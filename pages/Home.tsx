@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
 import { Button, SectionTitle } from '../components/UI';
-import { ArrowRight, Star, MessageCircle } from 'lucide-react';
+import { ArrowRight, Star, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
 const Home: React.FC = () => {
   const { state } = useApp();
   const { lang, content, menu, news } = state;
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
+  // State for News section
+  const [visibleNewsCount, setVisibleNewsCount] = useState(3);
+  const [expandedNewsIds, setExpandedNewsIds] = useState<Set<string>>(new Set());
 
   const popularItems = menu.filter(item => item.isPopular).slice(0, 3);
 
@@ -26,6 +30,22 @@ const Home: React.FC = () => {
 
   // Format phone number for WhatsApp (remove non-digits)
   const whatsappNumber = state.content.contact.phone.replace(/[^0-9]/g, '');
+
+  const toggleNewsExpand = (id: string) => {
+    setExpandedNewsIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const handleLoadMoreNews = () => {
+    setVisibleNewsCount(prev => prev + 3);
+  };
 
   return (
     <div className="min-h-screen">
@@ -212,18 +232,43 @@ const Home: React.FC = () => {
       <section className="py-24 px-6 border-t border-neutral-900/50">
          <div className="container mx-auto max-w-4xl">
             <SectionTitle title={lang === 'en' ? 'Latest News' : '새로운 소식'} centered={true} />
-            <div className="space-y-8 mt-12">
-              {news.slice(0, 3).map(post => (
-                <div key={post.id} className="border-b border-neutral-800 pb-8 last:border-0 hover:bg-neutral-900/50 p-6 transition-colors rounded">
-                  <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4">
-                    <h3 className="text-xl text-white font-bold uppercase">{post.title[lang]}</h3>
-                    <span className="text-xs text-gray-500 tracking-widest border border-neutral-800 px-2 py-1">{post.date}</span>
+            <div className="space-y-6 mt-12">
+              {news.slice(0, visibleNewsCount).map(post => {
+                const isExpanded = expandedNewsIds.has(post.id);
+                return (
+                  <div 
+                    key={post.id} 
+                    onClick={() => toggleNewsExpand(post.id)}
+                    className="border-b border-neutral-800 pb-8 last:border-0 hover:bg-neutral-900/50 p-6 transition-colors rounded cursor-pointer group"
+                  >
+                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4">
+                      <div className="flex items-center gap-3">
+                         <h3 className="text-xl text-white font-bold uppercase">{post.title[lang]}</h3>
+                         <span className="text-gray-600 group-hover:text-gold transition-colors">
+                           {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                         </span>
+                      </div>
+                      <span className="text-xs text-gray-500 tracking-widest border border-neutral-800 px-2 py-1">{post.date}</span>
+                    </div>
+                    
+                    <p className={`text-gray-400 font-light ${isExpanded ? '' : 'truncate'}`}>
+                       {post.content[lang]}
+                    </p>
                   </div>
-                  <p className="text-gray-400 font-light">{post.content[lang]}</p>
-                </div>
-              ))}
+                );
+              })}
+              
               {news.length === 0 && (
                 <p className="text-center text-gray-600 italic">{lang === 'en' ? 'No news available.' : '새로운 소식이 없습니다.'}</p>
+              )}
+
+              {/* Load More Button */}
+              {visibleNewsCount < news.length && (
+                <div className="text-center pt-8">
+                  <Button onClick={handleLoadMoreNews} variant="outline" size="sm">
+                     {lang === 'en' ? 'Load More News' : '게시물 더 보기'}
+                  </Button>
+                </div>
               )}
             </div>
          </div>

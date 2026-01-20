@@ -38,7 +38,7 @@ const Admin: React.FC = () => {
               label="Password" 
               value={password} 
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password (1111)"
+              placeholder="Enter password"
             />
             <Button type="submit" className="w-full mt-4">Login</Button>
             <button onClick={() => navigate('/')} type="button" className="w-full text-gray-500 text-xs uppercase tracking-widest mt-6 hover:text-white">Back to Home</button>
