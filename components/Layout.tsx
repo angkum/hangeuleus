@@ -22,6 +22,7 @@ export const Navbar: React.FC = () => {
     { en: 'Home', ko: '홈', path: '/' },
     { en: 'Menu', ko: '메뉴', path: '/menu' },
     { en: 'About', ko: '소개', path: '/about' },
+    { en: 'Location', ko: '위치', path: '/location' },
     { en: 'Reservation', ko: '예약', path: '/reservation' },
   ];
 
@@ -147,6 +148,7 @@ export const Footer: React.FC = () => {
                <h4 className="text-sm uppercase tracking-widest font-bold" style={{ color: primaryColor }}>{lang === 'en' ? 'Links' : '링크'}</h4>
                <ul className="space-y-3 text-sm text-gray-400">
                   <li><Link to="/menu" className="hover:text-white transition-colors tracking-wide">{lang === 'en' ? 'Menu' : '메뉴'}</Link></li>
+                  <li><Link to="/location" className="hover:text-white transition-colors tracking-wide">{lang === 'en' ? 'Location' : '위치'}</Link></li>
                   <li><Link to="/reservation" className="hover:text-white transition-colors tracking-wide">{lang === 'en' ? 'Reservations' : '예약'}</Link></li>
                   <li><Link to="/admin" className="hover:text-white transition-colors tracking-wide">Admin Login</Link></li>
                </ul>

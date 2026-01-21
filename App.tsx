@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Reservation from './pages/Reservation';
 import About from './pages/About';
+import Location from './pages/Location';
 import Admin from './pages/Admin';
 
 const ScrollToTop = () => {
@@ -27,6 +28,7 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
+          <Route path="/location" element={<Location />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

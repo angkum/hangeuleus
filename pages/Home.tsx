@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
 import { Button, SectionTitle, useInView, useIsTouch } from '../components/UI';
-import { ArrowRight, Star, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, Star, MessageCircle, ChevronDown, ChevronUp, Copy, Check, Navigation } from 'lucide-react';
 
 const PopularItemCard: React.FC<{ item: any, lang: any, primaryColor: string }> = ({ item, lang, primaryColor }) => {
   const { ref, isInView } = useInView({ threshold: 0.4 });
@@ -70,6 +70,9 @@ const Home: React.FC = () => {
   const [visibleNewsCount, setVisibleNewsCount] = useState(3);
   const [expandedNewsIds, setExpandedNewsIds] = useState<Set<string>>(new Set());
   
+  // State for Address Copy
+  const [copied, setCopied] = useState(false);
+
   // Environment checks
   const isTouch = useIsTouch();
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -112,6 +115,28 @@ const Home: React.FC = () => {
 
   const handleLoadMoreNews = () => {
     setVisibleNewsCount(prev => prev + 3);
+  };
+
+  const handleCopyAddress = () => {
+    const address = content.contact.address[lang];
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(address).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    } else {
+        // Fallback for older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = address;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   return (
@@ -340,6 +365,27 @@ const Home: React.FC = () => {
         <div className="container mx-auto max-w-5xl text-center">
            <SectionTitle title={lang === 'en' ? 'Visit Us' : '오시는 길'} subtitle={lang === 'en' ? 'Location' : '위치'} centered={true} />
            
+           {/* Address Actions */}
+           <div className="flex flex-wrap justify-center gap-4 mb-8">
+             <button 
+               onClick={handleCopyAddress}
+               className="text-xs flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded hover:bg-neutral-800 text-gold transition-colors font-medium tracking-wide bg-neutral-900"
+             >
+               {copied ? <Check size={14} /> : <Copy size={14} />}
+               {copied ? (lang === 'en' ? 'Copied!' : '복사됨!') : (lang === 'en' ? 'Copy Address' : '주소 복사')}
+             </button>
+
+             <a 
+               href="https://waze.com/ul?q=HAMGEULEUS&navigate=yes"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="text-xs flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded hover:bg-neutral-800 text-blue-400 transition-colors font-medium tracking-wide group bg-neutral-900"
+             >
+               <Navigation size={14} className="group-hover:text-blue-300" />
+               {lang === 'en' ? 'Waze Navigation' : 'Waze 실행'}
+             </a>
+           </div>
+
            <div 
              ref={mapRef}
              className={`w-full h-[400px] md:h-[500px] border border-neutral-800 transition-all duration-700 mb-12 shadow-2xl ${mapActive ? 'grayscale-0' : 'grayscale hover:grayscale-0'}`}

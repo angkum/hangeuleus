@@ -1,7 +1,7 @@
 import { AppState, MenuItem, NewsPost } from './types';
 
-// PASTE START: Generated from Admin (2026-01-21T09:52:51.017Z)
-const CURRENT_STATE = {
+// PASTE START: Generated from Admin (2026-01-21T11:09:34.909Z)
+const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
     "primaryColor": "#D4AF37"

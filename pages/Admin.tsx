@@ -607,7 +607,7 @@ const Admin: React.FC = () => {
          const codeTemplate = `import { AppState, MenuItem, NewsPost } from './types';
 
 // PASTE START: Generated from Admin (${new Date().toISOString()})
-const CURRENT_STATE = ${stateJson};
+const CURRENT_STATE: AppState = ${stateJson};
 // PASTE END
 
 export const INITIAL_MENU: MenuItem[] = CURRENT_STATE.menu;
