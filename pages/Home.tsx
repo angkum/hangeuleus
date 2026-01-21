@@ -1,28 +1,24 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
-import { Button, SectionTitle, useInView, useIsTouch } from '../components/UI';
+import { Button, SectionTitle, useIsTouch } from '../components/UI';
 import { ArrowRight, Star, MessageCircle, ChevronDown, ChevronUp, MapPin, Navigation } from 'lucide-react';
 
 const PopularItemCard: React.FC<{ item: any, lang: any, primaryColor: string }> = ({ item, lang, primaryColor }) => {
-  const { ref, isInView } = useInView({ threshold: 0.4 });
-  const isTouch = useIsTouch();
-  const isActive = isTouch && isInView;
-
   return (
-    <div ref={ref} className="group cursor-pointer">
+    <div className="group cursor-pointer">
       <div className="overflow-hidden mb-6 relative border border-white/5 bg-neutral-900">
         <img 
           src={item.image} 
           alt={item.name[lang]} 
-          className={`w-full h-80 object-cover transition-transform duration-700 ${isActive ? 'scale-105 opacity-100' : 'scale-100 opacity-90 group-hover:scale-105 group-hover:opacity-100'}`}
+          className="w-full h-80 object-cover transition-transform duration-700 scale-100 opacity-90 group-hover:scale-105 group-hover:opacity-100"
         />
         <div className="absolute top-4 right-4 bg-black/70 px-3 py-1 backdrop-blur-sm border border-white/10">
           <Star size={12} className="text-gold inline mr-1" fill={primaryColor} />
           <span className="text-xs tracking-widest uppercase text-white">Popular</span>
         </div>
       </div>
-      <div className={`text-center p-4 transition-colors rounded-sm ${isActive ? 'bg-white/5' : 'hover:bg-white/5'}`}>
+      <div className="text-center p-4 transition-colors rounded-sm hover:bg-white/5">
         <h3 className="text-xl text-white font-bold mb-2 uppercase">{item.name[lang]}</h3>
         <p className="text-gray-500 text-sm mb-3 line-clamp-2">{item.description[lang]}</p>
         <p className="text-lg font-bold" style={{ color: primaryColor }}>
@@ -34,15 +30,10 @@ const PopularItemCard: React.FC<{ item: any, lang: any, primaryColor: string }> 
 };
 
 const NewsItemCard = ({ post, lang, isExpanded, toggleExpand }: any) => {
-  const { ref, isInView } = useInView({ threshold: 0.5 });
-  const isTouch = useIsTouch();
-  const isActive = isTouch && isInView;
-
   return (
     <div 
-      ref={ref}
       onClick={() => toggleExpand(post.id)}
-      className={`border-b border-neutral-800 pb-8 last:border-0 p-6 transition-colors rounded cursor-pointer group ${isActive ? 'bg-neutral-900/50' : 'hover:bg-neutral-900/50'}`}
+      className="border-b border-neutral-800 pb-8 last:border-0 p-6 transition-colors rounded cursor-pointer group hover:bg-neutral-900/50"
     >
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4">
         <div className="flex items-center gap-3">
@@ -72,14 +63,20 @@ const Home: React.FC = () => {
   const { lang, content, menu, news } = state;
   const heroRef = useRef<HTMLDivElement>(null);
   
+  // Animation Trigger (On Mount)
+  const [heroMounted, setHeroMounted] = useState(false);
+  useEffect(() => {
+    // Slight delay to ensure CSS is ready and prevent flash
+    const timer = setTimeout(() => setHeroMounted(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   // State for News section
   const [visibleNewsCount, setVisibleNewsCount] = useState(3);
   const [expandedNewsIds, setExpandedNewsIds] = useState<Set<string>>(new Set());
   
   // Environment checks
   const isTouch = useIsTouch();
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isInteractive = !isTouch && !prefersReducedMotion;
 
   // Generate Embers - Fewer particles, slower speed
   const embers = useMemo(() => {
@@ -94,12 +91,6 @@ const Home: React.FC = () => {
       borderRadius: `${30 + Math.random() * 50}% ${30 + Math.random() * 50}% ${30 + Math.random() * 50}% ${30 + Math.random() * 50}% / ${30 + Math.random() * 50}% ${30 + Math.random() * 50}% ${30 + Math.random() * 50}% ${30 + Math.random() * 50}%`
     }));
   }, []);
-
-  // Hooks for single elements
-  const { ref: introImgRef, isInView: introImgInView } = useInView({ threshold: 0.3 });
-  const { ref: mapRef, isInView: mapInView } = useInView({ threshold: 0.3 });
-  const introImgActive = isTouch && introImgInView;
-  const mapActive = isTouch && mapInView;
 
   const popularItems = menu.filter(item => item.isPopular).slice(0, 3);
   const whatsappNumber = state.content.contact.phone.replace(/[^0-9]/g, '');
@@ -161,15 +152,40 @@ const Home: React.FC = () => {
           z-index: 20;
           will-change: transform, opacity;
         }
+
+        /* Clean Slide Up Animation */
+        @keyframes hero-slide-up {
+          0% {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Fade Only Animation */
+        @keyframes hero-fade-in {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        .animate-hero-slide-up {
+          animation: hero-slide-up 3.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .animate-hero-fade {
+          animation: hero-fade-in 3.5s ease-out forwards;
+        }
       `}</style>
 
       {/* 
         HERO SECTION 
-        Layers:
-        0. Background Image
-        1. Dark Overlay (60% opacity)
-        2. Ember Particles (Z-Index 20 - Visible over bg)
-        3. Content Text (Z-Index 30)
       */}
       <section 
         ref={heroRef}
@@ -205,35 +221,43 @@ const Home: React.FC = () => {
         </div>
 
         {/* Layer 3: Content (Text & CTA) */}
-        <div className="relative z-30 text-center px-6 max-w-5xl mx-auto">
+        <div 
+          className="relative z-30 text-center px-6 max-w-7xl mx-auto flex flex-col items-center justify-center h-full pt-20"
+        >
+          
+          {/* Subtitle - Slide Up */}
           <p 
-            className="text-sm md:text-base uppercase tracking-[0.3em] mb-6 text-gold font-medium drop-shadow-lg animate-fade-in"
-            style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
+            className={`text-base md:text-xl text-gold uppercase tracking-[0.3em] font-medium mb-8 ${heroMounted ? 'animate-hero-slide-up' : 'opacity-0'}`}
+            style={{ animationDelay: '0.2s' }}
           >
             {content.hero.subtitle[lang]}
           </p>
           
-          <div className="mb-12">
-            <h1 className="text-5xl md:text-7xl lg:text-9xl font-extrabold text-white leading-tight drop-shadow-2xl tracking-tighter">
-              {content.hero.title[lang].split(' ').map((word, i) => (
-                <span 
-                  key={i} 
-                  className="inline-block mx-2 animate-fade-in"
-                  style={{ animationDelay: `${0.4 + (i * 0.15)}s`, animationFillMode: 'both' }}
-                >
-                  {word}
+          {/* Title - Slide Up (Large & Readable) */}
+          <div className="mb-14 max-w-6xl mx-auto">
+            <h1 
+              className={`text-6xl md:text-8xl lg:text-9xl font-extrabold text-white leading-[0.9] tracking-tighter ${heroMounted ? 'animate-hero-slide-up' : 'opacity-0'}`}
+              style={{ animationDelay: '0.5s' }}
+            >
+              {lang === 'ko' ? (
+                <span className="flex flex-col gap-2 lg:gap-4">
+                  <span>한그릇은</span>
+                  <span>불이 완성합니다</span>
                 </span>
-              ))}
+              ) : (
+                content.hero.title[lang]
+              )}
             </h1>
           </div>
           
+          {/* Buttons - Fade Only (No Movement) */}
           <div 
-            className="flex flex-col md:flex-row justify-center items-center gap-6 animate-fade-in"
-            style={{ animationDelay: '1.4s', animationFillMode: 'both' }}
+            className={`flex flex-col md:flex-row justify-center items-center gap-6 ${heroMounted ? 'animate-hero-fade' : 'opacity-0'}`}
+            style={{ animationDelay: '1.2s' }}
           >
             <Link to="/menu" className="w-full md:w-auto">
-              <Button variant="outline" className="w-full group flex items-center justify-center gap-3 px-10 py-4 border-gold/60 text-gold hover:bg-gold hover:text-black transition-colors backdrop-blur-sm bg-black/50">
-                {content.hero.cta[lang]} <ArrowRight size={16} />
+              <Button variant="outline" className="w-full group flex items-center justify-center gap-3 px-10 py-5 text-base border-gold/60 text-gold hover:bg-gold hover:text-black transition-colors backdrop-blur-sm bg-black/50">
+                {content.hero.cta[lang]} <ArrowRight size={18} />
               </Button>
             </Link>
 
@@ -243,8 +267,8 @@ const Home: React.FC = () => {
               rel="noopener noreferrer"
               className="w-full md:w-auto"
             >
-              <Button variant="outline" className="w-full group flex items-center justify-center gap-3 px-10 py-4 border-gold/60 text-gold hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-colors backdrop-blur-sm bg-black/50">
-                WhatsApp <MessageCircle size={16} />
+              <Button variant="outline" className="w-full group flex items-center justify-center gap-3 px-10 py-5 text-base border-gold/60 text-gold hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-colors backdrop-blur-sm bg-black/50">
+                WhatsApp <MessageCircle size={18} />
               </Button>
             </a>
           </div>
@@ -257,14 +281,14 @@ const Home: React.FC = () => {
         <div className="absolute top-1/3 right-0 w-1/2 h-1/2 bg-gradient-to-l from-neutral-900/40 to-transparent pointer-events-none blur-3xl"></div>
 
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
-          <div ref={introImgRef} className="order-2 md:order-1 relative p-4">
+          <div className="order-2 md:order-1 relative p-4">
              {/* Image Frame Effect */}
              <div className="absolute top-0 left-0 w-full h-full border border-gold/10 translate-x-4 translate-y-4 -z-10"></div>
              <div className="absolute bottom-0 right-0 w-full h-full border border-white/5 -translate-x-4 -translate-y-4 -z-10"></div>
              <img 
                 src={content.about.image} 
                 alt="Chef" 
-                className={`w-full h-[500px] object-cover transition-all duration-700 shadow-2xl ${introImgActive ? 'grayscale-0' : 'filter grayscale hover:grayscale-0'}`}
+                className="w-full h-[500px] object-cover shadow-2xl transition-all duration-700 hover:grayscale-0 grayscale"
              />
           </div>
           <div className="order-1 md:order-2">
@@ -370,8 +394,7 @@ const Home: React.FC = () => {
            </div>
 
            <div 
-             ref={mapRef}
-             className={`w-full h-[400px] md:h-[500px] border border-neutral-800 transition-all duration-700 mb-12 shadow-2xl ${mapActive ? 'grayscale-0' : 'grayscale hover:grayscale-0'}`}
+             className="w-full h-[400px] md:h-[500px] border border-neutral-800 transition-all duration-700 mb-12 shadow-2xl grayscale hover:grayscale-0"
            >
              <iframe 
                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4726.072788120122!2d101.76440579999999!3d3.0357277999999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc35c729d82de3%3A0x4cc34d49e813397c!2sHANGEULEUS!5e1!3m2!1sko!2smy!4v1768914255084!5m2!1sko!2smy" 
