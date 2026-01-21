@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../contexts/AppContext';
 import { SectionTitle, Button, useInView, useIsTouch } from '../components/UI';
-import { MapPin, Phone, Clock, Mail, Copy, Check, Navigation } from 'lucide-react';
+import { MapPin, Phone, Clock, Mail, Navigation } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Location: React.FC = () => {
@@ -12,30 +12,6 @@ const Location: React.FC = () => {
   const { ref: mapRef, isInView: mapInView } = useInView({ threshold: 0.3 });
   const isTouch = useIsTouch();
   const mapActive = isTouch && mapInView;
-
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyAddress = () => {
-    const address = contact.address[lang];
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(address).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }).catch(err => {
-        console.error('Failed to copy: ', err);
-      });
-    } else {
-        // Fallback for older browsers
-        const textArea = document.createElement("textarea");
-        textArea.value = address;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-neutral-950 pt-32 pb-24 px-6">
@@ -55,16 +31,18 @@ const Location: React.FC = () => {
                      <p className="text-gray-400 whitespace-pre-line mb-4">{contact.address[lang]}</p>
                      
                      <div className="flex flex-wrap gap-3">
-                       <button 
-                         onClick={handleCopyAddress}
+                       <a 
+                         href="https://maps.app.goo.gl/jJhgQ7nsdmEAC7sK9"
+                         target="_blank"
+                         rel="noopener noreferrer"
                          className="text-xs flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded hover:bg-neutral-800 text-gold transition-colors font-medium tracking-wide"
                        >
-                         {copied ? <Check size={14} /> : <Copy size={14} />}
-                         {copied ? (lang === 'en' ? 'Copied!' : '복사됨!') : (lang === 'en' ? 'Copy Address' : '주소 복사')}
-                       </button>
+                         <MapPin size={14} />
+                         {lang === 'en' ? 'Google Map' : '구글 맵'}
+                       </a>
 
                        <a 
-                         href="https://waze.com/ul?q=HAMGEULEUS&navigate=yes"
+                         href="https://waze.com/ul?ll=3.0357278,101.7644058&navigate=yes"
                          target="_blank"
                          rel="noopener noreferrer"
                          className="text-xs flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded hover:bg-neutral-800 text-blue-400 transition-colors font-medium tracking-wide group"

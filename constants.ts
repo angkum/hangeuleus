@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost } from './types';
 
-// PASTE START: Generated from Admin (2026-01-21T11:09:34.909Z)
+// PASTE START: Generated from Admin (2026-01-21T12:11:46.242Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -156,6 +156,21 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_133008_3dd0f2ef-96e1-4b54-ae54-167cd86e1b5a.png",
       "isPopular": false
+    },
+    {
+      "id": "1768996839598",
+      "category": "rice",
+      "name": {
+        "en": "Wok Fried Rice",
+        "ko": "중화 볶음밥"
+      },
+      "description": {
+        "en": "Classic wok-fried rice finished over high heat for a fluffy, smoky “wok hei” aroma. Stir-fried with egg, scallions, and vegetables for a clean, satisfying bowl.",
+        "ko": "강한 불에서 빠르게 볶아낸 쌀알의 고슬함과 ‘불맛’을 살린 기본 볶음밥. 계란, 파, 야채를 밸런스 있게 볶아 한 그릇으로 깔끔하게 완성했습니다."
+      },
+      "price": 18,
+      "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-21%20195819.png",
+      "isPopular": false
     }
   ],
   "news": [
@@ -166,8 +181,8 @@ const CURRENT_STATE: AppState = {
         "ko": "그랜드 오픈"
       },
       "content": {
-        "en": "We are thrilled to open our doors in the heart of the city.",
-        "ko": "도심 한복판에 새로운 매장을 오픈하게 되어 기쁩니다."
+        "en": "🔥 A Bowl Shaped by Fire — Coming Soon\n\nHello, this is HAN GEU LEUS.\n\n🍽️ Very soon,\nwe will introduce a bowl\ndefined by fire and standards in Malaysia.\n\nHAN GEU LEUS does not simply recreate\nthe taste you remember from Korea.\n\n🌏 The climate is different.\n🥬 Ingredients behave differently.\n🔥 And fire itself works differently here.\n\nSo we redesigned everything from the start—\nheat levels, timing, and sequence—\nuntil the same depth of flavor was achieved.\n\n👨‍🍳 Before the kitchen,\nChef Jang worked with fire in a kiln, shaping ceramics.\nHe learned that fire may look the same,\nbut it never delivers the same result.\n\nThat understanding now defines our food.\n\nThis is not fast cooking.\nThis is not compromise.\n\n✨ This is a bowl\nfinished by fire and held to a standard.\n\n📍 Grand Opening Coming Soon\nExperience a different approach\nto what a single bowl can be.\n\nWe look forward to welcoming you\nto HAN GEU LEUS",
+        "ko": "🔥 불로 완성한 한 그릇, 곧 만납니다\n\n안녕하세요, HAN GEU LEUS입니다.\n\n🍽️ 곧,\n불을 기준으로 요리하는 한 그릇을\n말레이시아에서 선보입니다.\n\nHAN GEU LEUS는\n단순히 한국에서 먹던 맛을\n그대로 옮겨오는 데서 멈추지 않았습니다.\n\n🌏 기후가 다르고\n🥬 재료가 다르고\n🔥 무엇보다 불의 성질이 다른 이곳에서\n\n같은 깊이가 나올 때까지\n불의 세기, 시간, 순서를\n처음부터 다시 설계했습니다.\n\n👨‍🍳 불가마 앞에서 도자기를 만들던 쉐프 장은\n불이 같아 보여도\n결과는 절대 같지 않다는 걸 알고 있었습니다.\n그 기준은, 지금 이 주방에서도 이어집니다.\n\n그래서 HAN GEU LEUS의 한 그릇은\n✔ 빠르게 만든 음식이 아니고\n✔ 타협한 맛도 아닙니다.\n\n✨ 불로 완성한 기준입니다.\n\n📍 Grand Opening Coming Soon\n지금까지와는 다른\n한 그릇의 기준을\n직접 경험해 보세요.\n\n곧,\nHAN GEU LEUS에서 뵙겠습니다."
       },
       "date": "2026-01-21"
     },
@@ -178,10 +193,11 @@ const CURRENT_STATE: AppState = {
         "ko": "신규 시즌 메뉴"
       },
       "content": {
-        "en": "Try our new oyster dishes available for a limited time.",
-        "ko": "한정 기간 동안 제공되는 굴 요리를 맛보세요."
+        "en": "🔥 SEASONAL SET MENU\nExperience Cooking by Fire\n\nHello from HAN GEU LEUS,\n\nFor a limited time only,\nwe present a seasonal set menu crafted to showcase\nour philosophy of cooking by fire.\n\nEach set is prepared with\ncarefully planned heat intensity and cooking sequence,\nfinished at the most stable depth of flavor.\n\n📌 Only 30 sets available per day.\n\n🍽️ Set Menu Includes\n\nJja Jang Noodle\n\nJjamppong Soup\n\nSweet and Sour Pork (Tang Soo Yook)\n\n✔ Each dish is cooked and served in perfect timing\n✔ to deliver its best texture and balance.\n\n📅 Availability\n\nDate: February 29, 2026\n\nTime: 11:00 AM – 2:00 PM\n\nQuantity: Limited to 30 sets per day\n\n💰 Price\n\nRegular Price: RM 56\n\nSeasonal Special: RM 28\n\n✔ Not a rushed lunch,\n✔ but a meal completed by fire.\n\n📍 Limited availability — first come, first served.\nExperience cooking by fire, only at HAN GEU LEUS.",
+        "ko": "불의 요리를 경험하세요\n\n안녕하세요, HAN GEU LEUS입니다.\n\n한정된 시간 동안\n불의 기준으로 완성한 시즌 한정 세트 메뉴를 선보입니다.\n\n이번 세트는\n불의 세기와 조리 순서를 미리 설계해\n가장 안정적인 깊이로 완성한 구성입니다.\n\n📌 하루 단 30인분만 제공됩니다.\n\n🍽️ 세트 메뉴 구성\n\n짜장면\n\n짬뽕 국물\n\n탕수육\n\n✔ 각 메뉴는 동시에 가장 좋은 상태로 제공되도록\n✔ 불의 타이밍을 맞춰 조리됩니다.\n\n📅 이용 안내\n\n날짜: 2026년 2월 29일\n\n시간: 오전 11시 – 오후 2시\n\n수량: 하루 30세트 한정\n\n💰 가격\n\n정가 RM 56\n\n시즌 특별가 RM 28\n\n✔ 빠르게 소비되는 점심이 아닌,\n✔ 불로 완성한 기준을 경험하는 한 끼.\n\n📍 한정 수량으로 조기 마감될 수 있습니다.\n지금, 불의 요리를 경험해 보세요.\n\nHAN GEU LEUS"
       },
-      "date": "2026-02-09"
+      "date": "2026-01-21",
+      "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-21%20200609.png"
     }
   ],
   "content": {

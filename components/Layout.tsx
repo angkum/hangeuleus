@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, Phone, MapPin, Instagram, Facebook, Clock, AtSign } from 'lucide-react';
+import { Menu, X, Globe, Phone, MapPin, Instagram, Facebook, Clock, AtSign, Copy, Check } from 'lucide-react';
 import { useApp } from '../contexts/AppContext';
 
 export const Navbar: React.FC = () => {
@@ -94,6 +94,27 @@ export const Footer: React.FC = () => {
   const { contact, footer } = state.content;
   const lang = state.lang;
   const primaryColor = state.theme.primaryColor;
+  
+  const [addressCopied, setAddressCopied] = useState(false);
+
+  const handleCopyAddress = () => {
+      const address = contact.address[lang];
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(address).then(() => {
+          setAddressCopied(true);
+          setTimeout(() => setAddressCopied(false), 2000);
+        });
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = address;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        setAddressCopied(true);
+        setTimeout(() => setAddressCopied(false), 2000);
+      }
+  };
 
   // Fallback defaults if footer is missing (migration safety)
   const brandName = footer?.brandName?.[lang] || (lang === 'en' ? 'HAN GEU LEUS' : '한 그 릇');
@@ -135,7 +156,19 @@ export const Footer: React.FC = () => {
             <div className="space-y-6">
               <h4 className="text-sm uppercase tracking-widest font-bold" style={{ color: primaryColor }}>{lang === 'en' ? 'Contact' : '연락처'}</h4>
               <ul className="space-y-4 text-sm text-gray-400">
-                <li className="flex gap-3 items-start"><MapPin size={16} className="mt-0.5 shrink-0" /> {contact.address[lang]}</li>
+                <li className="flex gap-3 items-start">
+                    <MapPin size={16} className="mt-0.5 shrink-0" /> 
+                    <div className="flex flex-col items-start gap-2">
+                        <span>{contact.address[lang]}</span>
+                        <button 
+                            onClick={handleCopyAddress}
+                            className="text-[10px] uppercase tracking-wider border border-neutral-800 hover:bg-neutral-800 hover:text-white text-gray-500 px-2 py-1 rounded flex items-center gap-1 transition-colors"
+                        >
+                            {addressCopied ? <Check size={10} /> : <Copy size={10} />}
+                            {addressCopied ? (lang === 'en' ? 'Copied' : '복사됨') : (lang === 'en' ? 'Copy Address' : '주소 복사')}
+                        </button>
+                    </div>
+                </li>
                 <li className="flex gap-3 items-center"><Phone size={16} className="shrink-0" /> {contact.phone}</li>
                 <li className="flex gap-3 items-center"><Clock size={16} className="shrink-0" /> {contact.hours[lang]}</li>
               </ul>

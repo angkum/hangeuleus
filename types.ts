@@ -20,6 +20,7 @@ export interface NewsPost {
   title: LocalizedString;
   content: LocalizedString;
   date: string;
+  image?: string; // Added image field
 }
 
 export interface SiteContent {

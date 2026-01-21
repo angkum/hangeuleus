@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
 import { Button, SectionTitle, useInView, useIsTouch } from '../components/UI';
-import { ArrowRight, Star, MessageCircle, ChevronDown, ChevronUp, Copy, Check, Navigation } from 'lucide-react';
+import { ArrowRight, Star, MessageCircle, ChevronDown, ChevronUp, MapPin, Navigation } from 'lucide-react';
 
 const PopularItemCard: React.FC<{ item: any, lang: any, primaryColor: string }> = ({ item, lang, primaryColor }) => {
   const { ref, isInView } = useInView({ threshold: 0.4 });
@@ -54,7 +54,13 @@ const NewsItemCard = ({ post, lang, isExpanded, toggleExpand }: any) => {
         <span className="text-xs text-gray-500 tracking-widest border border-neutral-800 px-2 py-1">{post.date}</span>
       </div>
       
-      <p className={`text-gray-400 font-light ${isExpanded ? '' : 'truncate'}`}>
+      {isExpanded && post.image && (
+          <div className="mb-6 mt-2 overflow-hidden rounded border border-neutral-800">
+             <img src={post.image} alt="News Post" className="w-full object-cover max-h-[500px]" />
+          </div>
+      )}
+
+      <p className={`text-gray-400 font-light ${isExpanded ? 'whitespace-pre-line' : 'truncate'}`}>
           {post.content[lang]}
       </p>
     </div>
@@ -70,9 +76,6 @@ const Home: React.FC = () => {
   const [visibleNewsCount, setVisibleNewsCount] = useState(3);
   const [expandedNewsIds, setExpandedNewsIds] = useState<Set<string>>(new Set());
   
-  // State for Address Copy
-  const [copied, setCopied] = useState(false);
-
   // Environment checks
   const isTouch = useIsTouch();
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -115,28 +118,6 @@ const Home: React.FC = () => {
 
   const handleLoadMoreNews = () => {
     setVisibleNewsCount(prev => prev + 3);
-  };
-
-  const handleCopyAddress = () => {
-    const address = content.contact.address[lang];
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(address).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }).catch(err => {
-        console.error('Failed to copy: ', err);
-      });
-    } else {
-        // Fallback for older browsers
-        const textArea = document.createElement("textarea");
-        textArea.value = address;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    }
   };
 
   return (
@@ -367,16 +348,18 @@ const Home: React.FC = () => {
            
            {/* Address Actions */}
            <div className="flex flex-wrap justify-center gap-4 mb-8">
-             <button 
-               onClick={handleCopyAddress}
+             <a 
+               href="https://maps.app.goo.gl/jJhgQ7nsdmEAC7sK9"
+               target="_blank"
+               rel="noopener noreferrer"
                className="text-xs flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded hover:bg-neutral-800 text-gold transition-colors font-medium tracking-wide bg-neutral-900"
              >
-               {copied ? <Check size={14} /> : <Copy size={14} />}
-               {copied ? (lang === 'en' ? 'Copied!' : '복사됨!') : (lang === 'en' ? 'Copy Address' : '주소 복사')}
-             </button>
+               <MapPin size={14} />
+               {lang === 'en' ? 'Google Map' : '구글 맵'}
+             </a>
 
              <a 
-               href="https://waze.com/ul?q=HAMGEULEUS&navigate=yes"
+               href="https://waze.com/ul?ll=3.0357278,101.7644058&navigate=yes"
                target="_blank"
                rel="noopener noreferrer"
                className="text-xs flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded hover:bg-neutral-800 text-blue-400 transition-colors font-medium tracking-wide group bg-neutral-900"

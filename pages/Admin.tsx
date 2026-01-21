@@ -479,7 +479,8 @@ const Admin: React.FC = () => {
         id: Date.now().toString(),
         date: new Date().toISOString().split('T')[0],
         title: { en: '', ko: '' },
-        content: { en: '', ko: '' }
+        content: { en: '', ko: '' },
+        image: '' // Initialize image field
       });
     };
 
@@ -510,6 +511,13 @@ const Admin: React.FC = () => {
               <Input label="Date" type="date" value={formState.date} onChange={e => setFormState({...formState, date: e.target.value})} />
               <div />
               <div className="col-span-2">
+                 <ImagePicker 
+                    label="Post Image (Optional)" 
+                    value={formState.image || ''} 
+                    onChange={val => setFormState({...formState, image: val})} 
+                 />
+              </div>
+              <div className="col-span-2">
                 <TextArea label="Content (EN)" value={formState.content?.en} onChange={e => setFormState({...formState, content: {...formState.content!, en: e.target.value}})} rows={3} />
               </div>
               <div className="col-span-2">
@@ -526,9 +534,16 @@ const Admin: React.FC = () => {
         <div className="space-y-4">
           {state.news.map(post => (
              <div key={post.id} className="bg-neutral-900/50 p-4 border border-neutral-800 flex justify-between items-center">
-                <div>
-                   <p className="text-white font-medium">{post.title.en} <span className="text-gray-500 text-sm">/ {post.title.ko}</span></p>
-                   <p className="text-xs text-gray-500">{post.date}</p>
+                <div className="flex items-center gap-4">
+                   {post.image && (
+                      <div className="w-16 h-12 bg-neutral-800 rounded overflow-hidden">
+                         <img src={post.image} alt="Thumbnail" className="w-full h-full object-cover" />
+                      </div>
+                   )}
+                   <div>
+                      <p className="text-white font-medium">{post.title.en} <span className="text-gray-500 text-sm">/ {post.title.ko}</span></p>
+                      <p className="text-xs text-gray-500">{post.date}</p>
+                   </div>
                 </div>
                 <div className="flex gap-2">
                    <button onClick={() => startEdit(post)} className="p-2 text-blue-400 hover:bg-neutral-800 rounded"><Edit2 size={16}/></button>
