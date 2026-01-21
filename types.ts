@@ -28,6 +28,7 @@ export interface SiteContent {
     subtitle: LocalizedString;
     cta: LocalizedString;
     image: string;
+    imageOpacity?: number; // Added opacity control (0.0 to 1.0)
   };
   about: {
     title: LocalizedString;

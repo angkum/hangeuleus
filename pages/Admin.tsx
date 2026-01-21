@@ -1,15 +1,106 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { Button, Input, TextArea } from '../components/UI';
 import { MenuItem, NewsPost } from '../types';
-import { Trash2, Plus, Edit2, Save, LogOut, Layout, Coffee, FileText, Settings, AlignLeft, Phone, Share2, BarChart, FileImage } from 'lucide-react';
+import { 
+  Trash2, Plus, Edit2, LogOut, Layout, Coffee, FileText, 
+  Settings, AlignLeft, Phone, Share2, BarChart, FileImage, Upload,
+  Download, Database, Copy, AlertTriangle, RefreshCw, RotateCcw, Code,
+  Rocket, Smartphone, Globe
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
+const ImagePicker: React.FC<{ label: string; value: string; onChange: (val: string) => void }> = ({ label, value, onChange }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Limit to 1.5MB to be safe with LocalStorage (5MB typical limit)
+      if (file.size > 1.5 * 1024 * 1024) {
+         alert("File is too large! Please choose an image smaller than 1.5MB.\n\nBrowser storage is limited, and large images may crash the application.");
+         // Reset input
+         if (fileInputRef.current) fileInputRef.current.value = '';
+         return;
+      }
+      
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onChange(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleClear = () => {
+    onChange('');
+    if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+    }
+  };
+
+  const isBase64 = value && value.startsWith('data:image');
+
+  return (
+    <div className="mb-6">
+      <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">{label}</label>
+      
+      {value && (
+        <div className="mb-3 w-full max-w-xs aspect-video border border-neutral-700 bg-neutral-900 relative overflow-hidden group">
+          <img src={value} alt="Preview" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+             <span className="text-xs text-white font-mono">Preview</span>
+          </div>
+          <button 
+             type="button"
+             onClick={handleClear}
+             className="absolute top-2 right-2 bg-red-600/90 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
+             title="Remove Image"
+          >
+             <Trash2 size={14} />
+          </button>
+        </div>
+      )}
+
+      <div className="flex flex-col md:flex-row gap-3">
+        <label className="cursor-pointer bg-neutral-800 hover:bg-neutral-700 text-white px-4 py-3 text-sm border border-neutral-600 transition-colors flex items-center justify-center gap-2 min-w-[140px] shadow-sm whitespace-nowrap">
+          <Upload size={16} />
+          <span>{isBase64 ? 'Change File' : 'Upload File'}</span>
+          <input 
+            ref={fileInputRef}
+            type="file" 
+            accept="image/*" 
+            className="hidden" 
+            onChange={handleFileChange} 
+          />
+        </label>
+        <div className="flex-1 w-full">
+           {isBase64 ? (
+               <div className="w-full bg-neutral-900 border border-neutral-800 text-gray-400 p-3 text-sm flex justify-between items-center h-[46px]">
+                   <span className="flex items-center gap-2 truncate max-w-[200px]"><FileImage size={14} /> <span className="truncate">Local Image Loaded</span></span>
+                   <button type="button" onClick={handleClear} className="text-xs text-red-400 hover:text-white uppercase tracking-wider px-2">Remove</button>
+               </div>
+           ) : (
+               <input 
+                  type="text"
+                  className="w-full bg-neutral-900 border border-neutral-800 text-white p-3 text-sm focus:outline-none focus:border-white transition-colors placeholder-gray-600 h-[46px]"
+                  placeholder="Or paste image URL..."
+                  value={value}
+                  onChange={(e) => onChange(e.target.value)}
+               />
+           )}
+        </div>
+      </div>
+      <p className="text-xs text-gray-500 mt-1">Recommended: JPG/PNG under 1MB.</p>
+    </div>
+  );
+};
 
 const Admin: React.FC = () => {
   const { state, updateContent, updateTheme, addMenuItem, updateMenuItem, deleteMenuItem, addNews, updateNews, deleteNews } = useApp();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
-  const [activeTab, setActiveTab] = useState<'content' | 'menu' | 'news' | 'theme'>('content');
+  const [activeTab, setActiveTab] = useState<'content' | 'menu' | 'news' | 'theme' | 'deploy'>('content');
   const navigate = useNavigate();
 
   // Simple hardcoded auth
@@ -56,6 +147,7 @@ const Admin: React.FC = () => {
     const [heroTitleEn, setHeroTitleEn] = useState(state.content.hero.title.en);
     const [heroTitleKo, setHeroTitleKo] = useState(state.content.hero.title.ko);
     const [heroImg, setHeroImg] = useState(state.content.hero.image);
+    const [heroOpacity, setHeroOpacity] = useState(state.content.hero.imageOpacity || 0.6);
 
     // Local state for About (Philosophy)
     const [aboutTitleEn, setAboutTitleEn] = useState(state.content.about.title.en);
@@ -104,7 +196,8 @@ const Admin: React.FC = () => {
     const saveHero = () => {
       updateContent('hero', {
         title: { en: heroTitleEn, ko: heroTitleKo },
-        image: heroImg
+        image: heroImg,
+        imageOpacity: Number(heroOpacity)
       });
       alert('Hero saved!');
     };
@@ -155,7 +248,27 @@ const Admin: React.FC = () => {
              <Input label="Title (EN)" value={heroTitleEn} onChange={e => setHeroTitleEn(e.target.value)} />
              <Input label="Title (KO)" value={heroTitleKo} onChange={e => setHeroTitleKo(e.target.value)} />
           </div>
-          <Input label="Background Image URL" value={heroImg} onChange={e => setHeroImg(e.target.value)} />
+          <ImagePicker label="Background Image" value={heroImg} onChange={setHeroImg} />
+          
+          <div className="mb-4">
+            <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">
+              Background Opacity ({Math.round(heroOpacity * 100)}%)
+            </label>
+            <div className="flex items-center gap-4">
+              <input 
+                type="range" 
+                min="0" 
+                max="1" 
+                step="0.05" 
+                value={heroOpacity} 
+                onChange={(e) => setHeroOpacity(Number(e.target.value))}
+                className="w-full accent-white cursor-pointer h-1 bg-neutral-700 rounded-lg appearance-none"
+              />
+              <span className="text-white font-mono text-sm w-12 text-right">{heroOpacity}</span>
+            </div>
+            <p className="text-xs text-gray-500 mt-2">Adjust transparency of the background image. 0 is invisible (black), 1 is full visibility.</p>
+          </div>
+
           <Button onClick={saveHero} size="sm" className="mt-2">Save Changes</Button>
         </div>
 
@@ -209,7 +322,7 @@ const Admin: React.FC = () => {
              </div>
            </div>
 
-           <Input label="Image URL" value={aboutImg} onChange={e => setAboutImg(e.target.value)} />
+           <ImagePicker label="Section Image" value={aboutImg} onChange={setAboutImg} />
            <Button onClick={saveAbout} size="sm" className="mt-2">Save Changes</Button>
         </div>
 
@@ -224,8 +337,8 @@ const Admin: React.FC = () => {
               <Input label="Tagline (EN)" value={taglineEn} onChange={e => setTaglineEn(e.target.value)} />
               <Input label="Tagline (KO)" value={taglineKo} onChange={e => setTaglineKo(e.target.value)} />
            </div>
-           <Input label="Logo Image URL (Optional)" value={footerLogo} onChange={e => setFooterLogo(e.target.value)} placeholder="https://..." />
-           <p className="text-xs text-gray-500 mb-4">If a logo URL is provided, it will be displayed on the far right of the footer.</p>
+           <ImagePicker label="Logo Image" value={footerLogo} onChange={setFooterLogo} />
+           <p className="text-xs text-gray-500 mb-4">If a logo is provided, it will be displayed on the far right of the footer.</p>
            <Button onClick={saveFooter} size="sm" className="mt-2">Save Changes</Button>
         </div>
 
@@ -270,7 +383,7 @@ const Admin: React.FC = () => {
         name: { en: '', ko: '' },
         description: { en: '', ko: '' },
         price: 0,
-        image: 'https://picsum.photos/400',
+        image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
         isPopular: false
       });
     };
@@ -297,9 +410,17 @@ const Admin: React.FC = () => {
               <Input label="Desc (EN)" value={formState.description?.en} onChange={e => setFormState({...formState, description: {...formState.description!, en: e.target.value}})} />
               <Input label="Desc (KO)" value={formState.description?.ko} onChange={e => setFormState({...formState, description: {...formState.description!, ko: e.target.value}})} />
               <Input label="Price" type="number" value={formState.price} onChange={e => setFormState({...formState, price: Number(e.target.value)})} />
-              <Input label="Image URL" value={formState.image} onChange={e => setFormState({...formState, image: e.target.value})} />
+              
               <div className="col-span-2">
-                 <label className="text-white flex items-center gap-2">
+                <ImagePicker 
+                  label="Item Image" 
+                  value={formState.image || ''} 
+                  onChange={val => setFormState({...formState, image: val})} 
+                />
+              </div>
+
+              <div className="col-span-2">
+                 <label className="text-white flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" checked={formState.isPopular} onChange={e => setFormState({...formState, isPopular: e.target.checked})} />
                     Is Popular Item?
                  </label>
@@ -328,7 +449,9 @@ const Admin: React.FC = () => {
            {state.menu.map(item => (
              <div key={item.id} className="bg-neutral-900 p-4 flex justify-between items-center border border-neutral-800">
                 <div className="flex gap-4 items-center">
-                   <img src={item.image} alt={item.name.en} className="w-12 h-12 object-cover rounded" />
+                   <div className="w-12 h-12 shrink-0 overflow-hidden rounded bg-neutral-800">
+                      <img src={item.image} alt={item.name.en} className="w-full h-full object-cover" />
+                   </div>
                    <div>
                       <p className="text-white font-medium">{item.name.en} / {item.name.ko}</p>
                       <p className="text-xs text-gray-500 uppercase">{item.category} • RM {item.price}</p>
@@ -441,13 +564,178 @@ const Admin: React.FC = () => {
      )
   }
 
+  // 5. Deployment Editor (Renamed from Data Editor)
+  const DeploymentEditor = () => {
+    const handleExport = () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "hangeuleus_backup_" + new Date().toISOString().slice(0,10) + ".json");
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    };
+
+    const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (confirm("Importing data will overwrite all current changes. Continue?")) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const parsed = JSON.parse(event.target?.result as string);
+                    if (parsed.content && parsed.menu) {
+                        localStorage.setItem('hangeuleus_state', JSON.stringify(parsed));
+                        alert("Data imported successfully! The page will reload.");
+                        window.location.reload();
+                    } else {
+                        alert("Invalid data file.");
+                    }
+                } catch (err) {
+                    alert("Failed to parse JSON.");
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+
+    const handleCopyConfig = () => {
+         // Create the string representation of the code file
+         const stateJson = JSON.stringify(state, null, 2);
+         
+         const codeTemplate = `import { AppState, MenuItem, NewsPost } from './types';
+
+// PASTE START: Generated from Admin (${new Date().toISOString()})
+const CURRENT_STATE = ${stateJson};
+// PASTE END
+
+export const INITIAL_MENU: MenuItem[] = CURRENT_STATE.menu;
+export const INITIAL_NEWS: NewsPost[] = CURRENT_STATE.news;
+export const INITIAL_STATE: AppState = CURRENT_STATE;`;
+
+         navigator.clipboard.writeText(codeTemplate).then(() => {
+             alert("Full configuration code copied to clipboard! \n\nNow, update 'constants.ts' in your project code to publish these changes to the world.");
+         });
+    };
+
+    const handleReset = () => {
+        if (confirm("Are you sure? This will delete ALL local changes and revert to the original website data.")) {
+            localStorage.removeItem('hangeuleus_state');
+            window.location.reload();
+        }
+    }
+
+    return (
+        <div className="space-y-8 animate-fade-in pb-12">
+            
+            <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 border-l-4 border-gold p-6 rounded shadow-lg">
+                <h3 className="text-xl text-white font-bold mb-3">Why aren't my changes showing up on Mobile?</h3>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                  This website uses <strong>Client-Side Storage</strong> (Local Storage). Changes you make here are saved 
+                  only in <em>this specific browser</em>. To update the public website for everyone (including your mobile phone), 
+                  you must use <strong>Method 1</strong> below.
+                </p>
+            </div>
+
+            {/* Method 1: Permanent */}
+            <div className="bg-neutral-900 border border-gold/50 p-6 rounded relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <Globe size={120} className="text-gold" />
+                </div>
+                <div className="relative z-10">
+                    <h3 className="text-xl text-white mb-2 flex items-center gap-2">
+                        <span className="bg-gold text-black text-xs font-bold px-2 py-1 rounded">METHOD 1</span>
+                        <RefreshCw size={20} className="text-gold" /> 
+                        <span>Publish to World (Permanent)</span>
+                    </h3>
+                    <p className="text-gray-400 text-sm mb-6 max-w-2xl leading-relaxed">
+                        Updates the actual source code of the website so all visitors see your changes.
+                    </p>
+
+                    <div className="bg-black/40 p-5 rounded border border-neutral-800">
+                        <ol className="list-decimal list-inside text-sm text-gray-300 space-y-3 mb-6">
+                            <li>Click the <strong className="text-white">Copy Code</strong> button below.</li>
+                            <li>Send this code to your developer or open <code className="bg-neutral-800 px-1 py-0.5 rounded text-gold">constants.ts</code>.</li>
+                            <li>Replace the entire content of that file with the copied code.</li>
+                            <li>Deploy to GitHub.</li>
+                        </ol>
+
+                        <Button onClick={handleCopyConfig} size="sm" className="flex items-center gap-2 w-full md:w-auto justify-center bg-gold text-black hover:bg-white border-none font-bold">
+                            <Copy size={16} /> Copy Configuration Code
+                        </Button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Method 2: Temporary Sync */}
+            <div className="bg-neutral-900 border border-neutral-800 p-6 rounded relative">
+                <h3 className="text-xl text-white mb-2 flex items-center gap-2">
+                    <span className="bg-neutral-700 text-white text-xs font-bold px-2 py-1 rounded">METHOD 2</span>
+                    <Smartphone size={20} /> 
+                    <span>Sync to Mobile (Temporary)</span>
+                </h3>
+                <p className="text-gray-400 text-sm mb-6 max-w-2xl">
+                    Manually transfer your settings to another device using a file. Good for testing before publishing.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-black/20 p-4 rounded border border-neutral-800">
+                        <h4 className="text-white text-sm font-bold mb-2 flex items-center gap-2"><Download size={14}/> Step 1: Export</h4>
+                        <Button onClick={handleExport} variant="outline" size="sm" className="w-full flex justify-center items-center gap-2 text-xs">
+                            Download Backup (.json)
+                        </Button>
+                    </div>
+
+                    <div className="bg-black/20 p-4 rounded border border-neutral-800">
+                        <h4 className="text-white text-sm font-bold mb-2 flex items-center gap-2"><Upload size={14}/> Step 2: Import on Mobile</h4>
+                        <label className="cursor-pointer bg-neutral-800 hover:bg-neutral-700 text-white px-4 py-2 text-xs border border-neutral-600 transition-colors flex items-center justify-center gap-2 w-full uppercase tracking-wider font-medium">
+                            <span>Select JSON File...</span>
+                            <input type="file" accept=".json" onChange={handleImport} className="hidden" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            {/* Danger Zone */}
+            <div className="border-t border-red-900/30 pt-8 mt-8">
+                <h3 className="text-lg text-red-400 mb-4 flex items-center gap-2">
+                    <AlertTriangle size={18} /> Danger Zone
+                </h3>
+                <div className="flex items-center justify-between bg-red-950/10 border border-red-900/30 p-4 rounded">
+                    <div>
+                        <p className="text-white font-medium">Factory Reset</p>
+                        <p className="text-xs text-red-400/70 mt-1">Reverts all local changes to the original code defaults.</p>
+                    </div>
+                    <Button onClick={handleReset} variant="outline" size="sm" className="border-red-800 text-red-400 hover:bg-red-900/20">
+                        <RotateCcw size={14} className="mr-2" /> Reset
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
+  };
+
   // --- Main Dashboard Layout ---
   const activeColor = state.theme.primaryColor;
 
   return (
     <div className="min-h-screen bg-neutral-950 pt-24 px-6 pb-12 text-gray-200">
       <div className="container mx-auto">
-        <div className="flex justify-between items-center mb-12">
+        
+        {/* Warning Banner */}
+        <div className="bg-yellow-900/20 border border-yellow-700/30 p-4 rounded mb-8 text-center animate-fade-in">
+           <p className="text-yellow-200/80 text-sm flex flex-col md:flex-row items-center justify-center gap-2">
+             <span className="flex items-center gap-2"><AlertTriangle size={16} /> You are editing in <strong>Local Mode</strong>.</span>
+             <span className="hidden md:inline text-yellow-700">|</span>
+             <span>Changes are only saved to this browser.</span>
+             <button onClick={() => setActiveTab('deploy')} className="underline font-bold text-yellow-400 hover:text-white ml-2 flex items-center gap-1">
+                Publish to update Mobile/Public <Rocket size={12} />
+             </button>
+           </p>
+        </div>
+
+        <div className="flex justify-between items-center mb-8">
            <div>
               <h1 className="text-3xl font-serif text-white">Dashboard</h1>
               <p className="text-gray-500 text-sm">Manage website content</p>
@@ -472,6 +760,9 @@ const Admin: React.FC = () => {
               <button onClick={() => setActiveTab('theme')} className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${activeTab === 'theme' ? 'bg-neutral-900 text-white border-l-2' : 'hover:bg-neutral-900/50 text-gray-400'}`} style={{ borderColor: activeTab === 'theme' ? activeColor : 'transparent' }}>
                  <Settings size={18} /> Appearance
               </button>
+              <button onClick={() => setActiveTab('deploy')} className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${activeTab === 'deploy' ? 'bg-neutral-900 text-white border-l-2' : 'hover:bg-neutral-900/50 text-gray-400'}`} style={{ borderColor: activeTab === 'deploy' ? activeColor : 'transparent' }}>
+                 <Rocket size={18} /> Publish / Sync
+              </button>
            </div>
 
            {/* Content Area */}
@@ -480,6 +771,7 @@ const Admin: React.FC = () => {
               {activeTab === 'menu' && <MenuEditor />}
               {activeTab === 'news' && <NewsEditor />}
               {activeTab === 'theme' && <ThemeEditor />}
+              {activeTab === 'deploy' && <DeploymentEditor />}
            </div>
         </div>
       </div>

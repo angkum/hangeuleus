@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../contexts/AppContext';
 
 export const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { 
@@ -85,3 +85,40 @@ export const TextArea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaElement
     />
   </div>
 );
+
+// --- Hooks ---
+
+export const useIsTouch = () => {
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouch(window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch);
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
+  return isTouch;
+};
+
+export const useInView = (options?: IntersectionObserverInit) => {
+  const ref = useRef<any>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+    }, { threshold: 0.3, ...options });
+
+    observer.observe(el);
+
+    return () => {
+      observer.unobserve(el);
+    };
+  }, []); // Run once on mount
+
+  return { ref, isInView };
+};

@@ -1,6 +1,35 @@
 import React, { useState } from 'react';
 import { useApp } from '../contexts/AppContext';
-import { SectionTitle } from '../components/UI';
+import { SectionTitle, useInView, useIsTouch } from '../components/UI';
+
+const MenuGridItem: React.FC<{ item: any, lang: any, primaryColor: string }> = ({ item, lang, primaryColor }) => {
+  const { ref, isInView } = useInView({ threshold: 0.3 });
+  const isTouch = useIsTouch();
+  const isActive = isTouch && isInView;
+
+  return (
+    <div ref={ref} className="flex gap-6 group">
+      <div className="w-24 h-24 md:w-32 md:h-32 shrink-0 overflow-hidden rounded-sm bg-neutral-900">
+        <img 
+          src={item.image} 
+          alt={item.name[lang]} 
+          className={`w-full h-full object-cover transition-transform duration-500 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}
+        />
+      </div>
+      <div className="flex-1 flex flex-col justify-between py-1">
+        <div>
+          <div className="flex justify-between items-baseline mb-2 border-b border-neutral-800 pb-2 border-dashed">
+            <h3 className="text-lg md:text-xl font-bold text-white uppercase">{item.name[lang]}</h3>
+            <span className="text-lg ml-4 font-light" style={{ color: primaryColor }}>
+              {lang === 'en' ? `RM ${item.price}` : `${item.price} 링깃`}
+            </span>
+          </div>
+          <p className="text-gray-500 text-sm leading-relaxed">{item.description[lang]}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Menu: React.FC = () => {
   const { state } = useApp();
@@ -47,26 +76,12 @@ const Menu: React.FC = () => {
         {/* Menu Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 max-w-5xl mx-auto">
           {filteredMenu.map(item => (
-            <div key={item.id} className="flex gap-6 group">
-              <div className="w-24 h-24 md:w-32 md:h-32 shrink-0 overflow-hidden rounded-sm bg-neutral-900">
-                <img 
-                  src={item.image} 
-                  alt={item.name[lang]} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div className="flex-1 flex flex-col justify-between py-1">
-                <div>
-                  <div className="flex justify-between items-baseline mb-2 border-b border-neutral-800 pb-2 border-dashed">
-                    <h3 className="text-lg md:text-xl font-bold text-white uppercase">{item.name[lang]}</h3>
-                    <span className="text-lg ml-4 font-light" style={{ color: state.theme.primaryColor }}>
-                      {lang === 'en' ? `RM ${item.price}` : `${item.price} 링깃`}
-                    </span>
-                  </div>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.description[lang]}</p>
-                </div>
-              </div>
-            </div>
+            <MenuGridItem 
+              key={item.id} 
+              item={item} 
+              lang={lang} 
+              primaryColor={state.theme.primaryColor} 
+            />
           ))}
         </div>
 

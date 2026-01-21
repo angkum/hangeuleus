@@ -23,6 +23,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         if (!parsed.content.about.stats) {
              parsed.content.about.stats = INITIAL_STATE.content.about.stats;
         }
+        // Ensure hero opacity exists
+        if (parsed.content.hero.imageOpacity === undefined) {
+             parsed.content.hero.imageOpacity = 0.6;
+        }
 
         setState(parsed);
       } catch (e) {
@@ -33,7 +37,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   // Save to local storage on change
   useEffect(() => {
-    localStorage.setItem('hangeuleus_state', JSON.stringify(state));
+    try {
+      localStorage.setItem('hangeuleus_state', JSON.stringify(state));
+    } catch (e) {
+      console.error("Failed to save state to localStorage. Quota exceeded or storage error.", e);
+      // We do not alert here to avoid spamming the user on every keystroke/state change if storage is full.
+      // Ideally, show a toast notification, but for now we silence the crash.
+    }
   }, [state]);
 
   const setLanguage = (lang: Language) => {
