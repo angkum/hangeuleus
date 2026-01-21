@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost } from './types';
 
-// PASTE START: Generated from Admin (2026-01-21T09:05:57.849Z)
+// PASTE START: Generated from Admin (2026-01-21T09:52:51.017Z)
 const CURRENT_STATE = {
   "lang": "en",
   "theme": {
@@ -49,7 +49,7 @@ const CURRENT_STATE = {
         "ko": "바삭하게 튀긴 돼지고기에 새콤달콤한 소스를 더한 한국식 탕수육."
       },
       "price": 50,
-      "image": "https://postfiles.pstatic.net/MjAyNjAxMjBfMjcx/MDAxNzY4OTA3MDk5Mzg0.fGGjM2l5VbSizJdMjp8BjoWbjF8WmQej84x8tI0Sl3Ug.Rv1M2lyZNVYSFOYmDExTn6w5lTpklhiSDgOIxaf9Csog.PNG/%ED%83%95%EC%88%98%EC%9C%A1.png?type=w966",
+      "image": "https://696fb61876634d918b871516.imgix.net/%ED%83%95%EC%88%98%EC%9C%A1.png",
       "isPopular": true
     },
     {
@@ -255,8 +255,8 @@ const CURRENT_STATE = {
         "ko": "한 그 릇"
       },
       "tagline": {
-        "en": "Authentic Korean-Chinese Cuisine.",
-        "ko": "정통 중화요리의 진수."
+        "en": "A bowl shaped by fire and standards.",
+        "ko": "불과 기준으로 완성한 한 그릇."
       },
       "logo": "https://696fb61876634d918b871516.imgix.net/%EB%A1%9C%EA%B3%A0_21.png"
     }
