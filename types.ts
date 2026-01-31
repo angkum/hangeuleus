@@ -5,9 +5,22 @@ export interface LocalizedString {
   ko: string;
 }
 
+export interface MenuCategory {
+  id: string;
+  name: LocalizedString;
+  order: number;
+}
+
+export interface MenuSubCategory {
+  id: string;
+  categoryId: string; // Links to MenuCategory
+  name: LocalizedString;
+  order: number;
+}
+
 export interface MenuItem {
   id: string;
-  category: 'noodles' | 'rice' | 'dishes' | 'beverages';
+  subCategoryId: string; // Changed from category string to subCategoryId
   name: LocalizedString;
   description: LocalizedString;
   price: number;
@@ -20,7 +33,7 @@ export interface NewsPost {
   title: LocalizedString;
   content: LocalizedString;
   date: string;
-  image?: string; // Added image field
+  image?: string;
 }
 
 export interface SiteContent {
@@ -29,12 +42,12 @@ export interface SiteContent {
     subtitle: LocalizedString;
     cta: LocalizedString;
     image: string;
-    imageOpacity?: number; // Added opacity control (0.0 to 1.0)
+    imageOpacity?: number;
   };
   about: {
     title: LocalizedString;
-    description: LocalizedString; // Short summary for Home page
-    details: LocalizedString;     // Full content for About page
+    description: LocalizedString;
+    details: LocalizedString;
     image: string;
     stats: {
       stat1: {
@@ -68,10 +81,12 @@ export interface SiteContent {
 export interface AppState {
   lang: Language;
   content: SiteContent;
+  categories: MenuCategory[];
+  subCategories: MenuSubCategory[];
   menu: MenuItem[];
   news: NewsPost[];
   theme: {
-    primaryColor: string; // The Gold Color
+    primaryColor: string;
   };
 }
 
@@ -80,9 +95,23 @@ export interface AdminContextType {
   setLanguage: (lang: Language) => void;
   updateContent: (section: keyof SiteContent, data: any) => void;
   updateTheme: (color: string) => void;
+  
+  // Menu Item Actions
   addMenuItem: (item: MenuItem) => void;
   updateMenuItem: (item: MenuItem) => void;
   deleteMenuItem: (id: string) => void;
+  
+  // Category Actions
+  addCategory: (cat: MenuCategory) => void;
+  updateCategory: (cat: MenuCategory) => void;
+  deleteCategory: (id: string) => void;
+  
+  // SubCategory Actions
+  addSubCategory: (sub: MenuSubCategory) => void;
+  updateSubCategory: (sub: MenuSubCategory) => void;
+  deleteSubCategory: (id: string) => void;
+
+  // News Actions
   addNews: (post: NewsPost) => void;
   updateNews: (post: NewsPost) => void;
   deleteNews: (id: string) => void;

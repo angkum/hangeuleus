@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { AppState, AdminContextType, Language, SiteContent, MenuItem, NewsPost } from "../types";
+import { AppState, AdminContextType, Language, SiteContent, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from "../types";
 import { INITIAL_STATE } from "../constants";
 
 const AppContext = createContext<AdminContextType | undefined>(undefined);
@@ -53,6 +53,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         parsed.content.hero.imageOpacity = 0.6;
       }
 
+      // Ensure Categories exist (Migration from old version)
+      if (!parsed.categories || parsed.categories.length === 0) {
+        parsed.categories = INITIAL_STATE.categories;
+        parsed.subCategories = INITIAL_STATE.subCategories;
+        // Note: Old menu items won't have correct subCategoryId if we just load old state.
+        // In a real app, we'd run a migration script. For this demo, we assume the user 
+        // resets data if structure changes drastically, or we rely on INITIAL_STATE if parsed is invalid.
+      }
+
       setState(parsed);
     } catch (e) {
       console.error("Failed to load state", e);
@@ -67,8 +76,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch (e) {
       console.error("Failed to save state to localStorage. Quota exceeded or storage error.", e);
-      // We do not alert here to avoid spamming the user on every keystroke/state change if storage is full.
-      // Ideally, show a toast notification, but for now we silence the crash.
     }
   }, [state, isAdminRoute]);
 
@@ -90,6 +97,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setState((prev) => ({ ...prev, theme: { primaryColor: color } }));
   };
 
+  // --- Menu Items ---
   const addMenuItem = (item: MenuItem) => {
     setState((prev) => ({ ...prev, menu: [...prev.menu, item] }));
   };
@@ -108,6 +116,44 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }));
   };
 
+  // --- Categories ---
+  const addCategory = (cat: MenuCategory) => {
+    setState(prev => ({ ...prev, categories: [...prev.categories, cat] }));
+  }
+  const updateCategory = (updated: MenuCategory) => {
+    setState(prev => ({
+      ...prev,
+      categories: prev.categories.map(c => c.id === updated.id ? updated : c)
+    }));
+  }
+  const deleteCategory = (id: string) => {
+    setState(prev => ({
+      ...prev,
+      categories: prev.categories.filter(c => c.id !== id),
+      // Also delete subcategories? For safety, maybe just unlink or leave them.
+      // Let's remove subcategories to keep it clean.
+      subCategories: prev.subCategories.filter(s => s.categoryId !== id)
+    }));
+  }
+
+  // --- SubCategories ---
+  const addSubCategory = (sub: MenuSubCategory) => {
+    setState(prev => ({ ...prev, subCategories: [...prev.subCategories, sub] }));
+  }
+  const updateSubCategory = (updated: MenuSubCategory) => {
+    setState(prev => ({
+      ...prev,
+      subCategories: prev.subCategories.map(s => s.id === updated.id ? updated : s)
+    }));
+  }
+  const deleteSubCategory = (id: string) => {
+    setState(prev => ({
+      ...prev,
+      subCategories: prev.subCategories.filter(s => s.id !== id)
+    }));
+  }
+
+  // --- News ---
   const addNews = (post: NewsPost) => {
     setState((prev) => ({ ...prev, news: [post, ...prev.news] }));
   };
@@ -136,6 +182,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         addMenuItem,
         updateMenuItem,
         deleteMenuItem,
+        addCategory,
+        updateCategory,
+        deleteCategory,
+        addSubCategory,
+        updateSubCategory,
+        deleteSubCategory,
         addNews,
         updateNews,
         deleteNews,

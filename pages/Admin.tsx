@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { Button, Input, TextArea } from '../components/UI';
-import { MenuItem, NewsPost } from '../types';
+import { MenuItem, NewsPost, MenuCategory, MenuSubCategory } from '../types';
 import { 
   Trash2, Plus, Edit2, LogOut, Layout, Coffee, FileText, 
   Settings, AlignLeft, Phone, Share2, BarChart, FileImage, Upload,
   Download, Database, Copy, AlertTriangle, RefreshCw, RotateCcw, Code,
-  Rocket, Smartphone, Globe
+  Rocket, Smartphone, Globe, Layers, ArrowUp, ArrowDown
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -97,10 +97,27 @@ const ImagePicker: React.FC<{ label: string; value: string; onChange: (val: stri
 };
 
 const Admin: React.FC = () => {
-  const { state, updateContent, updateTheme, addMenuItem, updateMenuItem, deleteMenuItem, addNews, updateNews, deleteNews } = useApp();
+  const { 
+    state, 
+    updateContent, 
+    updateTheme, 
+    addMenuItem, 
+    updateMenuItem, 
+    deleteMenuItem,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+    addSubCategory,
+    updateSubCategory,
+    deleteSubCategory,
+    addNews, 
+    updateNews, 
+    deleteNews 
+  } = useApp();
+  
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
-  const [activeTab, setActiveTab] = useState<'content' | 'menu' | 'news' | 'theme' | 'deploy'>('content');
+  const [activeTab, setActiveTab] = useState<'content' | 'menu' | 'categories' | 'news' | 'theme' | 'deploy'>('content');
   const navigate = useNavigate();
 
   // Simple hardcoded auth
@@ -368,18 +385,27 @@ const Admin: React.FC = () => {
   // 2. Menu Editor
   const MenuEditor = () => {
     const [editingId, setEditingId] = useState<string | null>(null);
+    // Extra state to handle 2-level selection UI in form
+    const [selectedCatId, setSelectedCatId] = useState<string>(state.categories[0]?.id || '');
     const [formState, setFormState] = useState<Partial<MenuItem>>({});
 
     const startEdit = (item: MenuItem) => {
       setEditingId(item.id);
+      // Find parent category to set dropdowns correctly
+      const sub = state.subCategories.find(s => s.id === item.subCategoryId);
+      if (sub) {
+          setSelectedCatId(sub.categoryId);
+      }
       setFormState({ ...item });
     };
 
     const startNew = () => {
       setEditingId('new');
+      const defaultSub = state.subCategories.find(s => s.categoryId === selectedCatId) || state.subCategories[0];
+      
       setFormState({
         id: Date.now().toString(),
-        category: 'dishes',
+        subCategoryId: defaultSub?.id || '',
         name: { en: '', ko: '' },
         description: { en: '', ko: '' },
         price: 0,
@@ -397,6 +423,9 @@ const Admin: React.FC = () => {
       setEditingId(null);
     };
 
+    // Filter available subcategories based on selected large category
+    const availableSubCats = state.subCategories.filter(s => s.categoryId === selectedCatId);
+
     return (
       <div className="space-y-6 animate-fade-in pb-12">
         <Button onClick={startNew} className="flex items-center gap-2"><Plus size={16}/> Add New Item</Button>
@@ -405,6 +434,37 @@ const Admin: React.FC = () => {
           <div className="bg-neutral-800 p-6 border border-gold mb-8">
             <h4 className="text-white mb-4">{editingId === 'new' ? 'Create Item' : 'Edit Item'}</h4>
             <div className="grid grid-cols-2 gap-4">
+              <div className="col-span-2 md:col-span-1">
+                 <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">Large Category</label>
+                 <select 
+                    value={selectedCatId} 
+                    onChange={e => {
+                        const newCatId = e.target.value;
+                        setSelectedCatId(newCatId);
+                        // Auto-select first subcategory of new category
+                        const firstSub = state.subCategories.find(s => s.categoryId === newCatId);
+                        setFormState({...formState, subCategoryId: firstSub?.id || ''});
+                    }}
+                    className="w-full bg-neutral-900 border border-neutral-700 text-white p-3"
+                 >
+                    {state.categories.map(c => (
+                        <option key={c.id} value={c.id}>{c.name.en} / {c.name.ko}</option>
+                    ))}
+                 </select>
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                 <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">Sub Category</label>
+                 <select 
+                    value={formState.subCategoryId} 
+                    onChange={e => setFormState({...formState, subCategoryId: e.target.value})}
+                    className="w-full bg-neutral-900 border border-neutral-700 text-white p-3"
+                 >
+                    {availableSubCats.map(s => (
+                        <option key={s.id} value={s.id}>{s.name.en} / {s.name.ko}</option>
+                    ))}
+                 </select>
+              </div>
+
               <Input label="Name (EN)" value={formState.name?.en} onChange={e => setFormState({...formState, name: {...formState.name!, en: e.target.value}})} />
               <Input label="Name (KO)" value={formState.name?.ko} onChange={e => setFormState({...formState, name: {...formState.name!, ko: e.target.value}})} />
               <Input label="Desc (EN)" value={formState.description?.en} onChange={e => setFormState({...formState, description: {...formState.description!, en: e.target.value}})} />
@@ -425,18 +485,6 @@ const Admin: React.FC = () => {
                     Is Popular Item?
                  </label>
               </div>
-               <div className="col-span-2">
-                 <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">Category</label>
-                 <select 
-                    value={formState.category} 
-                    onChange={e => setFormState({...formState, category: e.target.value as any})}
-                    className="w-full bg-neutral-900 border border-neutral-700 text-white p-3"
-                 >
-                    <option value="noodles">Noodles</option>
-                    <option value="rice">Rice</option>
-                    <option value="dishes">Dishes</option>
-                 </select>
-              </div>
             </div>
             <div className="flex gap-4 mt-6">
                <Button onClick={handleSave} size="sm">Save Item</Button>
@@ -445,30 +493,172 @@ const Admin: React.FC = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-4">
-           {state.menu.map(item => (
-             <div key={item.id} className="bg-neutral-900 p-4 flex justify-between items-center border border-neutral-800">
-                <div className="flex gap-4 items-center">
-                   <div className="w-12 h-12 shrink-0 overflow-hidden rounded bg-neutral-800">
-                      <img src={item.image} alt={item.name.en} className="w-full h-full object-cover" />
-                   </div>
-                   <div>
-                      <p className="text-white font-medium">{item.name.en} / {item.name.ko}</p>
-                      <p className="text-xs text-gray-500 uppercase">{item.category} • RM {item.price}</p>
-                   </div>
-                </div>
-                <div className="flex gap-2">
-                   <button onClick={() => startEdit(item)} className="p-2 text-blue-400 hover:bg-neutral-800 rounded"><Edit2 size={16}/></button>
-                   <button onClick={() => deleteMenuItem(item.id)} className="p-2 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={16}/></button>
-                </div>
-             </div>
-           ))}
+        <div className="space-y-2">
+           {state.menu.map(item => {
+             const sub = state.subCategories.find(s => s.id === item.subCategoryId);
+             const cat = state.categories.find(c => c.id === sub?.categoryId);
+
+             return (
+               <div key={item.id} className="bg-neutral-900 p-4 flex justify-between items-center border border-neutral-800">
+                  <div className="flex gap-4 items-center">
+                     <div className="w-12 h-12 shrink-0 overflow-hidden rounded bg-neutral-800">
+                        <img src={item.image} alt={item.name.en} className="w-full h-full object-cover" />
+                     </div>
+                     <div>
+                        <p className="text-white font-medium">{item.name.en} / {item.name.ko}</p>
+                        <p className="text-xs text-gray-500 uppercase">
+                            {cat?.name.en} &gt; {sub?.name.en} • RM {item.price}
+                        </p>
+                     </div>
+                  </div>
+                  <div className="flex gap-2">
+                     <button onClick={() => startEdit(item)} className="p-2 text-blue-400 hover:bg-neutral-800 rounded"><Edit2 size={16}/></button>
+                     <button onClick={() => deleteMenuItem(item.id)} className="p-2 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={16}/></button>
+                  </div>
+               </div>
+             )
+           })}
         </div>
       </div>
     );
   };
 
-  // 3. News Editor
+  // 3. Category Manager (New)
+  const CategoryManager = () => {
+    // ---- Large Category State ----
+    const [editingCatId, setEditingCatId] = useState<string | null>(null);
+    const [catForm, setCatForm] = useState<Partial<MenuCategory>>({});
+    
+    // ---- Sub Category State ----
+    const [editingSubId, setEditingSubId] = useState<string | null>(null);
+    const [subForm, setSubForm] = useState<Partial<MenuSubCategory>>({});
+
+    // -- Category Handlers --
+    const startNewCat = () => {
+        setEditingCatId('new');
+        setCatForm({ id: `c_${Date.now()}`, name: { en: '', ko: '' }, order: state.categories.length + 1 });
+    }
+    const editCat = (c: MenuCategory) => {
+        setEditingCatId(c.id);
+        setCatForm({...c});
+    }
+    const saveCat = () => {
+        if(editingCatId === 'new') addCategory(catForm as MenuCategory);
+        else updateCategory(catForm as MenuCategory);
+        setEditingCatId(null);
+    }
+
+    // -- SubCategory Handlers --
+    const startNewSub = (parentId: string) => {
+        setEditingSubId('new');
+        setSubForm({ id: `s_${Date.now()}`, categoryId: parentId, name: { en: '', ko: '' }, order: state.subCategories.filter(s=>s.categoryId===parentId).length + 1 });
+    }
+    const editSub = (s: MenuSubCategory) => {
+        setEditingSubId(s.id);
+        setSubForm({...s});
+    }
+    const saveSub = () => {
+        if(editingSubId === 'new') addSubCategory(subForm as MenuSubCategory);
+        else updateSubCategory(subForm as MenuSubCategory);
+        setEditingSubId(null);
+    }
+
+    return (
+        <div className="space-y-12 animate-fade-in pb-12">
+            
+            {/* Intro */}
+            <div className="bg-neutral-900 border border-neutral-800 p-6 rounded">
+                <h3 className="text-xl text-white mb-2">Category Structure</h3>
+                <p className="text-gray-400 text-sm">Define the hierarchy: Large Category &gt; Sub Category &gt; Items.</p>
+                <div className="mt-4">
+                    <Button onClick={startNewCat} size="sm" className="flex gap-2"><Plus size={14}/> New Large Category</Button>
+                </div>
+            </div>
+
+            {/* Editing Large Category Modal/Form */}
+            {editingCatId && (
+                <div className="bg-neutral-800 p-6 border border-gold">
+                    <h4 className="text-white mb-4">{editingCatId === 'new' ? 'New Large Category' : 'Edit Category'}</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                        <Input label="Name (EN)" value={catForm.name?.en} onChange={e => setCatForm({...catForm, name: {...catForm.name!, en: e.target.value}})} />
+                        <Input label="Name (KO)" value={catForm.name?.ko} onChange={e => setCatForm({...catForm, name: {...catForm.name!, ko: e.target.value}})} />
+                        <Input label="Order" type="number" value={catForm.order} onChange={e => setCatForm({...catForm, order: Number(e.target.value)})} />
+                    </div>
+                    <div className="flex gap-4 mt-4">
+                        <Button onClick={saveCat} size="sm">Save</Button>
+                        <Button onClick={() => setEditingCatId(null)} variant="outline" size="sm">Cancel</Button>
+                    </div>
+                </div>
+            )}
+
+            {/* List of Categories */}
+            <div className="space-y-8">
+                {state.categories.sort((a,b) => a.order - b.order).map(cat => (
+                    <div key={cat.id} className="bg-neutral-900 border border-neutral-800 rounded overflow-hidden">
+                        {/* Header */}
+                        <div className="bg-neutral-800 p-4 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <span className="bg-gold text-black text-xs font-bold px-2 py-1 rounded">{cat.order}</span>
+                                <h4 className="text-lg text-white font-bold">{cat.name.en} / {cat.name.ko}</h4>
+                            </div>
+                            <div className="flex gap-2">
+                                <button onClick={() => editCat(cat)} className="text-blue-400 hover:text-white p-2"><Edit2 size={16}/></button>
+                                <button onClick={() => deleteCategory(cat.id)} className="text-red-400 hover:text-white p-2"><Trash2 size={16}/></button>
+                            </div>
+                        </div>
+
+                        {/* SubCategories Area */}
+                        <div className="p-4 bg-black/20">
+                            <div className="flex justify-between items-center mb-4">
+                                <h5 className="text-xs uppercase text-gray-500 font-bold tracking-widest">Sub-Categories</h5>
+                                <button onClick={() => startNewSub(cat.id)} className="text-gold text-xs flex items-center gap-1 hover:underline"><Plus size={12}/> Add Sub-Category</button>
+                            </div>
+                            
+                            {/* Editing Sub Form (Inline) */}
+                            {editingSubId && subForm.categoryId === cat.id && (
+                                <div className="bg-neutral-800 p-4 mb-4 border-l-2 border-gold">
+                                    <div className="grid grid-cols-3 gap-2">
+                                        <Input label="Sub Name (EN)" value={subForm.name?.en} onChange={e => setSubForm({...subForm, name: {...subForm.name!, en: e.target.value}})} />
+                                        <Input label="Sub Name (KO)" value={subForm.name?.ko} onChange={e => setSubForm({...subForm, name: {...subForm.name!, ko: e.target.value}})} />
+                                        <Input label="Order" type="number" value={subForm.order} onChange={e => setSubForm({...subForm, order: Number(e.target.value)})} />
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                        <Button onClick={saveSub} size="sm" className="py-1">Save</Button>
+                                        <Button onClick={() => setEditingSubId(null)} variant="outline" size="sm" className="py-1">Cancel</Button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Sub List */}
+                            <div className="space-y-2">
+                                {state.subCategories
+                                    .filter(s => s.categoryId === cat.id)
+                                    .sort((a,b) => a.order - b.order)
+                                    .map(sub => (
+                                    <div key={sub.id} className="flex justify-between items-center p-3 bg-neutral-900/50 border border-neutral-800/50 hover:bg-neutral-800 transition-colors">
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-gray-600 text-xs font-mono">{sub.order}</span>
+                                            <span className="text-gray-300 text-sm">{sub.name.en} / {sub.name.ko}</span>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <button onClick={() => editSub(sub)} className="text-blue-400/70 hover:text-blue-400 p-1"><Edit2 size={14}/></button>
+                                            <button onClick={() => deleteSubCategory(sub.id)} className="text-red-400/70 hover:text-red-400 p-1"><Trash2 size={14}/></button>
+                                        </div>
+                                    </div>
+                                ))}
+                                {state.subCategories.filter(s => s.categoryId === cat.id).length === 0 && (
+                                    <p className="text-gray-600 text-xs italic">No sub-categories defined.</p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+  }
+
+  // 4. News Editor
   const NewsEditor = () => {
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formState, setFormState] = useState<Partial<NewsPost>>({});
@@ -556,7 +746,7 @@ const Admin: React.FC = () => {
     );
   };
 
-  // 4. Theme Editor
+  // 5. Theme Editor
   const ThemeEditor = () => {
      return (
         <div className="bg-neutral-900 p-6 border border-neutral-800 animate-fade-in">
@@ -579,7 +769,7 @@ const Admin: React.FC = () => {
      )
   }
 
-  // 5. Deployment Editor (Renamed from Data Editor)
+  // 6. Deployment Editor
   const DeploymentEditor = () => {
     const handleExport = () => {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
@@ -619,7 +809,7 @@ const Admin: React.FC = () => {
          // Create the string representation of the code file
          const stateJson = JSON.stringify(state, null, 2);
          
-         const codeTemplate = `import { AppState, MenuItem, NewsPost } from './types';
+         const codeTemplate = `import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
 // PASTE START: Generated from Admin (${new Date().toISOString()})
 const CURRENT_STATE: AppState = ${stateJson};
@@ -766,15 +956,23 @@ export const INITIAL_STATE: AppState = CURRENT_STATE;`;
               <button onClick={() => setActiveTab('content')} className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${activeTab === 'content' ? 'bg-neutral-900 text-white border-l-2' : 'hover:bg-neutral-900/50 text-gray-400'}`} style={{ borderColor: activeTab === 'content' ? activeColor : 'transparent' }}>
                  <Layout size={18} /> Site Content
               </button>
+              
+              <button onClick={() => setActiveTab('categories')} className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${activeTab === 'categories' ? 'bg-neutral-900 text-white border-l-2' : 'hover:bg-neutral-900/50 text-gray-400'}`} style={{ borderColor: activeTab === 'categories' ? activeColor : 'transparent' }}>
+                 <Layers size={18} /> Categories
+              </button>
+
               <button onClick={() => setActiveTab('menu')} className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${activeTab === 'menu' ? 'bg-neutral-900 text-white border-l-2' : 'hover:bg-neutral-900/50 text-gray-400'}`} style={{ borderColor: activeTab === 'menu' ? activeColor : 'transparent' }}>
                  <Coffee size={18} /> Menu Items
               </button>
+
               <button onClick={() => setActiveTab('news')} className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${activeTab === 'news' ? 'bg-neutral-900 text-white border-l-2' : 'hover:bg-neutral-900/50 text-gray-400'}`} style={{ borderColor: activeTab === 'news' ? activeColor : 'transparent' }}>
                  <FileText size={18} /> News Posts
               </button>
+              
               <button onClick={() => setActiveTab('theme')} className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${activeTab === 'theme' ? 'bg-neutral-900 text-white border-l-2' : 'hover:bg-neutral-900/50 text-gray-400'}`} style={{ borderColor: activeTab === 'theme' ? activeColor : 'transparent' }}>
                  <Settings size={18} /> Appearance
               </button>
+              
               <button onClick={() => setActiveTab('deploy')} className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${activeTab === 'deploy' ? 'bg-neutral-900 text-white border-l-2' : 'hover:bg-neutral-900/50 text-gray-400'}`} style={{ borderColor: activeTab === 'deploy' ? activeColor : 'transparent' }}>
                  <Rocket size={18} /> Publish / Sync
               </button>
@@ -783,6 +981,7 @@ export const INITIAL_STATE: AppState = CURRENT_STATE;`;
            {/* Content Area */}
            <div className="lg:col-span-3">
               {activeTab === 'content' && <ContentEditor />}
+              {activeTab === 'categories' && <CategoryManager />}
               {activeTab === 'menu' && <MenuEditor />}
               {activeTab === 'news' && <NewsEditor />}
               {activeTab === 'theme' && <ThemeEditor />}
