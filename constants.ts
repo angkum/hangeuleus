@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-01-31T17:49:09.694Z)
+// PASTE START: Generated from Admin (2026-01-31T17:57:06.062Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -321,7 +321,7 @@ const CURRENT_STATE: AppState = {
       "id": "1769852056185",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "(Monday)imchi Samgyeopsal Deobap + Boneless Fried Chicken",
+        "en": "(Monday)Kimchi Samgyeopsal Deobap + Boneless Fried Chicken",
         "ko": "(월요일)김치삼겹덮밥 + 순살후라이드치킨"
       },
       "description": {
@@ -329,7 +329,7 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 28,
-      "image": "https://i.ibb.co/dwhm3B2s/2026-01-30-175628.png",
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175628.png",
       "isPopular": false,
       "order": 0
     },
