@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { SectionTitle, useInView, useIsTouch } from '../components/UI';
-import { X, ZoomIn } from 'lucide-react';
+import { X, ZoomIn, Sparkles } from 'lucide-react';
 import { MenuItem } from '../types';
 
 interface MenuGridItemProps {
@@ -33,9 +33,19 @@ const MenuGridItem: React.FC<MenuGridItemProps> = ({ item, lang, primaryColor, o
       <div className="flex-1 flex flex-col justify-between py-1">
         <div>
           <div className="flex justify-between items-baseline mb-2 border-b border-neutral-800 pb-2 border-dashed">
-            <h3 className="text-lg md:text-xl font-bold text-white uppercase cursor-pointer hover:text-gold transition-colors" onClick={() => onImageClick(item)}>
-                {item.name[lang]}
-            </h3>
+            <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-lg md:text-xl font-bold text-white uppercase cursor-pointer hover:text-gold transition-colors" onClick={() => onImageClick(item)}>
+                    {item.name[lang]}
+                </h3>
+                {item.isPopular && (
+                    <span 
+                        className="inline-flex items-center gap-1 text-[10px] md:text-xs font-bold px-2 py-0.5 rounded-full border border-gold/30 bg-gold/5 text-gold tracking-tight"
+                        style={{ borderColor: `${primaryColor}40`, color: primaryColor }}
+                    >
+                        ✨ {lang === 'en' ? 'BEST' : '인기'}
+                    </span>
+                )}
+            </div>
             <span className="text-lg ml-4 font-light whitespace-nowrap" style={{ color: primaryColor }}>
               {lang === 'en' ? `RM ${item.price}` : `${item.price} 링깃`}
             </span>
@@ -81,6 +91,17 @@ const Menu: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-neutral-950 pt-24 pb-24 relative">
+      <style>{`
+        /* Custom override for desktop to reset inline styles used for mobile active state */
+        @media (min-width: 1024px) {
+            .desktop-reset-bg {
+                background-color: transparent !important;
+            }
+            .desktop-active-bg {
+                background-color: rgba(255, 255, 255, 0.05) !important;
+            }
+        }
+      `}</style>
       
       {/* 
         IMAGE MODAL (Lightbox)
@@ -90,39 +111,54 @@ const Menu: React.FC = () => {
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 animate-fade-in"
             onClick={closeModal}
         >
-            {/* Close Button (Top Right) */}
+            {/* Close Button */}
             <button 
                 onClick={(e) => {
                     e.stopPropagation();
                     closeModal();
                 }}
-                className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors z-[110]"
+                className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors z-[110] bg-black/40 rounded-full p-1"
             >
-                <X size={40} />
+                <X size={28} />
             </button>
 
+            {/* Modal Content */}
             <div 
-                className="relative max-w-5xl w-full flex flex-col items-center justify-center"
-                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content area
+                className="relative w-full max-w-lg md:max-w-xl bg-neutral-900 border border-neutral-800 rounded-sm shadow-2xl overflow-hidden flex flex-col"
+                onClick={(e) => e.stopPropagation()} 
             >
-                {/* Image Wrapper - Constraints max height to viewport */}
-                <div className="relative w-auto max-w-full">
-                    <img 
+                {/* 
+                   Image Container: 
+                   - Widen modal (max-w-lg/xl) to support landscape aspect ratio.
+                   - object-contain ensures the entire image is visible without cropping.
+                */}
+                <div className="w-full bg-black relative shrink-0 flex items-center justify-center min-h-[200px]">
+                   <img 
                         src={selectedItem.image} 
                         alt={selectedItem.name[lang]} 
-                        className="max-h-[75vh] md:max-h-[80vh] w-auto max-w-full object-contain shadow-2xl border border-white/10 rounded-sm bg-neutral-900"
+                        className="w-full h-auto max-h-[60vh] object-contain"
                     />
                 </div>
 
-                {/* Caption */}
-                <div className="mt-6 text-center animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                    <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-wider mb-2">
-                        {selectedItem.name[lang]}
-                    </h3>
-                    <p className="text-xl font-light" style={{ color: primaryColor }}>
-                        {lang === 'en' ? `RM ${selectedItem.price}` : `${selectedItem.price} 링깃`}
-                    </p>
-                    <p className="text-gray-500 text-sm mt-2 max-w-md mx-auto">
+                {/* Caption / Details */}
+                <div className="p-6 overflow-y-auto bg-neutral-900 border-t border-white/5">
+                    <div className="flex justify-between items-start gap-3 mb-2">
+                         <div className="flex flex-col gap-1">
+                            <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-wider leading-tight flex items-center gap-3">
+                                {selectedItem.name[lang]}
+                                {selectedItem.isPopular && <span className="text-gold text-sm">✨</span>}
+                            </h3>
+                            {selectedItem.isPopular && (
+                                <span className="text-gold text-[10px] uppercase tracking-widest font-bold">
+                                    {lang === 'en' ? 'Most Popular Item' : '한그릇 인기 메뉴'}
+                                </span>
+                            )}
+                         </div>
+                        <span className="text-xl font-medium whitespace-nowrap" style={{ color: primaryColor }}>
+                            {lang === 'en' ? `RM ${selectedItem.price}` : `${selectedItem.price} 링깃`}
+                        </span>
+                    </div>
+                    <p className="text-gray-400 text-sm leading-relaxed mt-4 border-l border-gold/30 pl-4">
                         {selectedItem.description[lang]}
                     </p>
                 </div>
@@ -132,39 +168,52 @@ const Menu: React.FC = () => {
 
       {/* 
         LAYOUT: 
-        Mobile: Top horizontal scroll bar
+        Mobile: Top horizontal scroll bar (Sticky)
         Desktop: Left sticky sidebar 
       */}
       
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-12">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           
           {/* Sidebar / Top Nav */}
-          <aside className="lg:w-1/4 lg:shrink-0">
-             <div className="sticky top-24 z-20 bg-neutral-950/95 backdrop-blur lg:bg-transparent pb-4 lg:pb-0 border-b lg:border-b-0 border-neutral-800 lg:border-r lg:border-neutral-800 lg:pr-8 h-auto lg:h-[calc(100vh-6rem)] overflow-y-auto">
+          <aside className="lg:w-1/4 lg:shrink-0 relative z-30">
+             <div className="sticky top-[80px] lg:top-24 z-30 bg-neutral-950/95 backdrop-blur-md lg:backdrop-blur-none lg:bg-transparent -mx-4 px-4 py-4 lg:mx-0 lg:px-0 lg:py-0 border-b border-neutral-800 lg:border-b-0 lg:border-r lg:border-neutral-800 lg:pr-8 h-auto lg:h-[calc(100vh-6rem)] overflow-y-auto">
                 <h2 className="text-2xl font-serif text-white mb-6 hidden lg:block border-b border-gold pb-4">
                   {lang === 'en' ? 'Menu Category' : '메뉴 카테고리'}
                 </h2>
                 
-                {/* Mobile: Horizontal Scroll */}
-                <div className="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
-                  {categories.sort((a,b) => a.order - b.order).map(cat => (
-                    <button
-                      key={cat.id}
-                      onClick={() => {
-                        setActiveCategoryId(cat.id);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                      className={`whitespace-nowrap px-4 py-3 text-sm md:text-base uppercase tracking-widest text-left transition-all duration-300 border-l-2 lg:border-l-4 ${
-                        activeCategoryId === cat.id 
-                          ? `text-white bg-white/5 border-[${primaryColor}]` 
-                          : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-white/5'
-                      }`}
-                      style={{ borderColor: activeCategoryId === cat.id ? primaryColor : 'transparent' }}
-                    >
-                      {cat.name[lang]}
-                    </button>
-                  ))}
+                {/* Mobile: Horizontal Scroll (Pill Shape) / Desktop: Vertical List (Tabs) */}
+                <div className="flex lg:flex-col gap-3 lg:gap-2 overflow-x-auto pb-1 lg:pb-0 scrollbar-hide">
+                  {categories.sort((a,b) => a.order - b.order).map(cat => {
+                    const isActive = activeCategoryId === cat.id;
+                    return (
+                        <button
+                          key={cat.id}
+                          onClick={() => {
+                            setActiveCategoryId(cat.id);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className={`
+                            whitespace-nowrap px-6 py-3 lg:px-4 lg:py-3 
+                            text-sm md:text-base uppercase tracking-widest text-left transition-all duration-300 
+                            rounded-full lg:rounded-none border lg:border-0 lg:border-l-4
+                            flex-shrink-0
+                            ${isActive 
+                                ? 'text-black font-extrabold shadow-lg lg:text-white lg:shadow-none desktop-active-bg' 
+                                : 'bg-neutral-900 text-gray-400 border-neutral-800 hover:border-gray-600 lg:bg-transparent lg:border-transparent lg:hover:text-gray-300 lg:hover:bg-white/5 desktop-reset-bg'}
+                          `}
+                          style={{ 
+                              // Mobile: Use inline style for dynamic primary color background
+                              backgroundColor: isActive ? primaryColor : undefined,
+                              borderColor: isActive ? primaryColor : undefined,
+                              // Desktop: Use inline style for border-left color
+                              borderLeftColor: isActive && window.innerWidth >= 1024 ? primaryColor : undefined
+                          }}
+                        >
+                          {cat.name[lang]}
+                        </button>
+                    );
+                  })}
                 </div>
              </div>
           </aside>
