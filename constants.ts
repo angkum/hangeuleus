@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-01-31T16:31:35.002Z)
+// PASTE START: Generated from Admin (2026-01-31T17:37:09.853Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -189,7 +189,7 @@ const CURRENT_STATE: AppState = {
         "ko": "바삭한 치킨에 새콤하고 매콤한 간장 소스를 곁들인 요리."
       },
       "price": 50,
-      "image": "https://i.ibb.co/DPBrC0Nv/2026-01-30-173749.png",
+      "image": "https://i.ibb.co/8nyY51Jf/2026-01-30-173749.png",
       "isPopular": false,
       "order": 2
     },
@@ -205,7 +205,7 @@ const CURRENT_STATE: AppState = {
         "ko": "바삭한 새우 튀김에 매콤한 청양 크림 소스를 곁들였습니다."
       },
       "price": 55,
-      "image": "https://i.ibb.co/3mqZK5KF/2026-01-31-180629.png",
+      "image": "https://i.ibb.co/gZpKYbYW/2026-01-31-180629.png",
       "isPopular": false,
       "order": 4
     },
@@ -221,7 +221,7 @@ const CURRENT_STATE: AppState = {
         "ko": "바삭한 새우 튀김에 매콤한 청양 크림 소스를 곁들였습니다."
       },
       "price": 99,
-      "image": "https://i.ibb.co/3mqZK5KF/2026-01-31-180629.png",
+      "image": "https://i.ibb.co/gZpKYbYW/2026-01-31-180629.png",
       "isPopular": false,
       "order": 5
     },
@@ -268,7 +268,7 @@ const CURRENT_STATE: AppState = {
         "ko": "치킨과 마요 소스를 얹은 덮밥에 짬뽕 국물 제공."
       },
       "price": 28,
-      "image": "https://i.ibb.co/w2qFpxC/2026-01-30-143204.png",
+      "image": "https://i.ibb.co/H9yfGkY/2026-01-30-143204.png",
       "isPopular": false
     },
     {
@@ -283,7 +283,7 @@ const CURRENT_STATE: AppState = {
         "ko": "바삭한 치킨과 부드러운 마요 소스, 단짠의 정석을 보여주는 덮밥"
       },
       "price": 25,
-      "image": "https://i.ibb.co/ds8r0ffb/2026-01-30-174728.png",
+      "image": "https://i.ibb.co/1YFLf00s/2026-01-30-174728.png",
       "isPopular": false
     },
     {
@@ -313,7 +313,7 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 28,
-      "image": "https://i.ibb.co/YMj04PP/2026-01-30-175936.png",
+      "image": "https://i.ibb.co/dqKmsjj/2026-01-30-175936.png",
       "isPopular": false,
       "order": 1
     },
@@ -329,7 +329,7 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 28,
-      "image": "https://i.ibb.co/YFr0K2k4/2026-01-30-175628.png",
+      "image": "https://i.ibb.co/dwhm3B2s/2026-01-30-175628.png",
       "isPopular": false,
       "order": 0
     },
@@ -345,7 +345,7 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 28,
-      "image": "https://i.ibb.co/9HRJs660/2026-01-30-181415.png",
+      "image": "https://i.ibb.co/v42bZppW/2026-01-30-181415.png",
       "isPopular": false,
       "order": 2
     },
@@ -361,7 +361,7 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 28,
-      "image": "https://i.ibb.co/0VGFWdZd/2026-01-30-181733.png",
+      "image": "https://i.ibb.co/4gVYD5M5/2026-01-30-181733.png",
       "isPopular": false,
       "order": 3
     },
@@ -377,7 +377,7 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 28,
-      "image": "https://i.ibb.co/TDtJrrBZ/2026-01-30-182121.png",
+      "image": "https://i.ibb.co/8n9GXXDJ/2026-01-30-182121.png",
       "isPopular": false,
       "order": 4
     },
@@ -393,7 +393,7 @@ const CURRENT_STATE: AppState = {
         "ko": "삼겹살 듬뿍 · 삼겹살이 가득 올라간 짜장면"
       },
       "price": 33,
-      "image": "https://i.ibb.co/SZf4Mw5/2026-01-30-230517.png",
+      "image": "https://i.ibb.co/0zsR6ym/2026-01-30-230517.png\"",
       "isPopular": false
     },
     {
@@ -408,7 +408,7 @@ const CURRENT_STATE: AppState = {
         "ko": "짜장소스 덮밥과 짬뽕국물"
       },
       "price": 25,
-      "image": "https://i.ibb.co/nMxC46sx/2026-01-31-144910.png",
+      "image": "https://i.ibb.co/N2cSft6c/2026-01-31-144910.png",
       "isPopular": false
     },
     {
@@ -423,7 +423,7 @@ const CURRENT_STATE: AppState = {
         "ko": "양념소스 제공 · 바삭한 순살치킨"
       },
       "price": 35,
-      "image": "https://i.ibb.co/gbfWPK7y/2026-01-30-200319.png",
+      "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false,
       "order": 6
     },
@@ -439,7 +439,7 @@ const CURRENT_STATE: AppState = {
         "ko": "양념소스 제공 · 바삭한 순살치킨"
       },
       "price": 65,
-      "image": "https://i.ibb.co/gbfWPK7y/2026-01-30-200319.png",
+      "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false,
       "order": 7
     },
@@ -455,7 +455,7 @@ const CURRENT_STATE: AppState = {
         "ko": "바삭한 군만두"
       },
       "price": 15,
-      "image": "https://i.ibb.co/Kz88sZ8T/2026-01-30-143113.png",
+      "image": "https://i.ibb.co/qF22gG2T/2026-01-30-143113.png",
       "isPopular": false
     },
     {
@@ -470,7 +470,7 @@ const CURRENT_STATE: AppState = {
         "ko": "치킨이 올라간 샐러드"
       },
       "price": 18,
-      "image": "https://i.ibb.co/dsrJvY2p/2026-01-30-200711.png",
+      "image": "https://i.ibb.co/Y43TSskd/2026-01-30-200711.png",
       "isPopular": false
     },
     {
@@ -485,7 +485,7 @@ const CURRENT_STATE: AppState = {
         "ko": "매콤달콤한 소스에 쫄깃한 떡, 한국 길거리 음식의 대표주자"
       },
       "price": 23,
-      "image": "https://i.ibb.co/rBmswC3/2026-01-30-143155.png",
+      "image": "https://i.ibb.co/BhtNCXG/2026-01-30-143155.png",
       "isPopular": false
     },
     {
@@ -500,7 +500,7 @@ const CURRENT_STATE: AppState = {
         "ko": ""
       },
       "price": 9,
-      "image": "https://i.ibb.co/pB90FmjZ/2026-01-31-182508.png",
+      "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false
     },
     {
@@ -515,8 +515,8 @@ const CURRENT_STATE: AppState = {
         "ko": "흰쌀밥"
       },
       "price": 5,
-      "image": "https://i.ibb.co/Fqst5RfK/2026-01-31-230314.png",
-      "isPopular": true
+      "image": "https://i.ibb.co/k63F4Nrx/2026-01-31-230314.png",
+      "isPopular": false
     },
     {
       "id": "1769855282836",
@@ -530,7 +530,7 @@ const CURRENT_STATE: AppState = {
         "ko": "상큼한 유자차"
       },
       "price": 9,
-      "image": "https://i.ibb.co/TM5MYKg2/2026-01-30-185413.png",
+      "image": "https://i.ibb.co/8gVgNz7s/2026-01-30-185413.png",
       "isPopular": false
     },
     {
@@ -545,7 +545,7 @@ const CURRENT_STATE: AppState = {
         "ko": "깔끔한 녹차"
       },
       "price": 6,
-      "image": "https://i.ibb.co/Cs2L470K/2026-01-30-185727.png",
+      "image": "https://i.ibb.co/fGvJZp0d/2026-01-30-185727.png\"",
       "isPopular": false
     },
     {
@@ -560,7 +560,7 @@ const CURRENT_STATE: AppState = {
         "ko": "Sweet Korean coffee"
       },
       "price": 9,
-      "image": "https://i.ibb.co/q3n8wp5g/2026-01-30-190629.png",
+      "image": "https://i.ibb.co/67ZS5FBt/2026-01-30-190629.png",
       "isPopular": false
     },
     {
@@ -574,8 +574,8 @@ const CURRENT_STATE: AppState = {
         "en": "Soft Drinks",
         "ko": "탄산음료"
       },
-      "price": 6,
-      "image": "https://i.ibb.co/JF8378fy/2026-01-31-150036.png\"",
+      "price": 3,
+      "image": "https://i.ibb.co/JF8378fy/2026-01-31-150036.png",
       "isPopular": false
     },
     {
@@ -597,7 +597,7 @@ const CURRENT_STATE: AppState = {
       "id": "1769855858270",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "탄산음료",
+        "en": "Milkis",
         "ko": "밀키스"
       },
       "description": {
@@ -605,7 +605,7 @@ const CURRENT_STATE: AppState = {
         "ko": "탄산음료"
       },
       "price": 6,
-      "image": "https://i.ibb.co/mVnSsBvT/2026-01-31-150951.png",
+      "image": "https://i.ibb.co/9kxGXvwg/2026-01-31-150951.png",
       "isPopular": false
     },
     {
@@ -665,8 +665,8 @@ const CURRENT_STATE: AppState = {
         "ko": ""
       },
       "price": 11,
-      "image": "https://i.ibb.co/spt8d2vM/2026-01-31-221648.png",
-      "isPopular": false
+      "image": "https://i.ibb.co/4wJhn7Z5/2026-01-31-221648.png\"",
+      "isPopular": true
     }
   ],
   "news": [
