@@ -1,74 +1,153 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// Initial Categories based on request
-const INITIAL_CATEGORIES: MenuCategory[] = [
-  { id: 'c_sets', name: { en: 'Set & Weekday Specials', ko: '세트 및 평일 런치' }, order: 1 },
-  { id: 'c_mains', name: { en: 'Main Dishes', ko: '단품 식사류' }, order: 2 },
-  { id: 'c_fried', name: { en: 'Fried & Side Dishes', ko: '요리 및 사이드' }, order: 3 },
-  { id: 'c_drinks', name: { en: 'Drinks & Alcohol', ko: '음료 및 주류' }, order: 4 },
-];
-
-// Initial SubCategories based on request
-const INITIAL_SUB_CATEGORIES: MenuSubCategory[] = [
-  // 1. Set & Weekday Specials
-  { id: 's_best_set', categoryId: 'c_sets', name: { en: 'S-1. BEST Set Menu', ko: 'S-1. 베스트 세트 메뉴' }, order: 1 },
-  { id: 's_weekday', categoryId: 'c_sets', name: { en: 'DS. Weekday Lunch Menu', ko: 'DS. 평일 런치 메뉴' }, order: 2 },
-  
-  // 2. Main Dishes
-  { id: 's_noodle', categoryId: 'c_mains', name: { en: 'M. Noodle Dishes', ko: 'M. 면류' }, order: 1 },
-  { id: 's_rice', categoryId: 'c_mains', name: { en: 'R. Rice Dishes (1 PAX)', ko: 'R. 밥류 (1인)' }, order: 2 },
-
-  // 3. Fried & Side Dishes
-  { id: 's_fried_main', categoryId: 'c_fried', name: { en: 'C. Fried Main Dishes', ko: 'C. 튀김 요리' }, order: 1 },
-  { id: 's_side', categoryId: 'c_fried', name: { en: 'E. Side Dishes', ko: 'E. 사이드 메뉴' }, order: 2 },
-
-  // 4. Drinks & Alcohol
-  { id: 's_drinks', categoryId: 'c_drinks', name: { en: 'D. Drinks (Tea/Ade/Soda)', ko: 'D. 음료 (차/에이드)' }, order: 1 },
-  { id: 's_liquor', categoryId: 'c_drinks', name: { en: 'L. Liquor and Beer', ko: 'L. 주류 (소주/맥주)' }, order: 2 },
-];
-
-// PASTE START: Generated from Admin (2026-01-21T13:37:59.180Z) - Migrated to new structure
+// PASTE START: Generated from Admin (2026-01-31T14:41:30.482Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
     "primaryColor": "#D4AF37"
   },
-  "categories": INITIAL_CATEGORIES,
-  "subCategories": INITIAL_SUB_CATEGORIES,
+  "categories": [
+    {
+      "id": "c_sets",
+      "name": {
+        "en": "Set & Weekday Specials",
+        "ko": "세트 및 평일 런치"
+      },
+      "order": 1
+    },
+    {
+      "id": "c_mains",
+      "name": {
+        "en": "Main Dishes",
+        "ko": "단품 식사류"
+      },
+      "order": 2
+    },
+    {
+      "id": "c_fried",
+      "name": {
+        "en": "Fried & Side Dishes",
+        "ko": "요리 및 사이드"
+      },
+      "order": 3
+    },
+    {
+      "id": "c_drinks",
+      "name": {
+        "en": "Drinks & Alcohol",
+        "ko": "음료 및 주류"
+      },
+      "order": 4
+    }
+  ],
+  "subCategories": [
+    {
+      "id": "s_best_set",
+      "categoryId": "c_sets",
+      "name": {
+        "en": "S-1. BEST Set Menu",
+        "ko": "S-1. 베스트 세트 메뉴"
+      },
+      "order": 1
+    },
+    {
+      "id": "s_weekday",
+      "categoryId": "c_sets",
+      "name": {
+        "en": "DS. Weekday Lunch Menu",
+        "ko": "DS. 평일 런치 메뉴"
+      },
+      "order": 2
+    },
+    {
+      "id": "s_noodle",
+      "categoryId": "c_mains",
+      "name": {
+        "en": "M. Noodle Dishes",
+        "ko": "M. 면류"
+      },
+      "order": 1
+    },
+    {
+      "id": "s_rice",
+      "categoryId": "c_mains",
+      "name": {
+        "en": "R. Rice Dishes (1 PAX)",
+        "ko": "R. 밥류 (1인)"
+      },
+      "order": 2
+    },
+    {
+      "id": "s_fried_main",
+      "categoryId": "c_fried",
+      "name": {
+        "en": "C. Fried Main Dishes",
+        "ko": "C. 튀김 요리"
+      },
+      "order": 1
+    },
+    {
+      "id": "s_side",
+      "categoryId": "c_fried",
+      "name": {
+        "en": "E. Side Dishes",
+        "ko": "E. 사이드 메뉴"
+      },
+      "order": 2
+    },
+    {
+      "id": "s_drinks",
+      "categoryId": "c_drinks",
+      "name": {
+        "en": "D. Drinks (Tea/Ade/Soda)",
+        "ko": "D. 음료 (차/에이드)"
+      },
+      "order": 1
+    },
+    {
+      "id": "s_liquor",
+      "categoryId": "c_drinks",
+      "name": {
+        "en": "L. Liquor and Beer",
+        "ko": "L. 주류 (소주/맥주)"
+      },
+      "order": 2
+    }
+  ],
   "menu": [
     {
       "id": "1",
-      "subCategoryId": "s_noodle", // Migrated from 'noodles'
+      "subCategoryId": "s_noodle",
       "name": {
         "en": "Jajangmyeon",
-        "ko": "자장면"
+        "ko": "짜장면"
       },
       "description": {
         "en": "Noodles in a rich black bean sauce with pork and onions.",
         "ko": "돼지고기와 양파를 듬뿍 넣은 진한 춘장 소스의 면 요리."
       },
-      "price": 14,
+      "price": 25,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260117_081238_05644889-1fdb-4e9d-bf6d-a0d152cb1fa6.png",
       "isPopular": true
     },
     {
       "id": "2",
-      "subCategoryId": "s_noodle", // Migrated from 'noodles'
+      "subCategoryId": "s_noodle",
       "name": {
-        "en": "Jjamppong",
-        "ko": "짬뽕"
+        "en": "Seafood Jjambbong",
+        "ko": "해물 짬뽕"
       },
       "description": {
         "en": "Spicy seafood noodle soup with vegetables.",
         "ko": "해산물과 채소가 어우러진 얼큰한 국물 요리."
       },
-      "price": 16,
+      "price": 28,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260117_032254_57982580-dab1-4c39-9a8a-3054b6c30f94.png",
       "isPopular": true
     },
     {
       "id": "3",
-      "subCategoryId": "s_fried_main", // Migrated from 'dishes'
+      "subCategoryId": "s_fried_main",
       "name": {
         "en": "Tang Soo-yook(Regular)",
         "ko": "탕수육(중)"
@@ -83,7 +162,7 @@ const CURRENT_STATE: AppState = {
     },
     {
       "id": "4",
-      "subCategoryId": "s_fried_main", // Migrated from 'dishes'
+      "subCategoryId": "s_fried_main",
       "name": {
         "en": "Tang Soo-yook(large)",
         "ko": "탕수육(대)"
@@ -98,7 +177,7 @@ const CURRENT_STATE: AppState = {
     },
     {
       "id": "5",
-      "subCategoryId": "s_fried_main", // Migrated from 'dishes'
+      "subCategoryId": "s_fried_main",
       "name": {
         "en": "Yoo-rin Chicken(Regular)",
         "ko": "유린치킨(중)"
@@ -108,57 +187,57 @@ const CURRENT_STATE: AppState = {
         "ko": "바삭한 치킨에 새콤하고 매콤한 간장 소스를 곁들인 요리."
       },
       "price": 50,
-      "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_122626_95e36479-6678-4bbd-851c-8c18f879b041.png",
-      "isPopular": true
+      "image": "https://i.ibb.co/DPBrC0Nv/2026-01-30-173749.png",
+      "isPopular": false
     },
     {
       "id": "1768969350950",
-      "subCategoryId": "s_fried_main", // Migrated from 'dishes'
+      "subCategoryId": "s_fried_main",
       "name": {
-        "en": " Fried Shrimp with Cream Sauce(Regular)",
-        "ko": "크림새우(중)"
+        "en": "Fried Shrimp with Cream Sauce(Regular)",
+        "ko": "새우 후라이드 + 청양크림소스(중)"
       },
       "description": {
-        "en": "Deep-fried shrimp served with spicy cream sauce and chili peppers.",
-        "ko": "바삭한 새우 튀김에 매콤한 크림 소스를 곁들였습니다."
+        "en": "Crispy fried shrimp served with spicy Cheongyang cream sauce.",
+        "ko": "바삭한 새우 튀김에 매콤한 청양 크림 소스를 곁들였습니다."
       },
       "price": 55,
-      "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_143644_53e4831c-7853-4b85-a016-e73606c6f9ec.png",
+      "image": "https://i.ibb.co/3mqZK5KF/2026-01-31-180629.png",
       "isPopular": false
     },
     {
       "id": "1768969422694",
-      "subCategoryId": "s_fried_main", // Migrated from 'dishes'
+      "subCategoryId": "s_fried_main",
       "name": {
-        "en": " Fried Shrimp with Cream Sauce(Large)",
-        "ko": "크림새우(대)"
+        "en": "Fried Shrimp with Cream Sauce(Large)",
+        "ko": "새우 후라이드 + 청양크림소스대)"
       },
       "description": {
-        "en": "Deep-fried shrimp served with spicy cream sauce and chili peppers.",
-        "ko": "바삭한 새우 튀김에 매콤한 크림 소스를 곁들였습니다."
+        "en": "Crispy fried shrimp served with spicy Cheongyang cream sauce.",
+        "ko": "바삭한 새우 튀김에 매콤한 청양 크림 소스를 곁들였습니다."
       },
       "price": 99,
-      "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_143644_53e4831c-7853-4b85-a016-e73606c6f9ec.png",
+      "image": "https://i.ibb.co/3mqZK5KF/2026-01-31-180629.png",
       "isPopular": false
     },
     {
       "id": "1768969485626",
-      "subCategoryId": "s_fried_main", // Migrated from 'dishes'
+      "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Pork Cutlet",
-        "ko": "돈까스"
+        "en": "Yoo-rin Chicken(Large)",
+        "ko": "유린치킨(대)"
       },
       "description": {
-        "en": "Crispy breaded pork cutlet.",
-        "ko": "바삭하게 튀긴 한국식 돈까스."
+        "en": ".Deep-fried chicken topped with hot and sour soy sauce",
+        "ko": "알싸한 고추와 상큼한 간장 소스가 입맛을 돋우는 바삭한 치킨 요리"
       },
-      "price": 35,
-      "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_123049_130d9516-0ff7-4d52-966f-5be3242ab738.png",
+      "price": 90,
+      "image": "https://i.ibb.co/DPBrC0Nv/2026-01-30-173749.png",
       "isPopular": false
     },
     {
       "id": "1768969592524",
-      "subCategoryId": "s_rice", // Migrated from 'rice'
+      "subCategoryId": "s_rice",
       "name": {
         "en": "Seafood Jjam Bbong Rice",
         "ko": "해물 짬뽕밥"
@@ -173,7 +252,7 @@ const CURRENT_STATE: AppState = {
     },
     {
       "id": "1768969631602",
-      "subCategoryId": "s_rice", // Migrated from 'rice'
+      "subCategoryId": "s_rice",
       "name": {
         "en": "Chicken Mayo Rice + Jjam Bbong Soup",
         "ko": "치킨마요 덮밥 + 짬뽕국물"
@@ -183,22 +262,397 @@ const CURRENT_STATE: AppState = {
         "ko": "치킨과 마요 소스를 얹은 덮밥에 짬뽕 국물 제공."
       },
       "price": 28,
-      "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_133008_3dd0f2ef-96e1-4b54-ae54-167cd86e1b5a.png",
+      "image": "https://i.ibb.co/w2qFpxC/2026-01-30-143204.png",
       "isPopular": false
     },
     {
       "id": "1768996839598",
-      "subCategoryId": "s_rice", // Migrated from 'rice'
+      "subCategoryId": "s_rice",
       "name": {
-        "en": "Wok Fried Rice",
-        "ko": "중화 볶음밥"
+        "en": "Kimchi Samgyeopsal Deobap + Jjamppong Soup",
+        "ko": "김치삼겹살덮밥 + 짬뽕국물"
       },
       "description": {
-        "en": "Classic wok-fried rice finished over high heat for a fluffy, smoky “wok hei” aroma. Stir-fried with egg, scallions, and vegetables for a clean, satisfying bowl.",
-        "ko": "강한 불에서 빠르게 볶아낸 쌀알의 고슬함과 ‘불맛’을 살린 기본 볶음밥. 계란, 파, 야채를 밸런스 있게 볶아 한 그릇으로 깔끔하게 완성했습니다."
+        "en": "CRUNCHY CHICKEN AND CREAMY TERIYAKI MAYO ON RICE—THE PERFECT COMFORT BOWL",
+        "ko": "바삭한 치킨과 부드러운 마요 소스, 단짠의 정석을 보여주는 덮밥"
+      },
+      "price": 25,
+      "image": "https://i.ibb.co/ds8r0ffb/2026-01-30-174728.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769851092884",
+      "subCategoryId": "s_best_set",
+      "name": {
+        "en": "HAN GEU LEUS Set",
+        "ko": "한그릇 세트"
+      },
+      "description": {
+        "en": "Choose Jjajang or Jjamppong · Includes salad, shrimp in cream sauce, sweet & sour pork(min 2 pax)",
+        "ko": " 짜장면 또는 짬뽕 선택 · 샐러드, 고추마요새우, 탕수육 포함 세트메뉴(2인 이상 주문)"
+      },
+      "price": 45,
+      "image": "https://697c89c1c4feaabd2d10ebfb.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20183508.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769851882303",
+      "subCategoryId": "s_weekday",
+      "name": {
+        "en": "(Tuesday)Jjajang Noodle + Yoo-rin Chicken",
+        "ko": "(화요일)짜장면 + 유린치킨"
+      },
+      "description": {
+        "en": "Lunch Specials 12:00PM~15:00PM",
+        "ko": "점심특선__12:00PM~15:00PM"
+      },
+      "price": 28,
+      "image": "https://i.ibb.co/YMj04PP/2026-01-30-175936.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769852056185",
+      "subCategoryId": "s_weekday",
+      "name": {
+        "en": "(Monday)imchi Samgyeopsal Deobap + Boneless Fried Chicken",
+        "ko": "(월요일)김치삼겹덮밥 + 순살후라이드치킨"
+      },
+      "description": {
+        "en": "Lunch Specials 12:00PM~15:00PM",
+        "ko": "점심특선__12:00PM~15:00PM"
+      },
+      "price": 28,
+      "image": "https://i.ibb.co/YFr0K2k4/2026-01-30-175628.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769852167553",
+      "subCategoryId": "s_weekday",
+      "name": {
+        "en": "(Wednesday)Tteokbokki + Fried Dumplings (3P)",
+        "ko": "(수요일)떡볶이 + 군만두(3P)"
+      },
+      "description": {
+        "en": "Lunch Specials 12:00PM~15:00PM",
+        "ko": "점심특선__12:00PM~15:00PM"
+      },
+      "price": 28,
+      "image": "https://i.ibb.co/9HRJs660/2026-01-30-181415.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769852401728",
+      "subCategoryId": "s_weekday",
+      "name": {
+        "en": "(Thursday)Jjajang Noodle + Tang Soo-yok",
+        "ko": "(목요일)짜장면 + 탕수육"
+      },
+      "description": {
+        "en": "Lunch Specials 12:00PM~15:00PM",
+        "ko": "점심특선__12:00PM~15:00PM"
+      },
+      "price": 28,
+      "image": "https://i.ibb.co/0VGFWdZd/2026-01-30-181733.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769852567241",
+      "subCategoryId": "s_best_set",
+      "name": {
+        "en": "(Friday)Jjamppong + Fried Dumplings(3P)",
+        "ko": "짬뽕 + 군만두(3P) "
+      },
+      "description": {
+        "en": "Lunch Specials 12:00PM~15:00PM",
+        "ko": "점심특선__12:00PM~15:00PM"
+      },
+      "price": 28,
+      "image": "https://i.ibb.co/TDtJrrBZ/2026-01-30-182121.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769852829598",
+      "subCategoryId": "s_noodle",
+      "name": {
+        "en": "Bomb Samgyeopsal Jjajang",
+        "ko": "폭탄삼겹살짜장"
+      },
+      "description": {
+        "en": "Extra pork belly · Jjajang noodles loaded with pork belly",
+        "ko": "삼겹살 듬뿍 · 삼겹살이 가득 올라간 짜장면"
+      },
+      "price": 33,
+      "image": "https://i.ibb.co/SZf4Mw5/2026-01-30-230517.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769852924435",
+      "subCategoryId": "s_rice",
+      "name": {
+        "en": "Jjajang Rice + Jjamppong Soup",
+        "ko": "짜장밥 + 짬뽕국물"
+      },
+      "description": {
+        "en": "Black bean rice with jjamppong soup",
+        "ko": "짜장소스 덮밥과 짬뽕국물"
+      },
+      "price": 25,
+      "image": "https://i.ibb.co/nMxC46sx/2026-01-31-144910.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769854205551",
+      "subCategoryId": "s_fried_main",
+      "name": {
+        "en": "Boneless Fried Chicken(regular)",
+        "ko": "순살후라이드치킨(중)"
+      },
+      "description": {
+        "en": "Seasoning sauce · Crispy boneless chicken",
+        "ko": "양념소스 제공 · 바삭한 순살치킨"
+      },
+      "price": 35,
+      "image": "https://i.ibb.co/gbfWPK7y/2026-01-30-200319.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769854407673",
+      "subCategoryId": "s_fried_main",
+      "name": {
+        "en": "Boneless Fried Chicken(large)",
+        "ko": "순살후라이드치킨(대)"
+      },
+      "description": {
+        "en": "Seasoning sauce · Crispy boneless chicken",
+        "ko": "양념소스 제공 · 바삭한 순살치킨"
+      },
+      "price": 65,
+      "image": "https://i.ibb.co/gbfWPK7y/2026-01-30-200319.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769854517535",
+      "subCategoryId": "s_side",
+      "name": {
+        "en": "Goon Man Doo",
+        "ko": "군만두(6P)"
+      },
+      "description": {
+        "en": "Crispy dumplings",
+        "ko": "바삭한 군만두"
+      },
+      "price": 15,
+      "image": "https://i.ibb.co/Kz88sZ8T/2026-01-30-143113.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769854646188",
+      "subCategoryId": "s_side",
+      "name": {
+        "en": "Chicken Salad",
+        "ko": "치킨샐러드"
+      },
+      "description": {
+        "en": "Fresh salad with chicken",
+        "ko": "치킨이 올라간 샐러드"
       },
       "price": 18,
-      "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-21%20195819.png",
+      "image": "https://i.ibb.co/dsrJvY2p/2026-01-30-200711.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769854711584",
+      "subCategoryId": "s_side",
+      "name": {
+        "en": "DDOEK-BOKKI",
+        "ko": "떡볶이"
+      },
+      "description": {
+        "en": "CHEWY RICE CAKES IN AN ADDICTIVE SPICY-SWEET SAUCE—A KOREAN STREET FOOD ICON",
+        "ko": "매콤달콤한 소스에 쫄깃한 떡, 한국 길거리 음식의 대표주자"
+      },
+      "price": 23,
+      "image": "https://i.ibb.co/rBmswC3/2026-01-30-143155.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769854960018",
+      "subCategoryId": "s_side",
+      "name": {
+        "en": "Fried Chicken(5P)",
+        "ko": "후라이드치킨 추가(5P)"
+      },
+      "description": {
+        "en": "",
+        "ko": ""
+      },
+      "price": 9,
+      "image": "https://i.ibb.co/pB90FmjZ/2026-01-31-182508.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769855150528",
+      "subCategoryId": "s_side",
+      "name": {
+        "en": "GONGKIBAB",
+        "ko": "공기밥"
+      },
+      "description": {
+        "en": "Steamed Rice",
+        "ko": "흰쌀밥"
+      },
+      "price": 5,
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+      "isPopular": false
+    },
+    {
+      "id": "1769855282836",
+      "subCategoryId": "s_drinks",
+      "name": {
+        "en": "Korean Citron Tea · Hot/Cold",
+        "ko": "유자차 · Hot/Cold"
+      },
+      "description": {
+        "en": "Refreshing citron tea",
+        "ko": "상큼한 유자차"
+      },
+      "price": 9,
+      "image": "https://i.ibb.co/TM5MYKg2/2026-01-30-185413.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769855403823",
+      "subCategoryId": "s_drinks",
+      "name": {
+        "en": "Korean Green Tea · Hot/Cold",
+        "ko": "녹차 · Hot/Cold"
+      },
+      "description": {
+        "en": "Clean green tea",
+        "ko": "깔끔한 녹차"
+      },
+      "price": 6,
+      "image": "https://i.ibb.co/Cs2L470K/2026-01-30-185727.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769855548161",
+      "subCategoryId": "s_best_set",
+      "name": {
+        "en": "Korean Mix Coffee · Hot/Cold",
+        "ko": "믹스커피 · Hot/Cold"
+      },
+      "description": {
+        "en": "달콤한 한국식 커피",
+        "ko": "Sweet Korean coffee"
+      },
+      "price": 9,
+      "image": "https://i.ibb.co/q3n8wp5g/2026-01-30-190629.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769855647212",
+      "subCategoryId": "s_drinks",
+      "name": {
+        "en": "Coke",
+        "ko": "콜라"
+      },
+      "description": {
+        "en": "Soft Drinks",
+        "ko": "탄산음료"
+      },
+      "price": 3,
+      "image": "https://i.ibb.co/JF8378fy/2026-01-31-150036.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769855716287",
+      "subCategoryId": "s_drinks",
+      "name": {
+        "en": "Demisoda",
+        "ko": "데미소다"
+      },
+      "description": {
+        "en": "Soft Drinks",
+        "ko": "탄산음료"
+      },
+      "price": 6,
+      "image": "https://i.ibb.co/TM9XR3g2/2026-01-31-150442.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769855858270",
+      "subCategoryId": "s_drinks",
+      "name": {
+        "en": "탄산음료",
+        "ko": "밀키스"
+      },
+      "description": {
+        "en": "Soft Drinks",
+        "ko": "탄산음료"
+      },
+      "price": 6,
+      "image": "https://i.ibb.co/mVnSsBvT/2026-01-31-150951.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769868154190",
+      "subCategoryId": "s_drinks",
+      "name": {
+        "en": "Podo",
+        "ko": "포도봉봉"
+      },
+      "description": {
+        "en": "Soft Drinks",
+        "ko": "탄산음료"
+      },
+      "price": 6,
+      "image": "https://i.ibb.co/B2VvLjs4/2026-01-31-220407.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769868337430",
+      "subCategoryId": "s_liquor",
+      "name": {
+        "en": "Soju",
+        "ko": "소주"
+      },
+      "description": {
+        "en": "Korean soju",
+        "ko": "한국 소주"
+      },
+      "price": 29,
+      "image": "https://i.ibb.co/9HspZsRN/2026-01-30-192057.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769868385495",
+      "subCategoryId": "s_liquor",
+      "name": {
+        "en": "Tiger Beer (650ml)",
+        "ko": "타이거 맥주(650ml)"
+      },
+      "description": {
+        "en": "Regular · Bottled beer",
+        "ko": "병맥주"
+      },
+      "price": 26,
+      "image": "https://i.ibb.co/KpTXTYB7/2026-01-30-192314.png",
+      "isPopular": false
+    },
+    {
+      "id": "1769868476520",
+      "subCategoryId": "s_drinks",
+      "name": {
+        "en": "Cheongsachorong Ade",
+        "ko": "청사초롱에이드"
+      },
+      "description": {
+        "en": "",
+        "ko": ""
+      },
+      "price": 11,
+      "image": "https://i.ibb.co/spt8d2vM/2026-01-31-221648.png",
       "isPopular": false
     }
   ],
@@ -289,9 +743,9 @@ const CURRENT_STATE: AppState = {
         "ko": "매일: 오전 11시 - 오후 10시"
       },
       "social": {
-        "instagram": "https://instagram.com",
+        "instagram": "https://www.instagram.com/hangeuleus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
         "facebook": "https://facebook.com",
-        "threads": "https://threads.net"
+        "threads": "https://www.threads.com/@hangeuleus_kyunghee?invite=0"
       }
     },
     "footer": {
