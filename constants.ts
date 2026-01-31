@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-01-31T16:23:24.929Z)
+// PASTE START: Generated from Admin (2026-01-31T16:31:35.002Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -158,7 +158,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 50,
       "image": "https://696fb61876634d918b871516.imgix.net/%ED%83%95%EC%88%98%EC%9C%A1.png",
-      "isPopular": true
+      "isPopular": true,
+      "order": 0
     },
     {
       "id": "4",
@@ -173,7 +174,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 90,
       "image": "https://696fb61876634d918b871516.imgix.net/%ED%83%95%EC%88%98%EC%9C%A1.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 1
     },
     {
       "id": "5",
@@ -188,7 +190,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 50,
       "image": "https://i.ibb.co/DPBrC0Nv/2026-01-30-173749.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 2
     },
     {
       "id": "1768969350950",
@@ -203,7 +206,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 55,
       "image": "https://i.ibb.co/3mqZK5KF/2026-01-31-180629.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 4
     },
     {
       "id": "1768969422694",
@@ -218,7 +222,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 99,
       "image": "https://i.ibb.co/3mqZK5KF/2026-01-31-180629.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 5
     },
     {
       "id": "1768969485626",
@@ -233,7 +238,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 90,
       "image": "https://i.ibb.co/DPBrC0Nv/2026-01-30-173749.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 3
     },
     {
       "id": "1768969592524",
@@ -308,7 +314,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 28,
       "image": "https://i.ibb.co/YMj04PP/2026-01-30-175936.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 1
     },
     {
       "id": "1769852056185",
@@ -323,7 +330,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 28,
       "image": "https://i.ibb.co/YFr0K2k4/2026-01-30-175628.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 0
     },
     {
       "id": "1769852167553",
@@ -338,7 +346,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 28,
       "image": "https://i.ibb.co/9HRJs660/2026-01-30-181415.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 2
     },
     {
       "id": "1769852401728",
@@ -353,11 +362,12 @@ const CURRENT_STATE: AppState = {
       },
       "price": 28,
       "image": "https://i.ibb.co/0VGFWdZd/2026-01-30-181733.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 3
     },
     {
       "id": "1769852567241",
-      "subCategoryId": "s_best_set",
+      "subCategoryId": "s_weekday",
       "name": {
         "en": "(Friday)Jjamppong + Fried Dumplings(3P)",
         "ko": "짬뽕 + 군만두(3P) "
@@ -368,7 +378,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 28,
       "image": "https://i.ibb.co/TDtJrrBZ/2026-01-30-182121.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 4
     },
     {
       "id": "1769852829598",
@@ -413,7 +424,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 35,
       "image": "https://i.ibb.co/gbfWPK7y/2026-01-30-200319.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 6
     },
     {
       "id": "1769854407673",
@@ -428,7 +440,8 @@ const CURRENT_STATE: AppState = {
       },
       "price": 65,
       "image": "https://i.ibb.co/gbfWPK7y/2026-01-30-200319.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 7
     },
     {
       "id": "1769854517535",
@@ -502,8 +515,8 @@ const CURRENT_STATE: AppState = {
         "ko": "흰쌀밥"
       },
       "price": 5,
-      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
-      "isPopular": false
+      "image": "https://i.ibb.co/Fqst5RfK/2026-01-31-230314.png",
+      "isPopular": true
     },
     {
       "id": "1769855282836",
@@ -537,7 +550,7 @@ const CURRENT_STATE: AppState = {
     },
     {
       "id": "1769855548161",
-      "subCategoryId": "s_best_set",
+      "subCategoryId": "s_drinks",
       "name": {
         "en": "Korean Mix Coffee · Hot/Cold",
         "ko": "믹스커피 · Hot/Cold"
@@ -561,8 +574,8 @@ const CURRENT_STATE: AppState = {
         "en": "Soft Drinks",
         "ko": "탄산음료"
       },
-      "price": 3,
-      "image": "https://i.ibb.co/JF8378fy/2026-01-31-150036.png",
+      "price": 6,
+      "image": "https://i.ibb.co/JF8378fy/2026-01-31-150036.png\"",
       "isPopular": false
     },
     {
