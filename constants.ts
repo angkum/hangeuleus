@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-01-31T17:57:06.062Z)
+// PASTE START: Generated from Admin (2026-01-31T18:02:00.308Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
