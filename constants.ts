@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-01-31T17:37:09.853Z)
+// PASTE START: Generated from Admin (2026-01-31T17:49:09.694Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -313,7 +313,7 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 28,
-      "image": "https://i.ibb.co/dqKmsjj/2026-01-30-175936.png",
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175936.png",
       "isPopular": false,
       "order": 1
     },
@@ -361,7 +361,7 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 28,
-      "image": "https://i.ibb.co/4gVYD5M5/2026-01-30-181733.png",
+      "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20181733.png",
       "isPopular": false,
       "order": 3
     },
@@ -393,7 +393,7 @@ const CURRENT_STATE: AppState = {
         "ko": "삼겹살 듬뿍 · 삼겹살이 가득 올라간 짜장면"
       },
       "price": 33,
-      "image": "https://i.ibb.co/0zsR6ym/2026-01-30-230517.png\"",
+      "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20230517.png",
       "isPopular": false
     },
     {
