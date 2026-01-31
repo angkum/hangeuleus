@@ -403,6 +403,10 @@ const Admin: React.FC = () => {
       setEditingId('new');
       const defaultSub = state.subCategories.find(s => s.categoryId === selectedCatId) || state.subCategories[0];
       
+      // Default order: Put at the end of the current subcategory list
+      const existingItems = state.menu.filter(m => m.subCategoryId === defaultSub?.id);
+      const nextOrder = existingItems.length > 0 ? (Math.max(...existingItems.map(i => i.order || 0)) + 1) : 1;
+
       setFormState({
         id: Date.now().toString(),
         subCategoryId: defaultSub?.id || '',
@@ -410,7 +414,8 @@ const Admin: React.FC = () => {
         description: { en: '', ko: '' },
         price: 0,
         image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
-        isPopular: false
+        isPopular: false,
+        order: nextOrder
       });
     };
 
@@ -423,12 +428,41 @@ const Admin: React.FC = () => {
       setEditingId(null);
     };
 
+    // Reordering Logic
+    const moveItem = (item: MenuItem, direction: 'up' | 'down') => {
+        // Get all items in this subcategory sorted by order
+        const siblings = state.menu
+            .filter(m => m.subCategoryId === item.subCategoryId)
+            .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
+        
+        const currentIndex = siblings.findIndex(m => m.id === item.id);
+        if (currentIndex === -1) return;
+
+        const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+        if (targetIndex < 0 || targetIndex >= siblings.length) return;
+
+        // Create a new array with normalized orders
+        const newSiblings = siblings.map((sib, idx) => ({ ...sib, order: idx }));
+        
+        // Swap in the array
+        [newSiblings[currentIndex], newSiblings[targetIndex]] = [newSiblings[targetIndex], newSiblings[currentIndex]];
+        
+        // Re-assign order based on new array position
+        const updates = newSiblings.map((sib, idx) => ({ ...sib, order: idx }));
+        
+        // Dispatch updates
+        updates.forEach(u => updateMenuItem(u));
+    };
+
     // Filter available subcategories based on selected large category
     const availableSubCats = state.subCategories.filter(s => s.categoryId === selectedCatId);
 
     return (
       <div className="space-y-6 animate-fade-in pb-12">
-        <Button onClick={startNew} className="flex items-center gap-2"><Plus size={16}/> Add New Item</Button>
+        <div className="flex justify-between items-center mb-6">
+            <h3 className="text-xl text-white">Menu Items</h3>
+            <Button onClick={startNew} className="flex items-center gap-2"><Plus size={16}/> Add New Item</Button>
+        </div>
 
         {editingId && (
           <div className="bg-neutral-800 p-6 border border-gold mb-8">
@@ -470,6 +504,7 @@ const Admin: React.FC = () => {
               <Input label="Desc (EN)" value={formState.description?.en} onChange={e => setFormState({...formState, description: {...formState.description!, en: e.target.value}})} />
               <Input label="Desc (KO)" value={formState.description?.ko} onChange={e => setFormState({...formState, description: {...formState.description!, ko: e.target.value}})} />
               <Input label="Price" type="number" value={formState.price} onChange={e => setFormState({...formState, price: Number(e.target.value)})} />
+              <Input label="Order (Optional)" type="number" value={formState.order || 0} onChange={e => setFormState({...formState, order: Number(e.target.value)})} />
               
               <div className="col-span-2">
                 <ImagePicker 
@@ -493,31 +528,74 @@ const Admin: React.FC = () => {
           </div>
         )}
 
-        <div className="space-y-2">
-           {state.menu.map(item => {
-             const sub = state.subCategories.find(s => s.id === item.subCategoryId);
-             const cat = state.categories.find(c => c.id === sub?.categoryId);
-
-             return (
-               <div key={item.id} className="bg-neutral-900 p-4 flex justify-between items-center border border-neutral-800">
-                  <div className="flex gap-4 items-center">
-                     <div className="w-12 h-12 shrink-0 overflow-hidden rounded bg-neutral-800">
-                        <img src={item.image} alt={item.name.en} className="w-full h-full object-cover" />
-                     </div>
-                     <div>
-                        <p className="text-white font-medium">{item.name.en} / {item.name.ko}</p>
-                        <p className="text-xs text-gray-500 uppercase">
-                            {cat?.name.en} &gt; {sub?.name.en} • RM {item.price}
-                        </p>
-                     </div>
-                  </div>
-                  <div className="flex gap-2">
-                     <button onClick={() => startEdit(item)} className="p-2 text-blue-400 hover:bg-neutral-800 rounded"><Edit2 size={16}/></button>
-                     <button onClick={() => deleteMenuItem(item.id)} className="p-2 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={16}/></button>
-                  </div>
-               </div>
-             )
-           })}
+        {/* Grouped View for Reordering */}
+        <div className="space-y-6">
+           {state.categories.sort((a,b) => a.order - b.order).map(cat => (
+             <div key={cat.id} className="border border-neutral-800 rounded-lg overflow-hidden">
+                <div className="bg-neutral-800 px-4 py-2 font-bold text-white flex items-center gap-2">
+                   <span className="text-gold text-xs border border-gold px-1 rounded">{cat.order}</span> 
+                   {cat.name.en} / {cat.name.ko}
+                </div>
+                
+                <div className="p-4 bg-neutral-900/50 space-y-4">
+                   {state.subCategories
+                      .filter(s => s.categoryId === cat.id)
+                      .sort((a,b) => a.order - b.order)
+                      .map(sub => (
+                        <div key={sub.id} className="ml-4 pl-4 border-l border-neutral-700">
+                           <h5 className="text-sm font-bold text-gray-400 uppercase mb-3 flex items-center gap-2">
+                              {sub.name.en} / {sub.name.ko}
+                           </h5>
+                           
+                           <div className="space-y-2">
+                              {state.menu
+                                 .filter(m => m.subCategoryId === sub.id)
+                                 .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999))
+                                 .map((item, index, array) => (
+                                    <div key={item.id} className="bg-neutral-900 p-3 flex justify-between items-center border border-neutral-800 hover:border-neutral-600 transition-colors">
+                                       <div className="flex gap-4 items-center">
+                                          {/* Reorder Buttons */}
+                                          <div className="flex flex-col gap-1">
+                                             <button 
+                                                onClick={() => moveItem(item, 'up')}
+                                                disabled={index === 0}
+                                                className="text-gray-500 hover:text-gold disabled:opacity-20"
+                                             >
+                                                <ArrowUp size={14} />
+                                             </button>
+                                             <button 
+                                                onClick={() => moveItem(item, 'down')}
+                                                disabled={index === array.length - 1}
+                                                className="text-gray-500 hover:text-gold disabled:opacity-20"
+                                             >
+                                                <ArrowDown size={14} />
+                                             </button>
+                                          </div>
+                                          
+                                          <div className="w-10 h-10 shrink-0 overflow-hidden rounded bg-neutral-800">
+                                             <img src={item.image} alt={item.name.en} className="w-full h-full object-cover" />
+                                          </div>
+                                          <div>
+                                             <p className="text-white font-medium text-sm">{item.name.en}</p>
+                                             <p className="text-xs text-gray-500">RM {item.price}</p>
+                                          </div>
+                                       </div>
+                                       <div className="flex gap-2">
+                                          <button onClick={() => startEdit(item)} className="p-2 text-blue-400 hover:bg-neutral-800 rounded"><Edit2 size={16}/></button>
+                                          <button onClick={() => deleteMenuItem(item.id)} className="p-2 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={16}/></button>
+                                       </div>
+                                    </div>
+                                 ))
+                              }
+                              {state.menu.filter(m => m.subCategoryId === sub.id).length === 0 && (
+                                 <p className="text-gray-600 text-xs italic">No items in this category.</p>
+                              )}
+                           </div>
+                        </div>
+                   ))}
+                </div>
+             </div>
+           ))}
         </div>
       </div>
     );

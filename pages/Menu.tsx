@@ -179,8 +179,11 @@ const Menu: React.FC = () => {
                 )}
 
                 {activeSubCategories.map(sub => {
-                   // Get items for this subcategory
-                   const subItems = menu.filter(item => item.subCategoryId === sub.id);
+                   // Get items for this subcategory and sort by order
+                   const subItems = menu
+                      .filter(item => item.subCategoryId === sub.id)
+                      .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
+                      
                    if (subItems.length === 0) return null;
 
                    return (

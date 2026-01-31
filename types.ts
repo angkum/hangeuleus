@@ -1,3 +1,4 @@
+
 export type Language = 'en' | 'ko';
 
 export interface LocalizedString {
@@ -26,6 +27,7 @@ export interface MenuItem {
   price: number;
   image: string;
   isPopular: boolean;
+  order?: number; // Added for ordering items
 }
 
 export interface NewsPost {
