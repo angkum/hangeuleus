@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-02-01T07:14:57.406Z)
+// PASTE START: Generated from Admin (2026-02-01T07:57:29.907Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -311,16 +311,16 @@ const CURRENT_STATE: AppState = {
       "id": "1769851882303",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "DS-2. (Tuesday)Jjajang Noodle + Yoo-rin Chicken",
-        "ko": "DS-2. (화요일)짜장면 + 유린치킨"
+        "en": "DS-2. Jjajang Noodle + Yoo-rin Chicken",
+        "ko": "DS-2. 짜장면 + 유린치킨"
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
         "ko": "점심특선__12:00PM~15:00PM"
       },
-      "price": 28,
+      "price": 30,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175936.png",
-      "isPopular": false,
+      "isPopular": true,
       "order": 1,
       "originalPrice": 50
     },
@@ -328,14 +328,14 @@ const CURRENT_STATE: AppState = {
       "id": "1769852056185",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "DS-1. (Monday)Kimchi Samgyeopsal Deobap + Boneless Fried Chicken",
-        "ko": "DS-1. (월요일)김치삼겹덮밥 + 순살후라이드치킨"
+        "en": "DS-1. Kimchi Samgyeopsal Deobap + Boneless Fried Chicken",
+        "ko": "DS-1. 김치삼겹덮밥 + 순살후라이드치킨"
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
         "ko": "점심특선__12:00PM~15:00PM"
       },
-      "price": 28,
+      "price": 30,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175628.png",
       "isPopular": false,
       "order": 0,
@@ -345,31 +345,31 @@ const CURRENT_STATE: AppState = {
       "id": "1769852167553",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "DS-A (Thursday)Tteokbokki + Fried Dumplings (3P)",
-        "ko": "DS-A (목요일)떡볶이 + 군만두(3P)"
+        "en": "DS-3 Tteokbokki + Fried Dumplings (6P)",
+        "ko": "DS-3 떡볶이 + 군만두(6P)"
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
         "ko": "점심특선__12:00PM~15:00PM"
       },
-      "price": 28,
+      "price": 30,
       "image": "https://i.ibb.co/v42bZppW/2026-01-30-181415.png",
       "isPopular": false,
       "order": 2,
-      "originalPrice": 30.5
+      "originalPrice": 37
     },
     {
       "id": "1769852567241",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "DS-5 (Friday)Jjamppong + Fried Dumplings(3P)",
+        "en": "DS-5 Jjamppong + Fried Dumplings(3P)",
         "ko": "DS-5 짬뽕 + 군만두(3P) "
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
         "ko": "점심특선__12:00PM~15:00PM"
       },
-      "price": 28,
+      "price": 30,
       "image": "https://i.ibb.co/8n9GXXDJ/2026-01-30-182121.png",
       "isPopular": false,
       "order": 4,
@@ -563,7 +563,7 @@ const CURRENT_STATE: AppState = {
         "ko": "Sweet Korean coffee"
       },
       "price": 9,
-      "image": "https://i.ibb.co/67ZS5FBt/2026-01-30-190629.png",
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20155624.png",
       "isPopular": false
     },
     {
@@ -670,6 +670,24 @@ const CURRENT_STATE: AppState = {
       "price": 11,
       "image": "https://i.ibb.co/4wJhn7Z5/2026-01-31-221648.png\"",
       "isPopular": true
+    },
+    {
+      "id": "1769931900693",
+      "subCategoryId": "s_weekday",
+      "name": {
+        "en": "DS-A JJA JANG NOODLE + TANG SOO-YOOK",
+        "ko": "DS-A 짜장면 + 탕수육"
+      },
+      "description": {
+        "en": "RECHARGE YOUR DAY WITH OUR VIBRANT AND AFFORDABLE DAILY LUNCH SPECIALS",
+        "ko": "바쁜 일상 속 든든한 한 끼, 매일 다르게 즐기는 합리적인 런치 세트"
+      },
+      "price": 30,
+      "originalPrice": 75,
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20181733.png",
+      "isPopular": true,
+      "isSoldOut": false,
+      "order": 1
     }
   ],
   "news": [
