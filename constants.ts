@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-01-31T18:02:00.308Z)
+// PASTE START: Generated from Admin (2026-02-01T07:05:29.031Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -119,8 +119,8 @@ const CURRENT_STATE: AppState = {
       "id": "1",
       "subCategoryId": "s_noodle",
       "name": {
-        "en": "Jajangmyeon",
-        "ko": "짜장면"
+        "en": "M-1 Jajangmyeon",
+        "ko": "M-1 짜장면"
       },
       "description": {
         "en": "Noodles in a rich black bean sauce with pork and onions.",
@@ -128,14 +128,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 25,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260117_081238_05644889-1fdb-4e9d-bf6d-a0d152cb1fa6.png",
-      "isPopular": true
+      "isPopular": true,
+      "order": 0
     },
     {
       "id": "2",
       "subCategoryId": "s_noodle",
       "name": {
-        "en": "Seafood Jjambbong",
-        "ko": "해물 짬뽕"
+        "en": "M-3 Seafood Jjambbong",
+        "ko": "M-3 해물 짬뽕"
       },
       "description": {
         "en": "Spicy seafood noodle soup with vegetables.",
@@ -143,14 +144,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 28,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260117_032254_57982580-dab1-4c39-9a8a-3054b6c30f94.png",
-      "isPopular": true
+      "isPopular": true,
+      "order": 2
     },
     {
       "id": "3",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Tang Soo-yook(Regular)",
-        "ko": "탕수육(중)"
+        "en": "C-1R Tang Soo-yook(Regular)",
+        "ko": "C-1R 탕수육(중)"
       },
       "description": {
         "en": "Korean-style sweet and sour pork.",
@@ -165,8 +167,8 @@ const CURRENT_STATE: AppState = {
       "id": "4",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Tang Soo-yook(large)",
-        "ko": "탕수육(대)"
+        "en": "C-1L Tang Soo-yook(large)",
+        "ko": "C-1L 탕수육(대)"
       },
       "description": {
         "en": "Korean-style sweet and sour pork.",
@@ -181,8 +183,8 @@ const CURRENT_STATE: AppState = {
       "id": "5",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Yoo-rin Chicken(Regular)",
-        "ko": "유린치킨(중)"
+        "en": "C-2R Yoo-rin Chicken(Regular)",
+        "ko": "C-2R 유린치킨(중)"
       },
       "description": {
         "en": "Deep-fried chicken topped with hot and sour soy sauce.",
@@ -197,15 +199,15 @@ const CURRENT_STATE: AppState = {
       "id": "1768969350950",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Fried Shrimp with Cream Sauce(Regular)",
-        "ko": "새우 후라이드 + 청양크림소스(중)"
+        "en": "C-3R Fried Shrimp with Cream Sauce(Regular)",
+        "ko": "C-3R 새우 후라이드 + 청양크림소스(중)"
       },
       "description": {
         "en": "Crispy fried shrimp served with spicy Cheongyang cream sauce.",
         "ko": "바삭한 새우 튀김에 매콤한 청양 크림 소스를 곁들였습니다."
       },
       "price": 55,
-      "image": "https://i.ibb.co/gZpKYbYW/2026-01-31-180629.png",
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20133032.png",
       "isPopular": false,
       "order": 4
     },
@@ -213,15 +215,15 @@ const CURRENT_STATE: AppState = {
       "id": "1768969422694",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Fried Shrimp with Cream Sauce(Large)",
-        "ko": "새우 후라이드 + 청양크림소스대)"
+        "en": "C-3L Fried Shrimp with Cream Sauce(Large)",
+        "ko": "C-3L 새우 후라이드 + 청양크림소스대)"
       },
       "description": {
         "en": "Crispy fried shrimp served with spicy Cheongyang cream sauce.",
         "ko": "바삭한 새우 튀김에 매콤한 청양 크림 소스를 곁들였습니다."
       },
       "price": 99,
-      "image": "https://i.ibb.co/gZpKYbYW/2026-01-31-180629.png",
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20133032.png",
       "isPopular": false,
       "order": 5
     },
@@ -229,8 +231,8 @@ const CURRENT_STATE: AppState = {
       "id": "1768969485626",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Yoo-rin Chicken(Large)",
-        "ko": "유린치킨(대)"
+        "en": "C-2L Yoo-rin Chicken(Large)",
+        "ko": "C-2L 유린치킨(대)"
       },
       "description": {
         "en": ".Deep-fried chicken topped with hot and sour soy sauce",
@@ -245,8 +247,8 @@ const CURRENT_STATE: AppState = {
       "id": "1768969592524",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "Seafood Jjam Bbong Rice",
-        "ko": "해물 짬뽕밥"
+        "en": "R-2 Seafood Jjam Bbong Rice",
+        "ko": "R-2 해물 짬뽕밥"
       },
       "description": {
         "en": "Spicy seafood soup served with rice.",
@@ -254,14 +256,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 28,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_132940_48715c18-6666-421c-865d-20dca9f342da.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 1
     },
     {
       "id": "1768969631602",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "Chicken Mayo Rice + Jjam Bbong Soup",
-        "ko": "치킨마요 덮밥 + 짬뽕국물"
+        "en": "R-3 Chicken Mayo Rice + Jjam Bbong Soup",
+        "ko": "R-3 치킨마요 덮밥 + 짬뽕국물"
       },
       "description": {
         "en": "Fried chicken over rice with teriyaki mayo sauce, served with spicy soup.",
@@ -269,14 +272,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 28,
       "image": "https://i.ibb.co/H9yfGkY/2026-01-30-143204.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 2
     },
     {
       "id": "1768996839598",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "Kimchi Samgyeopsal Deobap + Jjamppong Soup",
-        "ko": "김치삼겹살덮밥 + 짬뽕국물"
+        "en": "R-5 Kimchi Samgyeopsal Deobap + Jjamppong Soup",
+        "ko": "R-5 김치삼겹살덮밥 + 짬뽕국물"
       },
       "description": {
         "en": "CRUNCHY CHICKEN AND CREAMY TERIYAKI MAYO ON RICE—THE PERFECT COMFORT BOWL",
@@ -284,29 +288,31 @@ const CURRENT_STATE: AppState = {
       },
       "price": 25,
       "image": "https://i.ibb.co/1YFLf00s/2026-01-30-174728.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 3
     },
     {
       "id": "1769851092884",
       "subCategoryId": "s_best_set",
       "name": {
-        "en": "HAN GEU LEUS Set",
-        "ko": "한그릇 세트"
+        "en": "S-1. HAN GEU LEUS SIGNATURE DUO SET (FOR 2 PAX)",
+        "ko": "S-1. 한그릇 시그니처 듀오 세트 (2인 기준)"
       },
       "description": {
-        "en": "Choose Jjajang or Jjamppong · Includes salad, shrimp in cream sauce, sweet & sour pork(min 2 pax)",
-        "ko": " 짜장면 또는 짬뽕 선택 · 샐러드, 고추마요새우, 탕수육 포함 세트메뉴(2인 이상 주문)"
+        "en": "THE SMARTEST WAY TO TASTE HANGEULEUS! INCLUDES: SALAD, TANG SOO YOOK, LEMON CREAM SHRIMP + CHOICE OF ANY 2 MAINS (JJA JANG / JJAM BBONG) + 2 DRINKS (GREEN TEA, CITRON TEA, OR SOFT DRINKS)",
+        "ko": "한그릇 인기 메뉴를 한 번에 즐기는 최고의 가성비! 구성: 샐러드, 탕수육, 레몬 크림 새우 + 식사 2그릇(짜장/짬뽕 중 선택) + 음료 2잔(녹차, 유자차, 탄산음료 중 택2)"
       },
-      "price": 45,
-      "image": "https://697c89c1c4feaabd2d10ebfb.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20183508.png",
-      "isPopular": false
+      "price": 99,
+      "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20135514.png",
+      "isPopular": true,
+      "originalPrice": 179
     },
     {
       "id": "1769851882303",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "(Tuesday)Jjajang Noodle + Yoo-rin Chicken",
-        "ko": "(화요일)짜장면 + 유린치킨"
+        "en": "DS-2. (Tuesday)Jjajang Noodle + Yoo-rin Chicken",
+        "ko": "DS-2. (화요일)짜장면 + 유린치킨"
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
@@ -315,14 +321,15 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175936.png",
       "isPopular": false,
-      "order": 1
+      "order": 1,
+      "originalPrice": 50
     },
     {
       "id": "1769852056185",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "(Monday)Kimchi Samgyeopsal Deobap + Boneless Fried Chicken",
-        "ko": "(월요일)김치삼겹덮밥 + 순살후라이드치킨"
+        "en": "DS-1. (Monday)Kimchi Samgyeopsal Deobap + Boneless Fried Chicken",
+        "ko": "DS-1. (월요일)김치삼겹덮밥 + 순살후라이드치킨"
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
@@ -331,14 +338,15 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175628.png",
       "isPopular": false,
-      "order": 0
+      "order": 0,
+      "originalPrice": 37
     },
     {
       "id": "1769852167553",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "(Wednesday)Tteokbokki + Fried Dumplings (3P)",
-        "ko": "(수요일)떡볶이 + 군만두(3P)"
+        "en": "DS-A (Thursday)Tteokbokki + Fried Dumplings (3P)",
+        "ko": "DS-A (목요일)떡볶이 + 군만두(3P)"
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
@@ -347,30 +355,15 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://i.ibb.co/v42bZppW/2026-01-30-181415.png",
       "isPopular": false,
-      "order": 2
-    },
-    {
-      "id": "1769852401728",
-      "subCategoryId": "s_weekday",
-      "name": {
-        "en": "(Thursday)Jjajang Noodle + Tang Soo-yok",
-        "ko": "(목요일)짜장면 + 탕수육"
-      },
-      "description": {
-        "en": "Lunch Specials 12:00PM~15:00PM",
-        "ko": "점심특선__12:00PM~15:00PM"
-      },
-      "price": 28,
-      "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20181733.png",
-      "isPopular": false,
-      "order": 3
+      "order": 2,
+      "originalPrice": 30.5
     },
     {
       "id": "1769852567241",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "(Friday)Jjamppong + Fried Dumplings(3P)",
-        "ko": "짬뽕 + 군만두(3P) "
+        "en": "DS-5 (Friday)Jjamppong + Fried Dumplings(3P)",
+        "ko": "DS-5 짬뽕 + 군만두(3P) "
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
@@ -379,14 +372,15 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://i.ibb.co/8n9GXXDJ/2026-01-30-182121.png",
       "isPopular": false,
-      "order": 4
+      "order": 4,
+      "originalPrice": 35.5
     },
     {
       "id": "1769852829598",
       "subCategoryId": "s_noodle",
       "name": {
-        "en": "Bomb Samgyeopsal Jjajang",
-        "ko": "폭탄삼겹살짜장"
+        "en": "M-2 Bomb Samgyeopsal Jjajang",
+        "ko": "M-2 폭탄삼겹살짜장"
       },
       "description": {
         "en": "Extra pork belly · Jjajang noodles loaded with pork belly",
@@ -394,14 +388,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 33,
       "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20230517.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 1
     },
     {
       "id": "1769852924435",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "Jjajang Rice + Jjamppong Soup",
-        "ko": "짜장밥 + 짬뽕국물"
+        "en": "R-1 Jjajang Rice + Jjamppong Soup",
+        "ko": "R-1 짜장밥 + 짬뽕국물"
       },
       "description": {
         "en": "Black bean rice with jjamppong soup",
@@ -409,23 +404,25 @@ const CURRENT_STATE: AppState = {
       },
       "price": 25,
       "image": "https://i.ibb.co/N2cSft6c/2026-01-31-144910.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 0
     },
     {
       "id": "1769854205551",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Boneless Fried Chicken(regular)",
-        "ko": "순살후라이드치킨(중)"
+        "en": "Boneless Fried Chicken",
+        "ko": "순살후라이드치킨"
       },
       "description": {
         "en": "Seasoning sauce · Crispy boneless chicken",
         "ko": "양념소스 제공 · 바삭한 순살치킨"
       },
-      "price": 35,
+      "price": 55,
       "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false,
-      "order": 6
+      "order": 6,
+      "isSoldOut": false
     },
     {
       "id": "1769854407673",
@@ -441,14 +438,15 @@ const CURRENT_STATE: AppState = {
       "price": 65,
       "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false,
-      "order": 7
+      "order": 7,
+      "isSoldOut": true
     },
     {
       "id": "1769854517535",
       "subCategoryId": "s_side",
       "name": {
-        "en": "Goon Man Doo",
-        "ko": "군만두(6P)"
+        "en": "E-1 Goon Man Doo",
+        "ko": "E-1. 군만두(6P)"
       },
       "description": {
         "en": "Crispy dumplings",
@@ -456,14 +454,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 15,
       "image": "https://i.ibb.co/qF22gG2T/2026-01-30-143113.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 0
     },
     {
       "id": "1769854646188",
       "subCategoryId": "s_side",
       "name": {
-        "en": "Chicken Salad",
-        "ko": "치킨샐러드"
+        "en": "E-2 Chicken Salad",
+        "ko": "E-2. 치킨샐러드"
       },
       "description": {
         "en": "Fresh salad with chicken",
@@ -471,14 +470,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 18,
       "image": "https://i.ibb.co/Y43TSskd/2026-01-30-200711.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 1
     },
     {
       "id": "1769854711584",
       "subCategoryId": "s_side",
       "name": {
-        "en": "DDOEK-BOKKI",
-        "ko": "떡볶이"
+        "en": "E-A DDOEK-BOKKI",
+        "ko": "E-A 떡볶이"
       },
       "description": {
         "en": "CHEWY RICE CAKES IN AN ADDICTIVE SPICY-SWEET SAUCE—A KOREAN STREET FOOD ICON",
@@ -486,14 +486,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 23,
       "image": "https://i.ibb.co/BhtNCXG/2026-01-30-143155.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 3
     },
     {
       "id": "1769854960018",
       "subCategoryId": "s_side",
       "name": {
-        "en": "Fried Chicken(5P)",
-        "ko": "후라이드치킨 추가(5P)"
+        "en": "E-3 Fried Chicken(5P)",
+        "ko": "E-3. 후라이드치킨 추가(5P)"
       },
       "description": {
         "en": "",
@@ -501,14 +502,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 9,
       "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 2
     },
     {
       "id": "1769855150528",
       "subCategoryId": "s_side",
       "name": {
-        "en": "GONGKIBAB",
-        "ko": "공기밥"
+        "en": "E-5 GONGKIBAB",
+        "ko": "E-5 공기밥"
       },
       "description": {
         "en": "Steamed Rice",
@@ -516,14 +518,15 @@ const CURRENT_STATE: AppState = {
       },
       "price": 5,
       "image": "https://i.ibb.co/k63F4Nrx/2026-01-31-230314.png",
-      "isPopular": false
+      "isPopular": false,
+      "order": 4
     },
     {
       "id": "1769855282836",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "Korean Citron Tea · Hot/Cold",
-        "ko": "유자차 · Hot/Cold"
+        "en": "D-1 Korean Citron Tea · Hot/Cold",
+        "ko": "D-1 유자차 · Hot/Cold"
       },
       "description": {
         "en": "Refreshing citron tea",
@@ -531,29 +534,29 @@ const CURRENT_STATE: AppState = {
       },
       "price": 9,
       "image": "https://i.ibb.co/8gVgNz7s/2026-01-30-185413.png",
-      "isPopular": false
+      "isPopular": true
     },
     {
       "id": "1769855403823",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "Korean Green Tea · Hot/Cold",
-        "ko": "녹차 · Hot/Cold"
+        "en": "D-2 Korean Green Tea · Hot/Cold",
+        "ko": "D-2 녹차 · Hot/Cold"
       },
       "description": {
         "en": "Clean green tea",
         "ko": "깔끔한 녹차"
       },
       "price": 6,
-      "image": "https://i.ibb.co/fGvJZp0d/2026-01-30-185727.png\"",
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20133936.png",
       "isPopular": false
     },
     {
       "id": "1769855548161",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "Korean Mix Coffee · Hot/Cold",
-        "ko": "믹스커피 · Hot/Cold"
+        "en": "D-3 Korean Mix Coffee · Hot/Cold",
+        "ko": "D-3 믹스커피 · Hot/Cold"
       },
       "description": {
         "en": "달콤한 한국식 커피",
@@ -567,8 +570,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769855647212",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "Coke",
-        "ko": "콜라"
+        "en": "D-A Coke",
+        "ko": "D-A 콜라"
       },
       "description": {
         "en": "Soft Drinks",
@@ -582,8 +585,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769855716287",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "Demisoda",
-        "ko": "데미소다"
+        "en": "D-A Demisoda",
+        "ko": "D-A 데미소다"
       },
       "description": {
         "en": "Soft Drinks",
@@ -597,8 +600,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769855858270",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "Milkis",
-        "ko": "밀키스"
+        "en": "D-A Milkis",
+        "ko": "D-A 밀키스"
       },
       "description": {
         "en": "Soft Drinks",
@@ -612,8 +615,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769868154190",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "Podo",
-        "ko": "포도봉봉"
+        "en": "D-A Podo BONG BONG",
+        "ko": "D-A 포도봉봉"
       },
       "description": {
         "en": "Soft Drinks",
@@ -627,8 +630,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769868337430",
       "subCategoryId": "s_liquor",
       "name": {
-        "en": "Soju",
-        "ko": "소주"
+        "en": "L-1 Soju",
+        "ko": "L-1 소주"
       },
       "description": {
         "en": "Korean soju",
@@ -642,8 +645,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769868385495",
       "subCategoryId": "s_liquor",
       "name": {
-        "en": "Tiger Beer (650ml)",
-        "ko": "타이거 맥주(650ml)"
+        "en": "L-2 Tiger Beer (650ml)",
+        "ko": "L-2 타이거 맥주(650ml)"
       },
       "description": {
         "en": "Regular · Bottled beer",
@@ -657,8 +660,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769868476520",
       "subCategoryId": "s_drinks",
       "name": {
-        "en": "Cheongsachorong Ade",
-        "ko": "청사초롱에이드"
+        "en": "D-5 Cheongsachorong Ade",
+        "ko": "D-5 청사초롱에이드"
       },
       "description": {
         "en": "",
