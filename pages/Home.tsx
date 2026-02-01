@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
@@ -5,25 +6,54 @@ import { Button, SectionTitle, useIsTouch } from '../components/UI';
 import { ArrowRight, Star, MessageCircle, ChevronDown, ChevronUp, MapPin, Navigation } from 'lucide-react';
 
 const PopularItemCard: React.FC<{ item: any, lang: any, primaryColor: string }> = ({ item, lang, primaryColor }) => {
+  const hasDiscount = item.originalPrice && item.originalPrice > item.price;
+  const savings = hasDiscount ? item.originalPrice - item.price : 0;
+  const isSoldOut = item.isSoldOut;
+
   return (
-    <div className="group cursor-pointer">
+    <div className={`group cursor-pointer ${isSoldOut ? 'pointer-events-none' : ''}`}>
       <div className="overflow-hidden mb-6 relative border border-white/5 bg-neutral-900">
         <img 
           src={item.image} 
           alt={item.name[lang]} 
-          className="w-full h-80 object-cover transition-transform duration-700 scale-100 opacity-90 group-hover:scale-105 group-hover:opacity-100"
+          className={`w-full h-80 object-cover transition-transform duration-700 scale-100 opacity-90 ${isSoldOut ? 'grayscale blur-[2px]' : 'group-hover:scale-105 group-hover:opacity-100'}`}
         />
-        <div className="absolute top-4 right-4 bg-black/70 px-3 py-1 backdrop-blur-sm border border-white/10">
-          <Star size={12} className="text-gold inline mr-1" fill={primaryColor} />
-          <span className="text-xs tracking-widest uppercase text-white">Popular</span>
+        
+        {/* Sold Out Overlay for Home Page */}
+        {isSoldOut && (
+           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <span className="text-xs font-black text-white bg-red-600 px-4 py-2 tracking-[0.2em] border-2 border-white shadow-2xl">
+                SOLD OUT
+              </span>
+           </div>
+        )}
+
+        <div className="absolute top-4 right-4 bg-black/70 px-3 py-1 backdrop-blur-sm border border-white/10 flex flex-col items-end gap-1">
+          <div className="flex items-center">
+            <Star size={12} className="text-gold inline mr-1" fill={primaryColor} />
+            <span className="text-xs tracking-widest uppercase text-white">Popular</span>
+          </div>
+          {hasDiscount && !isSoldOut && (
+             <span className="text-[10px] bg-gold text-black font-black px-1.5 py-0.5 tracking-tighter">
+                SAVE RM{savings}
+             </span>
+          )}
         </div>
       </div>
-      <div className="text-center p-4 transition-colors rounded-sm hover:bg-white/5">
-        <h3 className="text-xl text-white font-bold mb-2 uppercase">{item.name[lang]}</h3>
-        <p className="text-gray-500 text-sm mb-3 line-clamp-2">{item.description[lang]}</p>
-        <p className="text-lg font-bold" style={{ color: primaryColor }}>
-          {lang === 'en' ? `RM ${item.price}` : `${item.price} 링깃`}
+      <div className={`text-center p-4 transition-colors rounded-sm ${isSoldOut ? '' : 'hover:bg-white/5'}`}>
+        <h3 className={`text-xl font-bold mb-2 uppercase ${isSoldOut ? 'text-gray-600' : 'text-white'}`}>{item.name[lang]}</h3>
+        <p className={`text-sm mb-3 line-clamp-2 ${isSoldOut ? 'text-gray-700 italic' : 'text-gray-500'}`}>
+            {isSoldOut ? (lang === 'en' ? 'Currently Out of Stock' : '현재 품절 상태입니다') : item.description[lang]}
         </p>
+        
+        <div className="flex flex-col items-center">
+            {hasDiscount && !isSoldOut && (
+                <span className="text-sm text-gray-500 line-through mb-1">RM {item.originalPrice}</span>
+            )}
+            <p className={`text-lg font-bold ${isSoldOut ? 'text-gray-600' : ''}`} style={{ color: isSoldOut ? undefined : primaryColor }}>
+              {lang === 'en' ? `RM ${item.price}` : `${item.price} 링깃`}
+            </p>
+        </div>
       </div>
     </div>
   );

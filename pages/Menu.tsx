@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { SectionTitle, useInView, useIsTouch } from '../components/UI';
-import { X, ZoomIn, Sparkles } from 'lucide-react';
+import { X, ZoomIn, Sparkles, Tag, AlertCircle } from 'lucide-react';
 import { MenuItem } from '../types';
 
 interface MenuGridItemProps {
@@ -12,8 +13,12 @@ interface MenuGridItemProps {
 }
 
 const MenuGridItem: React.FC<MenuGridItemProps> = ({ item, lang, primaryColor, onImageClick }) => {
+  const hasDiscount = item.originalPrice && item.originalPrice > item.price;
+  const savings = hasDiscount ? item.originalPrice! - item.price : 0;
+  const isSoldOut = item.isSoldOut;
+
   return (
-    <div className="flex gap-6 group">
+    <div className={`flex gap-6 group transition-opacity duration-300 ${isSoldOut ? 'opacity-60' : 'opacity-100'}`}>
       {/* Clickable Image Container */}
       <div 
         onClick={() => onImageClick(item)}
@@ -22,22 +27,41 @@ const MenuGridItem: React.FC<MenuGridItemProps> = ({ item, lang, primaryColor, o
         <img 
           src={item.image} 
           alt={item.name[lang]} 
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className={`w-full h-full object-cover transition-all duration-500 ${isSoldOut ? 'grayscale blur-[1px]' : 'group-hover:scale-110'}`}
         />
-        {/* Hover Overlay with Icon */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-            <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity transform scale-75 group-hover:scale-100" size={24} />
-        </div>
+        
+        {/* Sold Out Overlay */}
+        {isSoldOut && (
+           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+              <span className="text-[10px] md:text-xs font-black text-white bg-red-600 px-2 py-1 tracking-widest border border-white/20">
+                SOLD OUT
+              </span>
+           </div>
+        )}
+
+        {/* Hover Overlay with Icon (Only if not sold out) */}
+        {!isSoldOut && (
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+              <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity transform scale-75 group-hover:scale-100" size={24} />
+          </div>
+        )}
+        
+        {/* Discount Badge on Image */}
+        {hasDiscount && !isSoldOut && (
+           <div className="absolute top-0 left-0 bg-gold text-black text-[9px] font-bold px-1.5 py-0.5 tracking-tighter">
+              SAVE RM{savings}
+           </div>
+        )}
       </div>
 
       <div className="flex-1 flex flex-col justify-between py-1">
         <div>
           <div className="flex justify-between items-baseline mb-2 border-b border-neutral-800 pb-2 border-dashed">
             <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-lg md:text-xl font-bold text-white uppercase cursor-pointer hover:text-gold transition-colors" onClick={() => onImageClick(item)}>
+                <h3 className={`text-lg md:text-xl font-bold uppercase transition-colors ${isSoldOut ? 'text-gray-500' : 'text-white cursor-pointer hover:text-gold'}`} onClick={() => !isSoldOut && onImageClick(item)}>
                     {item.name[lang]}
                 </h3>
-                {item.isPopular && (
+                {item.isPopular && !isSoldOut && (
                     <span 
                         className="inline-flex items-center gap-1 text-[10px] md:text-xs font-bold px-2 py-0.5 rounded-full border border-gold/30 bg-gold/5 text-gold tracking-tight"
                         style={{ borderColor: `${primaryColor}40`, color: primaryColor }}
@@ -45,12 +69,32 @@ const MenuGridItem: React.FC<MenuGridItemProps> = ({ item, lang, primaryColor, o
                         ✨ {lang === 'en' ? 'BEST' : '인기'}
                     </span>
                 )}
+                {isSoldOut && (
+                    <span className="text-[10px] text-red-500 font-bold border border-red-500/30 px-1.5 py-0.5 uppercase tracking-tighter">
+                        {lang === 'en' ? 'Out of Stock' : '품절'}
+                    </span>
+                )}
             </div>
-            <span className="text-lg ml-4 font-light whitespace-nowrap" style={{ color: primaryColor }}>
-              {lang === 'en' ? `RM ${item.price}` : `${item.price} 링깃`}
-            </span>
+            
+            <div className="flex flex-col items-end">
+                {hasDiscount && !isSoldOut && (
+                    <span className="text-xs text-gray-500 line-through mb-0.5">
+                        RM {item.originalPrice}
+                    </span>
+                )}
+                <div className="flex items-center gap-2">
+                    {hasDiscount && !isSoldOut && (
+                        <span className="text-[10px] font-bold text-gold uppercase tracking-tighter bg-gold/10 px-1.5 py-0.5 border border-gold/20 hidden md:inline-block">
+                            SAVE RM{savings}
+                        </span>
+                    )}
+                    <span className={`text-lg font-light whitespace-nowrap ${isSoldOut ? 'text-gray-600' : ''}`} style={{ color: isSoldOut ? undefined : primaryColor }}>
+                        {lang === 'en' ? `RM ${item.price}` : `${item.price} 링깃`}
+                    </span>
+                </div>
+            </div>
           </div>
-          <p className="text-gray-500 text-sm leading-relaxed">{item.description[lang]}</p>
+          <p className={`text-sm leading-relaxed ${isSoldOut ? 'text-gray-600' : 'text-gray-500'}`}>{item.description[lang]}</p>
         </div>
       </div>
     </div>
@@ -127,38 +171,61 @@ const Menu: React.FC = () => {
                 className="relative w-full max-w-lg md:max-w-xl bg-neutral-900 border border-neutral-800 rounded-sm shadow-2xl overflow-hidden flex flex-col"
                 onClick={(e) => e.stopPropagation()} 
             >
-                {/* 
-                   Image Container: 
-                   - Widen modal (max-w-lg/xl) to support landscape aspect ratio.
-                   - object-contain ensures the entire image is visible without cropping.
-                */}
+                {/* Image Container */}
                 <div className="w-full bg-black relative shrink-0 flex items-center justify-center min-h-[200px]">
                    <img 
                         src={selectedItem.image} 
                         alt={selectedItem.name[lang]} 
-                        className="w-full h-auto max-h-[60vh] object-contain"
+                        className={`w-full h-auto max-h-[60vh] object-contain ${selectedItem.isSoldOut ? 'grayscale blur-sm opacity-50' : ''}`}
                     />
+                    
+                    {/* Modal Sold Out Banner */}
+                    {selectedItem.isSoldOut && (
+                       <div className="absolute inset-0 flex items-center justify-center">
+                           <div className="bg-red-600 text-white px-8 py-4 font-black text-2xl shadow-2xl tracking-[0.2em] transform -rotate-12 border-4 border-white">
+                               SOLD OUT
+                           </div>
+                       </div>
+                    )}
+
+                    {selectedItem.originalPrice && selectedItem.originalPrice > selectedItem.price && !selectedItem.isSoldOut && (
+                        <div className="absolute bottom-4 right-4 bg-gold text-black px-4 py-2 font-black text-sm shadow-xl tracking-widest animate-pulse">
+                            SAVE RM{selectedItem.originalPrice - selectedItem.price}
+                        </div>
+                    )}
                 </div>
 
                 {/* Caption / Details */}
                 <div className="p-6 overflow-y-auto bg-neutral-900 border-t border-white/5">
                     <div className="flex justify-between items-start gap-3 mb-2">
                          <div className="flex flex-col gap-1">
-                            <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-wider leading-tight flex items-center gap-3">
+                            <h3 className={`text-xl md:text-2xl font-bold uppercase tracking-wider leading-tight flex items-center gap-3 ${selectedItem.isSoldOut ? 'text-gray-500' : 'text-white'}`}>
                                 {selectedItem.name[lang]}
-                                {selectedItem.isPopular && <span className="text-gold text-sm">✨</span>}
+                                {selectedItem.isPopular && !selectedItem.isSoldOut && <span className="text-gold text-sm">✨</span>}
                             </h3>
-                            {selectedItem.isPopular && (
+                            {selectedItem.isPopular && !selectedItem.isSoldOut && (
                                 <span className="text-gold text-[10px] uppercase tracking-widest font-bold">
                                     {lang === 'en' ? 'Most Popular Item' : '한그릇 인기 메뉴'}
                                 </span>
                             )}
+                            {selectedItem.isSoldOut && (
+                                <span className="text-red-500 text-[10px] uppercase tracking-widest font-bold flex items-center gap-1">
+                                    <AlertCircle size={10} />
+                                    {lang === 'en' ? 'Currently Unavailable' : '현재 주문이 불가능합니다'}
+                                </span>
+                            )}
                          </div>
-                        <span className="text-xl font-medium whitespace-nowrap" style={{ color: primaryColor }}>
-                            {lang === 'en' ? `RM ${selectedItem.price}` : `${selectedItem.price} 링깃`}
-                        </span>
+                        
+                        <div className="flex flex-col items-end">
+                            {selectedItem.originalPrice && selectedItem.originalPrice > selectedItem.price && !selectedItem.isSoldOut && (
+                                <span className="text-sm text-gray-500 line-through mb-1">RM {selectedItem.originalPrice}</span>
+                            )}
+                            <span className={`text-xl font-medium whitespace-nowrap ${selectedItem.isSoldOut ? 'text-gray-600' : ''}`} style={{ color: selectedItem.isSoldOut ? undefined : primaryColor }}>
+                                {lang === 'en' ? `RM ${selectedItem.price}` : `${selectedItem.price} 링깃`}
+                            </span>
+                        </div>
                     </div>
-                    <p className="text-gray-400 text-sm leading-relaxed mt-4 border-l border-gold/30 pl-4">
+                    <p className={`text-sm leading-relaxed mt-4 border-l pl-4 ${selectedItem.isSoldOut ? 'text-gray-600 border-gray-800' : 'text-gray-400 border-gold/30'}`}>
                         {selectedItem.description[lang]}
                     </p>
                 </div>

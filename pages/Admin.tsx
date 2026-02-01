@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { Button, Input, TextArea } from '../components/UI';
@@ -413,8 +414,10 @@ const Admin: React.FC = () => {
         name: { en: '', ko: '' },
         description: { en: '', ko: '' },
         price: 0,
+        originalPrice: 0,
         image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
         isPopular: false,
+        isSoldOut: false,
         order: nextOrder
       });
     };
@@ -503,7 +506,14 @@ const Admin: React.FC = () => {
               <Input label="Name (KO)" value={formState.name?.ko} onChange={e => setFormState({...formState, name: {...formState.name!, ko: e.target.value}})} />
               <Input label="Desc (EN)" value={formState.description?.en} onChange={e => setFormState({...formState, description: {...formState.description!, en: e.target.value}})} />
               <Input label="Desc (KO)" value={formState.description?.ko} onChange={e => setFormState({...formState, description: {...formState.description!, ko: e.target.value}})} />
-              <Input label="Price" type="number" value={formState.price} onChange={e => setFormState({...formState, price: Number(e.target.value)})} />
+              
+              <div className="col-span-2 md:col-span-1">
+                <Input label="Selling Price" type="number" value={formState.price} onChange={e => setFormState({...formState, price: Number(e.target.value)})} />
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <Input label="Original Price (For Discounts)" type="number" value={formState.originalPrice} onChange={e => setFormState({...formState, originalPrice: Number(e.target.value)})} />
+              </div>
+              
               <Input label="Order (Optional)" type="number" value={formState.order || 0} onChange={e => setFormState({...formState, order: Number(e.target.value)})} />
               
               <div className="col-span-2">
@@ -514,10 +524,14 @@ const Admin: React.FC = () => {
                 />
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-2 flex gap-8">
                  <label className="text-white flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" checked={formState.isPopular} onChange={e => setFormState({...formState, isPopular: e.target.checked})} />
                     Is Popular Item?
+                 </label>
+                 <label className="text-red-400 flex items-center gap-2 cursor-pointer font-bold">
+                    <input type="checkbox" checked={formState.isSoldOut} onChange={e => setFormState({...formState, isSoldOut: e.target.checked})} />
+                    Sold Out (품절)
                  </label>
               </div>
             </div>
@@ -552,7 +566,7 @@ const Admin: React.FC = () => {
                                  .filter(m => m.subCategoryId === sub.id)
                                  .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999))
                                  .map((item, index, array) => (
-                                    <div key={item.id} className="bg-neutral-900 p-3 flex justify-between items-center border border-neutral-800 hover:border-neutral-600 transition-colors">
+                                    <div key={item.id} className={`bg-neutral-900 p-3 flex justify-between items-center border hover:border-neutral-600 transition-colors ${item.isSoldOut ? 'border-red-900/30 opacity-60' : 'border-neutral-800'}`}>
                                        <div className="flex gap-4 items-center">
                                           {/* Reorder Buttons */}
                                           <div className="flex flex-col gap-1">
@@ -572,12 +586,28 @@ const Admin: React.FC = () => {
                                              </button>
                                           </div>
                                           
-                                          <div className="w-10 h-10 shrink-0 overflow-hidden rounded bg-neutral-800">
-                                             <img src={item.image} alt={item.name.en} className="w-full h-full object-cover" />
+                                          <div className="w-10 h-10 shrink-0 overflow-hidden rounded bg-neutral-800 relative">
+                                             <img src={item.image} alt={item.name.en} className={`w-full h-full object-cover ${item.isSoldOut ? 'grayscale blur-[1px]' : ''}`} />
+                                             {item.originalPrice && item.originalPrice > item.price && !item.isSoldOut && (
+                                                 <div className="absolute top-0 left-0 bg-gold w-2 h-2 rounded-full border border-black animate-pulse" />
+                                             )}
+                                             {item.isSoldOut && (
+                                                 <div className="absolute top-0 left-0 bg-red-600 w-full h-full flex items-center justify-center">
+                                                     <span className="text-[6px] font-black text-white leading-none">SOLD</span>
+                                                 </div>
+                                             )}
                                           </div>
                                           <div>
-                                             <p className="text-white font-medium text-sm">{item.name.en}</p>
-                                             <p className="text-xs text-gray-500">RM {item.price}</p>
+                                             <div className="flex items-center gap-2">
+                                                <p className={`font-medium text-sm ${item.isSoldOut ? 'text-gray-500 line-through' : 'text-white'}`}>{item.name.en}</p>
+                                                {item.isSoldOut && <span className="text-[8px] bg-red-600/20 text-red-500 px-1 font-bold">품절</span>}
+                                                {item.originalPrice && item.originalPrice > item.price && !item.isSoldOut && (
+                                                    <span className="text-[9px] text-gold font-bold">-%{Math.round((1 - item.price / item.originalPrice) * 100)}</span>
+                                                )}
+                                             </div>
+                                             <div className="flex items-center gap-2">
+                                                <p className={`text-xs ${item.isSoldOut ? 'text-gray-600' : 'text-gray-300'}`}>RM {item.price}</p>
+                                             </div>
                                           </div>
                                        </div>
                                        <div className="flex gap-2">

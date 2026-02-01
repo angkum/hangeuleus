@@ -25,8 +25,10 @@ export interface MenuItem {
   name: LocalizedString;
   description: LocalizedString;
   price: number;
+  originalPrice?: number; // Added for showing discounts
   image: string;
   isPopular: boolean;
+  isSoldOut?: boolean; // Added for sold out status
   order?: number; // Added for ordering items
 }
 
