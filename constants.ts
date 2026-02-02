@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-02-02T17:59:02.854Z)
+// PASTE START: Generated from Admin (2026-02-02T18:49:36.599Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -208,8 +208,12 @@ const CURRENT_STATE: AppState = {
       },
       "price": 55,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20133032.png",
-      "isPopular": false,
-      "order": 3
+      "isPopular": true,
+      "order": 3,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1768969422694",
@@ -356,7 +360,12 @@ const CURRENT_STATE: AppState = {
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20154532.png",
       "isPopular": false,
       "order": 1,
-      "originalPrice": 35
+      "originalPrice": 35,
+      "toppingText": {
+        "ko": "토핑추가 - 진한 모짜젤라 치즈 추가:RM 5 / 메추리알 (5p):RM 3",
+        "en": "ADD-ON - Mozzarella Cheese: 5RM / Quall Eggs (5pcs):3RM"
+      },
+      "hasToppings": true
     },
     {
       "id": "1769852567241",
@@ -487,7 +496,12 @@ const CURRENT_STATE: AppState = {
       "price": 23,
       "image": "https://i.ibb.co/BhtNCXG/2026-01-30-143155.png",
       "isPopular": false,
-      "order": 2
+      "order": 2,
+      "toppingText": {
+        "ko": "토핑추가 - 진한 모짜젤라 치즈 추가:RM 5 / 메추리알 (5p):RM 3",
+        "en": "ADD-ON - Mozzarella Cheese: 5RM / Quall Eggs (5pcs):3RM"
+      },
+      "hasToppings": true
     },
     {
       "id": "1769854960018",
@@ -705,7 +719,12 @@ const CURRENT_STATE: AppState = {
       "isPopular": false,
       "isSoldOut": false,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-02%20225813.png",
-      "order": 6
+      "order": 6,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "isNew": true
     },
     {
       "id": "1770051754856",
@@ -723,7 +742,12 @@ const CURRENT_STATE: AppState = {
       "isPopular": false,
       "isSoldOut": false,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-02%20231109.png",
-      "order": 3
+      "order": 3,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "isNew": true
     },
     {
       "id": "1770051892677",
@@ -740,7 +764,12 @@ const CURRENT_STATE: AppState = {
       "originalPrice": 0,
       "isPopular": false,
       "isSoldOut": false,
-      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-03%20001242.png"
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-03%20001242.png",
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "isNew": true
     }
   ],
   "news": [
