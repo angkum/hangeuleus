@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Globe, Phone, MapPin, Instagram, Facebook, Clock, AtSign, Copy, Check } from 'lucide-react';
@@ -68,21 +69,67 @@ export const Navbar: React.FC = () => {
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
 
-        {/* Mobile Menu Overlay */}
-        <div className={`fixed inset-0 bg-black/95 flex flex-col justify-center items-center gap-8 transition-transform duration-500 md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          {navLinks.map((link) => (
-            <Link 
-              key={link.path} 
-              to={link.path} 
-              className="text-2xl font-bold text-white tracking-widest"
-              onClick={() => setIsOpen(false)}
-            >
-              {link[state.lang]}
-            </Link>
-          ))}
-          <button onClick={toggleLang} className="mt-8 text-gold uppercase tracking-widest">
-            Switch to {state.lang === 'en' ? 'Korean' : 'English'}
-          </button>
+        {/* Mobile Menu Overlay - Redesigned based on screenshot */}
+        <div className={`fixed inset-0 bg-black transition-transform duration-500 md:hidden z-40 overflow-y-auto ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex flex-col p-12 pt-28 gap-8">
+            
+            {/* 1. Contact Info at the top (as seen in screenshot) */}
+            <div className="flex flex-col gap-3 text-[10px] text-gray-500 tracking-widest uppercase border-b border-white/5 pb-8">
+               <div className="flex items-center gap-2">
+                 <Phone size={12} /> {state.content.contact.phone}
+               </div>
+               <div className="flex items-center gap-2">
+                 <Clock size={12} /> {state.content.contact.hours[state.lang]}
+               </div>
+            </div>
+
+            {/* 2 & 3. Header Row: LINKS (Left) and LOGO (Right) */}
+            <div className="flex justify-between items-center border-b border-white/5 pb-6">
+              <h4 className="text-gold text-[10px] uppercase tracking-[0.4em] font-black">Links</h4>
+              {state.content.footer.logo && (
+                <div className="w-20 h-20">
+                  <img src={state.content.footer.logo} alt="Brand Logo" className="w-full h-full object-contain opacity-90" />
+                </div>
+              )}
+            </div>
+
+            {/* Links Section */}
+            <div>
+              <div className="flex flex-col gap-6">
+                {navLinks.map((link) => (
+                  <Link 
+                    key={link.path} 
+                    to={link.path} 
+                    className={`text-xl font-bold tracking-[0.2em] transition-colors ${location.pathname === link.path ? 'text-gold' : 'text-white'}`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link[state.lang]}
+                  </Link>
+                ))}
+                <Link 
+                  to="/admin" 
+                  className="text-xl font-bold tracking-[0.2em] text-white/50 hover:text-white"
+                  onClick={() => setIsOpen(false)}
+                >
+                  ADMIN LOGIN
+                </Link>
+              </div>
+            </div>
+
+            {/* 4. Language Switch & Footer */}
+            <div className="mt-8 pt-8 border-t border-white/5">
+              <button 
+                onClick={toggleLang} 
+                className="text-[10px] uppercase tracking-widest text-gold border border-gold/20 px-4 py-2 hover:bg-gold hover:text-black transition-all"
+              >
+                {state.lang === 'en' ? 'Switch to Korean' : 'Switch to English'}
+              </button>
+              <p className="mt-12 text-[8px] text-gray-700 tracking-[0.3em]">
+                &copy; {new Date().getFullYear()} {state.lang === 'en' ? 'HAN GEU LEUS' : '한그릇'}
+              </p>
+            </div>
+
+          </div>
         </div>
       </div>
     </nav>

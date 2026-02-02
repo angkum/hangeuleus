@@ -14,22 +14,22 @@ export interface MenuCategory {
 
 export interface MenuSubCategory {
   id: string;
-  categoryId: string; // Links to MenuCategory
+  categoryId: string;
   name: LocalizedString;
   order: number;
 }
 
 export interface MenuItem {
   id: string;
-  subCategoryId: string; // Changed from category string to subCategoryId
+  subCategoryId: string;
   name: LocalizedString;
   description: LocalizedString;
   price: number;
-  originalPrice?: number; // Added for showing discounts
+  originalPrice?: number;
   image: string;
   isPopular: boolean;
-  isSoldOut?: boolean; // Added for sold out status
-  order?: number; // Added for ordering items
+  isSoldOut?: boolean;
+  order?: number;
 }
 
 export interface NewsPost {
@@ -67,6 +67,7 @@ export interface SiteContent {
   contact: {
     address: LocalizedString;
     phone: string;
+    whatsapp: string; // Added field
     email: string;
     hours: LocalizedString;
     social: {
@@ -99,23 +100,15 @@ export interface AdminContextType {
   setLanguage: (lang: Language) => void;
   updateContent: (section: keyof SiteContent, data: any) => void;
   updateTheme: (color: string) => void;
-  
-  // Menu Item Actions
   addMenuItem: (item: MenuItem) => void;
   updateMenuItem: (item: MenuItem) => void;
   deleteMenuItem: (id: string) => void;
-  
-  // Category Actions
   addCategory: (cat: MenuCategory) => void;
   updateCategory: (cat: MenuCategory) => void;
   deleteCategory: (id: string) => void;
-  
-  // SubCategory Actions
   addSubCategory: (sub: MenuSubCategory) => void;
   updateSubCategory: (sub: MenuSubCategory) => void;
   deleteSubCategory: (id: string) => void;
-
-  // News Actions
   addNews: (post: NewsPost) => void;
   updateNews: (post: NewsPost) => void;
   deleteNews: (id: string) => void;

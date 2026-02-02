@@ -2,14 +2,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { Button, Input, TextArea, SectionTitle } from '../components/UI';
-import { MenuItem, NewsPost, MenuCategory, MenuSubCategory } from '../types';
+import { MenuItem, NewsPost, MenuCategory, MenuSubCategory, SiteContent } from '../types';
 import { 
   Trash2, Plus, Edit2, LogOut, Layout, Coffee, FileText, 
   Settings, AlignLeft, Phone, Share2, BarChart, FileImage, Upload,
   Download, Database, Copy, AlertTriangle, RefreshCw, RotateCcw, Code,
-  Rocket, Smartphone, Globe, Layers, ArrowUp, ArrowDown, X
+  Rocket, Smartphone, Globe, Layers, ArrowUp, ArrowDown, X, MapPin, Clock, Info, Instagram, Facebook, AtSign, MessageCircle
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
+// --- Shared Components ---
 
 const ImagePicker: React.FC<{ label: string; value: string; onChange: (val: string) => void }> = ({ label, value, onChange }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -65,7 +67,6 @@ const ImagePicker: React.FC<{ label: string; value: string; onChange: (val: stri
   );
 };
 
-// Separated EditForm component to prevent re-mounting on parent re-render
 interface MenuEditFormProps {
   editingId: string;
   initialForm: Partial<MenuItem>;
@@ -85,19 +86,13 @@ const MenuEditForm: React.FC<MenuEditFormProps> = ({
 }) => {
   const [form, setForm] = useState<Partial<MenuItem>>(initialForm);
 
-  // Synchronize local form state if initialForm changes externally (e.g. switching between items)
   useEffect(() => {
     setForm(initialForm);
   }, [initialForm.id]);
 
   return (
-    <div className="bg-neutral-800 p-6 border-2 border-gold mb-8 mt-2 shadow-2xl animate-fade-in relative">
-      <button 
-        onClick={onCancel}
-        className="absolute top-4 right-4 text-gray-500 hover:text-white"
-      >
-        <X size={20} />
-      </button>
+    <div className="bg-neutral-800 p-6 border-2 border-gold mb-8 mt-2 shadow-2xl animate-fade-in relative z-10">
+      <button onClick={onCancel} className="absolute top-4 right-4 text-gray-500 hover:text-white"><X size={20} /></button>
       <h4 className="text-gold font-bold uppercase tracking-widest mb-6 flex items-center gap-2">
         {editingId === 'new' ? <Plus size={18} /> : <Edit2 size={18} />}
         {editingId === 'new' ? 'New Menu Item' : 'Edit Menu Item'}
@@ -137,7 +132,7 @@ const MenuEditForm: React.FC<MenuEditFormProps> = ({
         <div className="col-span-2 flex gap-8 py-2">
            <label className="text-white flex items-center gap-3 cursor-pointer group">
               <input type="checkbox" className="w-4 h-4 accent-gold" checked={form.isPopular} onChange={e => setForm({...form, isPopular: e.target.checked})} />
-              <span className="group-hover:text-gold transition-colors">Mark as Popular Item</span>
+              <span className="group-hover:text-gold transition-colors font-medium">BEST ITEM</span>
            </label>
            <label className="text-red-400 flex items-center gap-3 cursor-pointer group">
               <input type="checkbox" className="w-4 h-4 accent-red-600" checked={form.isSoldOut} onChange={e => setForm({...form, isSoldOut: e.target.checked})} />
@@ -158,6 +153,8 @@ const MenuEditForm: React.FC<MenuEditFormProps> = ({
   );
 };
 
+// --- Main Admin Component ---
+
 const Admin: React.FC = () => {
   const { 
     state, updateContent, updateTheme, addMenuItem, updateMenuItem, deleteMenuItem,
@@ -167,7 +164,7 @@ const Admin: React.FC = () => {
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
-  const [activeTab, setActiveTab] = useState<'content' | 'menu' | 'categories' | 'news' | 'theme' | 'deploy'>('content');
+  const [activeTab, setActiveTab] = useState<'content' | 'menu' | 'news' | 'theme' | 'deploy'>('content');
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
@@ -193,67 +190,82 @@ const Admin: React.FC = () => {
     );
   }
 
-  // --- Tabs Implementation ---
+  // --- Sub-Editor Components ---
 
   const ContentEditor = () => {
-    const [hero, setHero] = useState(state.content.hero);
-    const [about, setAbout] = useState(state.content.about);
+    const [localContent, setLocalContent] = useState<SiteContent>(state.content);
+
+    const handleSave = (section: keyof SiteContent) => {
+      updateContent(section, localContent[section]);
+      alert(`${section.toUpperCase()} saved successfully!`);
+    };
 
     return (
-      <div className="space-y-8 animate-fade-in pb-12">
-        <div className="bg-neutral-900 p-6 rounded border border-neutral-800">
-          <h3 className="text-xl text-white mb-4 flex items-center gap-2 font-serif"><Layout size={20} /> Hero Section</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-             <Input label="Title (EN)" value={hero.title.en} onChange={e => setHero({...hero, title: {...hero.title, en: e.target.value}})} />
-             <Input label="Title (KO)" value={hero.title.ko} onChange={e => setHero({...hero, title: {...hero.title, ko: e.target.value}})} />
+      <div className="space-y-12 animate-fade-in pb-12">
+        {/* 1. Hero Section */}
+        <div className="bg-neutral-900 p-8 border border-neutral-800 rounded">
+          <h3 className="text-xl text-white mb-6 flex items-center gap-2 font-serif text-gold"><Layout size={20} /> Hero Section</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+             <Input label="Title (KO)" value={localContent.hero.title.ko} onChange={e => setLocalContent({...localContent, hero: {...localContent.hero, title: {...localContent.hero.title, ko: e.target.value}}})} />
+             <Input label="Title (EN)" value={localContent.hero.title.en} onChange={e => setLocalContent({...localContent, hero: {...localContent.hero, title: {...localContent.hero.title, en: e.target.value}}})} />
+             <Input label="Subtitle (KO)" value={localContent.hero.subtitle.ko} onChange={e => setLocalContent({...localContent, hero: {...localContent.hero, subtitle: {...localContent.hero.subtitle, ko: e.target.value}}})} />
+             <Input label="Subtitle (EN)" value={localContent.hero.subtitle.en} onChange={e => setLocalContent({...localContent, hero: {...localContent.hero, subtitle: {...localContent.hero.subtitle, en: e.target.value}}})} />
+             <Input label="CTA Button (KO)" value={localContent.hero.cta.ko} onChange={e => setLocalContent({...localContent, hero: {...localContent.hero, cta: {...localContent.hero.cta, ko: e.target.value}}})} />
+             <Input label="CTA Button (EN)" value={localContent.hero.cta.en} onChange={e => setLocalContent({...localContent, hero: {...localContent.hero, cta: {...localContent.hero.cta, en: e.target.value}}})} />
           </div>
-          <ImagePicker label="Hero Image" value={hero.image} onChange={val => setHero({...hero, image: val})} />
-          <Button onClick={() => { updateContent('hero', hero); alert('Hero Saved!'); }}>Save Hero</Button>
+          <ImagePicker label="Hero Background Image" value={localContent.hero.image} onChange={val => setLocalContent({...localContent, hero: {...localContent.hero, image: val}})} />
+          <Button onClick={() => handleSave('hero')}>Save Hero</Button>
         </div>
-        
-        <div className="bg-neutral-900 p-6 rounded border border-neutral-800">
-          <h3 className="text-xl text-white mb-4 flex items-center gap-2 font-serif"><AlignLeft size={20} /> About Section</h3>
-          <TextArea label="Story (EN)" rows={6} value={about.details?.en || about.description.en} onChange={e => setAbout({...about, details: {...(about.details || about.description), en: e.target.value}})} />
-          <TextArea label="Story (KO)" rows={6} value={about.details?.ko || about.description.ko} onChange={e => setAbout({...about, details: {...(about.details || about.description), ko: e.target.value}})} />
-          <Button onClick={() => { updateContent('about', about); alert('About Saved!'); }}>Save About</Button>
+
+        {/* 2. About Section */}
+        <div className="bg-neutral-900 p-8 border border-neutral-800 rounded">
+          <h3 className="text-xl text-white mb-6 flex items-center gap-2 font-serif text-gold"><AlignLeft size={20} /> About Section</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+             <TextArea label="Brand Story (KO)" rows={8} value={localContent.about.details?.ko || localContent.about.description.ko} onChange={e => setLocalContent({...localContent, about: {...localContent.about, details: {...(localContent.about.details || localContent.about.description), ko: e.target.value}}})} />
+             <TextArea label="Brand Story (EN)" rows={8} value={localContent.about.details?.en || localContent.about.description.en} onChange={e => setLocalContent({...localContent, about: {...localContent.about, details: {...(localContent.about.details || localContent.about.description), en: e.target.value}}})} />
+          </div>
+          <ImagePicker label="About Image" value={localContent.about.image} onChange={val => setLocalContent({...localContent, about: {...localContent.about, image: val}})} />
+          <Button onClick={() => handleSave('about')}>Save About</Button>
         </div>
-      </div>
-    );
-  };
 
-  const CategoryManager = () => {
-    const [editingCat, setEditingCat] = useState<Partial<MenuCategory> | null>(null);
+        {/* 3. Location & Contact Section */}
+        <div className="bg-neutral-900 p-8 border border-neutral-800 rounded">
+          <h3 className="text-xl text-white mb-6 flex items-center gap-2 font-serif text-gold"><MapPin size={20} /> Location & Contact</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+             <Input label="Full Address (KO)" value={localContent.contact.address.ko} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, address: {...localContent.contact.address, ko: e.target.value}}})} />
+             <Input label="Full Address (EN)" value={localContent.contact.address.en} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, address: {...localContent.contact.address, en: e.target.value}}})} />
+             <Input label="Public Phone" value={localContent.contact.phone} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, phone: e.target.value}})} />
+             <Input 
+                label="WhatsApp Number (Hero Button Link)" 
+                value={localContent.contact.whatsapp} 
+                placeholder="+60 11-1635-2210"
+                onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, whatsapp: e.target.value}})} 
+             />
+             <Input label="Email" value={localContent.contact.email} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, email: e.target.value}})} />
+             <Input label="Business Hours (KO)" value={localContent.contact.hours.ko} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, hours: {...localContent.contact.hours, ko: e.target.value}}})} />
+             <Input label="Business Hours (EN)" value={localContent.contact.hours.en} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, hours: {...localContent.contact.hours, en: e.target.value}}})} />
+          </div>
+          <Button onClick={() => handleSave('contact')}>Save Contact Info</Button>
+        </div>
 
-    return (
-      <div className="space-y-8 animate-fade-in pb-12">
-        <div className="bg-neutral-900 p-6 border border-neutral-800 rounded">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl text-white font-serif">Main Categories</h3>
-            <Button size="sm" onClick={() => setEditingCat({ id: `c_${Date.now()}`, name: {en:'', ko:''}, order: state.categories.length + 1 })}>Add Category</Button>
+        {/* 4. Footer & Logo Section */}
+        <div className="bg-neutral-900 p-8 border border-neutral-800 rounded">
+          <h3 className="text-xl text-white mb-6 flex items-center gap-2 font-serif text-gold"><FileImage size={20} /> Branding & Footer</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+             <Input label="Brand Name (KO)" value={localContent.footer.brandName.ko} onChange={e => setLocalContent({...localContent, footer: {...localContent.footer, brandName: {...localContent.footer.brandName, ko: e.target.value}}})} />
+             <Input label="Brand Name (EN)" value={localContent.footer.brandName.en} onChange={e => setLocalContent({...localContent, footer: {...localContent.footer, brandName: {...localContent.footer.brandName, en: e.target.value}}})} />
+             <Input label="Tagline (KO)" value={localContent.footer.tagline.ko} onChange={e => setLocalContent({...localContent, footer: {...localContent.footer, tagline: {...localContent.footer.tagline, ko: e.target.value}}})} />
+             <Input label="Tagline (EN)" value={localContent.footer.tagline.en} onChange={e => setLocalContent({...localContent, footer: {...localContent.footer, tagline: {...localContent.footer.tagline, en: e.target.value}}})} />
           </div>
-          {editingCat && (
-            <div className="bg-neutral-800 p-4 mb-6 border border-gold">
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <Input label="Name (EN)" value={editingCat.name?.en} onChange={e => setEditingCat({...editingCat, name: {...editingCat.name!, en: e.target.value}})} />
-                <Input label="Name (KO)" value={editingCat.name?.ko} onChange={e => setEditingCat({...editingCat, name: {...editingCat.name!, ko: e.target.value}})} />
-              </div>
-              <div className="flex gap-2">
-                <Button size="sm" onClick={() => { editingCat.id?.startsWith('c_') ? addCategory(editingCat as MenuCategory) : updateCategory(editingCat as MenuCategory); setEditingCat(null); }}>Save</Button>
-                <Button size="sm" variant="outline" onClick={() => setEditingCat(null)}>Cancel</Button>
-              </div>
-            </div>
-          )}
-          <div className="space-y-2">
-            {state.categories.sort((a,b) => a.order - b.order).map(cat => (
-              <div key={cat.id} className="bg-black/20 p-3 flex justify-between items-center border border-neutral-800">
-                <span className="text-white font-medium">{cat.name.ko} / {cat.name.en}</span>
-                <div className="flex gap-2">
-                  <button onClick={() => setEditingCat(cat)} className="p-2 text-blue-400 hover:bg-neutral-800 rounded"><Edit2 size={14}/></button>
-                  <button onClick={() => deleteCategory(cat.id)} className="p-2 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={14}/></button>
-                </div>
-              </div>
-            ))}
+          <ImagePicker label="Main Logo Image" value={localContent.footer.logo} onChange={val => setLocalContent({...localContent, footer: {...localContent.footer, logo: val}})} />
+          
+          <h4 className="text-gray-400 text-xs uppercase tracking-widest mb-4 mt-8 flex items-center gap-2"><Share2 size={14} /> Social Links</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+             <Input label="Instagram URL" value={localContent.contact.social.instagram} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, social: {...localContent.contact.social, instagram: e.target.value}}})} />
+             <Input label="Facebook URL" value={localContent.contact.social.facebook} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, social: {...localContent.contact.social, facebook: e.target.value}}})} />
+             <Input label="Threads URL" value={localContent.contact.social.threads} onChange={e => setLocalContent({...localContent, contact: {...localContent.contact, social: {...localContent.contact.social, threads: e.target.value}}})} />
           </div>
+          <Button onClick={() => handleSave('footer')}>Save Footer & Social</Button>
         </div>
       </div>
     );
@@ -284,22 +296,16 @@ const Admin: React.FC = () => {
     };
 
     const handleSave = (formData: MenuItem) => {
-      if (editingId === 'new') {
-        addMenuItem(formData);
-      } else {
-        updateMenuItem(formData);
-      }
+      if (editingId === 'new') addMenuItem(formData);
+      else updateMenuItem(formData);
       setEditingId(null);
     };
 
     const handleMove = (item: MenuItem, direction: 'up' | 'down', siblingItems: MenuItem[]) => {
       const currentIndex = siblingItems.findIndex(i => i.id === item.id);
       const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
-
       if (targetIndex < 0 || targetIndex >= siblingItems.length) return;
-
       const targetItem = siblingItems[targetIndex];
-      
       const tempOrder = item.order ?? 0;
       updateMenuItem({ ...item, order: targetItem.order ?? 0 });
       updateMenuItem({ ...targetItem, order: tempOrder });
@@ -308,10 +314,8 @@ const Admin: React.FC = () => {
     return (
       <div className="space-y-12 animate-fade-in pb-12">
         <div className="flex justify-between items-center mb-6">
-          <h3 className="text-2xl text-white font-serif">Menu Items Management</h3>
-          <Button onClick={startNew} className="flex items-center gap-2">
-            <Plus size={18} /> Add New Item
-          </Button>
+          <h3 className="text-2xl text-white font-serif">Menu Management</h3>
+          <Button onClick={startNew} className="flex items-center gap-2"><Plus size={18} /> Add New Item</Button>
         </div>
 
         {editingId === 'new' && (
@@ -345,10 +349,9 @@ const Admin: React.FC = () => {
                     return (
                       <div key={sub.id} className="space-y-4">
                         <h5 className="text-sm font-bold text-gray-500 uppercase tracking-widest">{sub.name.ko} / {sub.name.en}</h5>
-                        
                         <div className="grid gap-3">
                           {subItems.length === 0 ? (
-                            <p className="text-xs text-gray-700 italic">No items in this subcategory.</p>
+                            <p className="text-xs text-gray-700 italic">No items here.</p>
                           ) : (
                             subItems.map((item, idx) => (
                               <React.Fragment key={item.id}>
@@ -361,52 +364,20 @@ const Admin: React.FC = () => {
                                     </div>
                                     <div>
                                        <p className={`font-bold text-lg ${item.isSoldOut ? 'text-gray-500' : 'text-white'}`}>{item.name.ko}</p>
-                                       <p className="text-xs text-gray-500 font-mono">RM {item.price} {!!(item.originalPrice && item.originalPrice > item.price) ? `(Disc. from ${item.originalPrice})` : ''}</p>
+                                       <p className="text-xs text-gray-500 font-mono uppercase tracking-widest">RM {item.price}</p>
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2">
                                     <div className="flex flex-col gap-1 mr-2">
-                                      <button 
-                                        disabled={idx === 0}
-                                        onClick={() => handleMove(item, 'up', subItems)}
-                                        className={`p-1.5 rounded transition-colors ${idx === 0 ? 'text-gray-700 cursor-not-allowed' : 'text-gray-400 hover:text-white hover:bg-neutral-800'}`}
-                                      >
-                                        <ArrowUp size={14} />
-                                      </button>
-                                      <button 
-                                        disabled={idx === subItems.length - 1}
-                                        onClick={() => handleMove(item, 'down', subItems)}
-                                        className={`p-1.5 rounded transition-colors ${idx === subItems.length - 1 ? 'text-gray-700 cursor-not-allowed' : 'text-gray-400 hover:text-white hover:bg-neutral-800'}`}
-                                      >
-                                        <ArrowDown size={14} />
-                                      </button>
+                                      <button disabled={idx === 0} onClick={() => handleMove(item, 'up', subItems)} className={`p-1.5 rounded ${idx === 0 ? 'text-gray-700' : 'text-gray-400 hover:text-white hover:bg-neutral-800'}`}><ArrowUp size={14} /></button>
+                                      <button disabled={idx === subItems.length - 1} onClick={() => handleMove(item, 'down', subItems)} className={`p-1.5 rounded ${idx === subItems.length - 1 ? 'text-gray-700' : 'text-gray-400 hover:text-white hover:bg-neutral-800'}`}><ArrowDown size={14} /></button>
                                     </div>
-
-                                    <button 
-                                      onClick={() => startEdit(item)} 
-                                      className={`p-3 rounded transition-colors ${editingId === item.id ? 'bg-gold text-black' : 'text-blue-400 hover:bg-neutral-800'}`}
-                                      title="Edit"
-                                    >
-                                      <Edit2 size={18}/>
-                                    </button>
-                                    <button 
-                                      onClick={() => { if(window.confirm('Delete this item?')) deleteMenuItem(item.id); }} 
-                                      className="p-3 text-red-400 hover:bg-neutral-800 rounded transition-colors"
-                                      title="Delete"
-                                    >
-                                      <Trash2 size={18}/>
-                                    </button>
+                                    <button onClick={() => startEdit(item)} className={`p-3 rounded ${editingId === item.id ? 'bg-gold text-black' : 'text-blue-400 hover:bg-neutral-800'}`}><Edit2 size={18}/></button>
+                                    <button onClick={() => window.confirm('Delete?') && deleteMenuItem(item.id)} className="p-3 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={18}/></button>
                                   </div>
                                 </div>
                                 {editingId === item.id && (
-                                  <MenuEditForm 
-                                    editingId={item.id} 
-                                    initialForm={form} 
-                                    categories={state.categories} 
-                                    subCategories={state.subCategories} 
-                                    onSave={handleSave} 
-                                    onCancel={() => setEditingId(null)} 
-                                  />
+                                  <MenuEditForm editingId={item.id} initialForm={form} categories={state.categories} subCategories={state.subCategories} onSave={handleSave} onCancel={() => setEditingId(null)} />
                                 )}
                               </React.Fragment>
                             ))
@@ -430,30 +401,43 @@ const Admin: React.FC = () => {
     return (
       <div className="space-y-8 animate-fade-in pb-12">
         <div className="flex justify-between items-center">
-          <h3 className="text-xl text-white font-serif">News Posts</h3>
-          <Button size="sm" onClick={() => setEditing({ id: Date.now().toString(), title: {en:'', ko:''}, content: {en:'', ko:''}, date: new Date().toISOString().split('T')[0] })}>Create Post</Button>
+          <h3 className="text-xl text-white font-serif">Board / News Management</h3>
+          <Button size="sm" onClick={() => setEditing({ id: Date.now().toString(), title: {en:'', ko:''}, content: {en:'', ko:''}, date: new Date().toISOString().split('T')[0] })}>Create New Post</Button>
         </div>
         {editing && (
-          <div className="bg-neutral-800 p-6 border border-gold mb-8">
-            <Input label="Title (KO)" value={editing.title?.ko} onChange={e => setEditing({...editing, title: {...editing.title!, ko: e.target.value}})} />
-            <TextArea label="Content (KO)" rows={5} value={editing.content?.ko} onChange={e => setEditing({...editing, content: {...editing.content!, ko: e.target.value}})} />
-            <ImagePicker label="Image" value={editing.image || ''} onChange={val => setEditing({...editing, image: val})} />
-            <div className="flex gap-2">
-              <Button size="sm" onClick={() => { editing.id?.length ? (state.news.find(n=>n.id===editing.id) ? updateNews(editing as NewsPost) : addNews(editing as NewsPost)) : null; setEditing(null); }}>Save</Button>
-              <Button size="sm" variant="outline" onClick={() => setEditing(null)}>Cancel</Button>
+          <div className="bg-neutral-800 p-8 border-2 border-gold mb-12 shadow-2xl animate-fade-in">
+            <h4 className="text-gold font-bold uppercase tracking-widest mb-6">Edit Post (EN/KO)</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <Input label="Title (KO)" value={editing.title?.ko} onChange={e => setEditing({...editing, title: {...editing.title!, ko: e.target.value}})} />
+              <Input label="Title (EN)" value={editing.title?.en} onChange={e => setEditing({...editing, title: {...editing.title!, en: e.target.value}})} />
+              <TextArea label="Content (KO)" rows={10} value={editing.content?.ko} onChange={e => setEditing({...editing, content: {...editing.content!, ko: e.target.value}})} />
+              <TextArea label="Content (EN)" rows={10} value={editing.content?.en} onChange={e => setEditing({...editing, content: {...editing.content!, en: e.target.value}})} />
+              <Input label="Date" type="date" value={editing.date} onChange={e => setEditing({...editing, date: e.target.value})} />
+            </div>
+            <ImagePicker label="Featured Image" value={editing.image || ''} onChange={val => setEditing({...editing, image: val})} />
+            <div className="flex gap-4">
+              <Button onClick={() => { 
+                const isExisting = state.news.some(n => n.id === editing.id);
+                isExisting ? updateNews(editing as NewsPost) : addNews(editing as NewsPost);
+                setEditing(null);
+              }}>Save Post</Button>
+              <Button variant="outline" onClick={() => setEditing(null)}>Cancel</Button>
             </div>
           </div>
         )}
         <div className="grid gap-4">
           {state.news.map(post => (
-            <div key={post.id} className="bg-neutral-900 p-4 border border-neutral-800 flex justify-between items-center rounded">
-              <div className="flex items-center gap-4">
-                {post.image && <img src={post.image} className="w-12 h-12 object-cover" />}
-                <span className="text-white font-medium">{post.title.ko}</span>
+            <div key={post.id} className="bg-neutral-900 p-6 border border-neutral-800 flex justify-between items-center rounded hover:border-gold transition-colors">
+              <div className="flex items-center gap-6">
+                {post.image && <img src={post.image} className="w-16 h-16 object-cover rounded" />}
+                <div>
+                   <h4 className="text-white font-bold">{post.title.ko}</h4>
+                   <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">{post.date} | {post.title.en}</p>
+                </div>
               </div>
               <div className="flex gap-2">
-                <button onClick={() => setEditing(post)} className="p-2 text-blue-400 hover:bg-neutral-800 rounded"><Edit2 size={16}/></button>
-                <button onClick={() => deleteNews(post.id)} className="p-2 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={16}/></button>
+                <button onClick={() => setEditing(post)} className="p-3 text-blue-400 hover:bg-neutral-800 rounded"><Edit2 size={20}/></button>
+                <button onClick={() => window.confirm('Delete?') && deleteNews(post.id)} className="p-3 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={20}/></button>
               </div>
             </div>
           ))}
@@ -463,16 +447,43 @@ const Admin: React.FC = () => {
   };
 
   const ThemeEditor = () => (
-    <div className="bg-neutral-900 p-8 border border-neutral-800 rounded animate-fade-in">
-      <h3 className="text-white text-xl font-serif mb-6">Brand Identity</h3>
-      <div className="space-y-4">
-        <label className="block text-gray-400 text-sm uppercase tracking-widest">Primary Accent Color</label>
-        <div className="flex gap-6">
-          {['#D4AF37', '#E53935', '#3949AB', '#43A047', '#C0C0C0'].map(c => (
-            <button key={c} onClick={() => updateTheme(c)} className={`w-14 h-14 rounded-full transition-transform hover:scale-110 shadow-xl ${state.theme.primaryColor === c ? 'ring-4 ring-white ring-offset-4 ring-offset-black' : ''}`} style={{backgroundColor: c}} />
-          ))}
+    <div className="bg-neutral-900 p-8 border border-neutral-800 rounded animate-fade-in space-y-8">
+      <div>
+        <h3 className="text-xl text-white mb-6 flex items-center gap-2 font-serif text-gold"><Settings size={20} /> Branding Theme</h3>
+        <div className="space-y-4">
+          <label className="block text-gray-400 text-sm uppercase tracking-widest">Primary Accent Color</label>
+          <div className="flex flex-wrap gap-6">
+            {['#D4AF37', '#E53935', '#3949AB', '#43A047', '#C0C0C0', '#F06292', '#8BC34A'].map(c => (
+              <button 
+                key={c} 
+                onClick={() => updateTheme(c)} 
+                className={`w-14 h-14 rounded-full transition-transform hover:scale-110 shadow-xl border-4 ${state.theme.primaryColor === c ? 'border-white scale-110' : 'border-transparent'}`} 
+                style={{backgroundColor: c}} 
+              />
+            ))}
+          </div>
+          <div className="flex items-center gap-4 mt-8">
+            <div className="space-y-1">
+              <p className="text-xs text-gray-500 uppercase">Current Color Hex</p>
+              <input 
+                type="text" 
+                value={state.theme.primaryColor} 
+                onChange={(e) => updateTheme(e.target.value)}
+                className="bg-neutral-800 border border-neutral-700 text-white font-mono p-2 text-sm focus:outline-none focus:border-gold"
+              />
+            </div>
+            <div className="w-10 h-10 border border-neutral-700" style={{ backgroundColor: state.theme.primaryColor }}></div>
+          </div>
         </div>
-        <p className="text-xs text-gray-500 mt-4 uppercase">Current Color: <span className="text-gold font-mono">{state.theme.primaryColor}</span></p>
+      </div>
+
+      <div className="pt-8 border-t border-neutral-800">
+        <h4 className="text-sm font-bold text-white uppercase tracking-[0.2em] mb-4">Color Preview</h4>
+        <div className="flex gap-4 items-center">
+            <Button>Primary Button</Button>
+            <Button variant="outline">Outline Button</Button>
+            <span style={{ color: state.theme.primaryColor }} className="font-bold text-lg">Accent Text</span>
+        </div>
       </div>
     </div>
   );
@@ -486,22 +497,13 @@ const Admin: React.FC = () => {
     return (
       <div className="space-y-8 animate-fade-in pb-12">
         <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 border-l-4 border-gold p-8 rounded shadow-2xl">
-          <h3 className="text-2xl text-white font-bold mb-4 font-serif">Ready to Publish?</h3>
+          <h3 className="text-2xl text-white font-bold mb-4 font-serif">Publish Changes</h3>
           <p className="text-gray-300 text-sm mb-8 leading-relaxed max-w-2xl">
-            Currently, your changes are only saved in this browser (Local Storage). To make these updates visible to everyone (including mobile visitors), you must update the source code.
+            To make your changes visible to everyone permanently, copy the configuration code below and update the `constants.ts` file in your source code.
           </p>
-          <div className="bg-black/50 p-6 rounded border border-white/5 space-y-6">
-            <h4 className="text-gold font-bold uppercase tracking-[0.2em] flex items-center gap-2"><RefreshCw size={18} /> Method: Permanent Update</h4>
-            <ul className="text-sm text-gray-400 list-decimal list-inside space-y-3">
-              <li>Click the button below to copy the site configuration.</li>
-              <li>Open <code className="text-gold font-mono">constants.ts</code> in your project.</li>
-              <li>Replace the entire content with the copied code.</li>
-              <li>Deploy to your web host (GitHub, etc).</li>
-            </ul>
-            <Button onClick={handleCopyConfig} className="flex items-center gap-3 bg-gold text-black border-none font-bold py-4 px-8 shadow-lg hover:bg-white transition-colors">
-              <Copy size={20} /> Copy Configuration Code
-            </Button>
-          </div>
+          <Button onClick={handleCopyConfig} className="flex items-center gap-3 bg-gold text-black font-bold py-4 px-8 shadow-lg hover:bg-white transition-colors">
+            <Copy size={20} /> Copy Site Configuration Code
+          </Button>
         </div>
       </div>
     );
@@ -511,7 +513,7 @@ const Admin: React.FC = () => {
     <div className="min-h-screen bg-neutral-950 pt-32 pb-24 px-6">
       <div className="container mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-          <SectionTitle title="Dashboard" subtitle="Management" centered={false} />
+          <SectionTitle title="CMS DASHBOARD" subtitle="Management" centered={false} />
           <Button onClick={handleLogout} variant="outline" size="sm" className="flex items-center gap-2 border-white/20 text-white hover:bg-red-600 hover:border-red-600">
             <LogOut size={16} /> Logout
           </Button>
@@ -521,18 +523,11 @@ const Admin: React.FC = () => {
           {[
             { id: 'content', label: 'Content', icon: <Layout size={14} /> },
             { id: 'menu', label: 'Menu', icon: <Coffee size={14} /> },
-            { id: 'categories', label: 'Categories', icon: <Layers size={14} /> },
             { id: 'news', label: 'News', icon: <FileText size={14} /> },
             { id: 'theme', label: 'Theme', icon: <Settings size={14} /> },
-            { id: 'deploy', label: 'Deploy', icon: <Rocket size={14} /> },
+            { id: 'deploy', label: 'Publish', icon: <Rocket size={14} /> },
           ].map(tab => (
-            <button 
-              key={tab.id} 
-              onClick={() => setActiveTab(tab.id as any)} 
-              className={`px-8 py-4 text-xs uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-2 border-b-2 whitespace-nowrap ${
-                activeTab === tab.id ? 'text-gold border-gold font-bold bg-white/5' : 'text-gray-500 border-transparent hover:text-white hover:bg-white/5'
-              }`}
-            >
+            <button key={tab.id} onClick={() => setActiveTab(tab.id as any)} className={`px-8 py-4 text-xs uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-2 border-b-2 whitespace-nowrap ${activeTab === tab.id ? 'text-gold border-gold font-bold bg-white/5' : 'text-gray-500 border-transparent hover:text-white hover:bg-white/5'}`}>
               {tab.icon} {tab.label}
             </button>
           ))}
@@ -541,7 +536,6 @@ const Admin: React.FC = () => {
         <div className="min-h-[500px]">
           {activeTab === 'content' && <ContentEditor />}
           {activeTab === 'menu' && <MenuEditor />}
-          {activeTab === 'categories' && <CategoryManager />}
           {activeTab === 'news' && <NewsEditor />}
           {activeTab === 'theme' && <ThemeEditor />}
           {activeTab === 'deploy' && <DeploymentEditor />}

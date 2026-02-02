@@ -123,7 +123,10 @@ const Home: React.FC = () => {
   }, []);
 
   const popularItems = menu.filter(item => item.isPopular).slice(0, 3);
-  const whatsappNumber = state.content.contact.phone.replace(/[^0-9]/g, '');
+  
+  // Use dedicated whatsapp field if available, fallback to phone
+  const whatsappNumberRaw = state.content.contact.whatsapp || state.content.contact.phone;
+  const whatsappNumber = whatsappNumberRaw.replace(/[^0-9]/g, '');
 
   const toggleNewsExpand = (id: string) => {
     setExpandedNewsIds(prev => {
