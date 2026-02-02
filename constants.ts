@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-02-01T07:57:29.907Z)
+// PASTE START: Generated from Admin (2026-02-02T17:11:00.291Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -177,7 +177,7 @@ const CURRENT_STATE: AppState = {
       "price": 90,
       "image": "https://696fb61876634d918b871516.imgix.net/%ED%83%95%EC%88%98%EC%9C%A1.png",
       "isPopular": false,
-      "order": 1
+      "order": 0
     },
     {
       "id": "5",
@@ -193,7 +193,7 @@ const CURRENT_STATE: AppState = {
       "price": 50,
       "image": "https://i.ibb.co/8nyY51Jf/2026-01-30-173749.png",
       "isPopular": false,
-      "order": 2
+      "order": 1
     },
     {
       "id": "1768969350950",
@@ -209,7 +209,7 @@ const CURRENT_STATE: AppState = {
       "price": 55,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20133032.png",
       "isPopular": false,
-      "order": 4
+      "order": 3
     },
     {
       "id": "1768969422694",
@@ -225,7 +225,7 @@ const CURRENT_STATE: AppState = {
       "price": 99,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20133032.png",
       "isPopular": false,
-      "order": 5
+      "order": 4
     },
     {
       "id": "1768969485626",
@@ -241,7 +241,7 @@ const CURRENT_STATE: AppState = {
       "price": 90,
       "image": "https://i.ibb.co/DPBrC0Nv/2026-01-30-173749.png",
       "isPopular": false,
-      "order": 3
+      "order": 2
     },
     {
       "id": "1768969592524",
@@ -299,13 +299,13 @@ const CURRENT_STATE: AppState = {
         "ko": "S-1. 한그릇 시그니처 듀오 세트 (2인 기준)"
       },
       "description": {
-        "en": "THE SMARTEST WAY TO TASTE HANGEULEUS! INCLUDES: SALAD, TANG SOO YOOK, LEMON CREAM SHRIMP + CHOICE OF ANY 2 MAINS (JJA JANG / JJAM BBONG) + 2 DRINKS (GREEN TEA, CITRON TEA, OR SOFT DRINKS)",
-        "ko": "한그릇 인기 메뉴를 한 번에 즐기는 최고의 가성비! 구성: 샐러드, 탕수육, 레몬 크림 새우 + 식사 2그릇(짜장/짬뽕 중 선택) + 음료 2잔(녹차, 유자차, 탄산음료 중 택2)"
+        "en": "THE SMARTEST WAY TO TASTE HANGEULEUS! INCLUDES: SALAD, TANG SOO YOOK, LEMON CREAM SHRIMP + CHOICE OF ANY 2 MAINS (JJA JANG / JJAM BBONG) + 2 DRINKS (SOFT DRINKS)",
+        "ko": "한그릇 인기 메뉴를 한 번에 즐기는 최고의 가성비! 구성: 샐러드, 탕수육, 레몬 크림 새우 + 식사 2그릇(짜장/짬뽕 중 선택) + 음료 2잔(탄산음료 중 택2)"
       },
       "price": 99,
       "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20135514.png",
       "isPopular": true,
-      "originalPrice": 179
+      "originalPrice": 180
     },
     {
       "id": "1769851882303",
@@ -322,7 +322,7 @@ const CURRENT_STATE: AppState = {
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175936.png",
       "isPopular": true,
       "order": 1,
-      "originalPrice": 50
+      "originalPrice": 75
     },
     {
       "id": "1769852056185",
@@ -339,7 +339,7 @@ const CURRENT_STATE: AppState = {
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175628.png",
       "isPopular": false,
       "order": 0,
-      "originalPrice": 37
+      "originalPrice": 66
     },
     {
       "id": "1769852167553",
@@ -353,10 +353,10 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 30,
-      "image": "https://i.ibb.co/v42bZppW/2026-01-30-181415.png",
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20154532.png",
       "isPopular": false,
-      "order": 2,
-      "originalPrice": 37
+      "order": 1,
+      "originalPrice": 35
     },
     {
       "id": "1769852567241",
@@ -373,7 +373,7 @@ const CURRENT_STATE: AppState = {
       "image": "https://i.ibb.co/8n9GXXDJ/2026-01-30-182121.png",
       "isPopular": false,
       "order": 4,
-      "originalPrice": 35.5
+      "originalPrice": 35
     },
     {
       "id": "1769852829598",
@@ -411,8 +411,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769854205551",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "Boneless Fried Chicken",
-        "ko": "순살후라이드치킨"
+        "en": "C-A Boneless Fried Chicken",
+        "ko": "C-A 순살후라이드치킨"
       },
       "description": {
         "en": "Seasoning sauce · Crispy boneless chicken",
@@ -421,7 +421,7 @@ const CURRENT_STATE: AppState = {
       "price": 55,
       "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false,
-      "order": 6,
+      "order": 5,
       "isSoldOut": false
     },
     {
@@ -471,7 +471,7 @@ const CURRENT_STATE: AppState = {
       "price": 18,
       "image": "https://i.ibb.co/Y43TSskd/2026-01-30-200711.png",
       "isPopular": false,
-      "order": 1
+      "order": 0
     },
     {
       "id": "1769854711584",
@@ -481,13 +481,13 @@ const CURRENT_STATE: AppState = {
         "ko": "E-A 떡볶이"
       },
       "description": {
-        "en": "CHEWY RICE CAKES IN AN ADDICTIVE SPICY-SWEET SAUCE—A KOREAN STREET FOOD ICON",
-        "ko": "매콤달콤한 소스에 쫄깃한 떡, 한국 길거리 음식의 대표주자"
+        "en": "CHEWY RICE CAKES IN AN ADDICTIVE SPICY-SWEET SAUCE—A KOREAN STREET FOOD ICON \n[ADD-ON: MOZZARELLA CHEESE:5RM / QUAIL EGGS (5P):3RM]",
+        "ko": "매콤달콤한 소스에 쫄깃한 떡, 한국 길거리 음식의 대표주자\n[토핑추가-모짜렐라 치즈:5RM / 메추리알 5알:3RM]"
       },
       "price": 23,
       "image": "https://i.ibb.co/BhtNCXG/2026-01-30-143155.png",
       "isPopular": false,
-      "order": 3
+      "order": 2
     },
     {
       "id": "1769854960018",
@@ -503,7 +503,7 @@ const CURRENT_STATE: AppState = {
       "price": 9,
       "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false,
-      "order": 2
+      "order": 1
     },
     {
       "id": "1769855150528",
@@ -577,7 +577,7 @@ const CURRENT_STATE: AppState = {
         "en": "Soft Drinks",
         "ko": "탄산음료"
       },
-      "price": 3,
+      "price": 5,
       "image": "https://i.ibb.co/JF8378fy/2026-01-31-150036.png",
       "isPopular": false
     },
@@ -687,7 +687,60 @@ const CURRENT_STATE: AppState = {
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20181733.png",
       "isPopular": true,
       "isSoldOut": false,
-      "order": 1
+      "order": 2
+    },
+    {
+      "id": "1770051613454",
+      "subCategoryId": "s_fried_main",
+      "name": {
+        "en": "NEW. KIM-PI-TANG (Kimchi Cheese Tang Soo Yook)",
+        "ko": "신메뉴. 김피탕 - 김치피자탕수육 "
+      },
+      "description": {
+        "en": "The ultimate Korean fusion dish! Our classic crispy Tang Soo Yook topped with spicy stir-fried Kimchi and generous melted mozzarella cheese.",
+        "ko": "한국식 퓨전 요리의 끝판왕! 바삭한 탕수육 위에 매콤한 볶음 김치와 고소한 모짜렐라 치즈를 듬뿍 얹어 환상적인 맛의 조화를 자랑합니다."
+      },
+      "price": 59,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isSoldOut": false,
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-02%20225813.png",
+      "order": 6
+    },
+    {
+      "id": "1770051754856",
+      "subCategoryId": "s_side",
+      "name": {
+        "en": "E-NEW. TANGSU MAN DOO(6p)",
+        "ko": "신메뉴 탕수만두(6p)"
+      },
+      "description": {
+        "en": "Crispy fried dumplings (6pcs) topped with our signature sweet and sour Tangsuyuk sauce. A perfect combination of crunch and flavor.",
+        "ko": "바삭하게 튀겨낸 만두(6pcs) 위에 새콤달콤한 특제 탕수육 소스를 얹었습니다. 바삭한 식감과 소스의 풍미가 완벽한 조화를 이루는 메뉴입니다."
+      },
+      "price": 18,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isSoldOut": false,
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-02%20231109.png",
+      "order": 3
+    },
+    {
+      "id": "1770051892677",
+      "subCategoryId": "s_drinks",
+      "name": {
+        "en": "D-6 BIRAK SIKHYE",
+        "ko": "D-6 비락식혜"
+      },
+      "description": {
+        "en": "Korea's favorite traditional sweet rice drink. Made with malt water and real cooked rice grains, offering a unique and refreshing taste.",
+        "ko": ""
+      },
+      "price": 6,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isSoldOut": false,
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-03%20001242.png"
     }
   ],
   "news": [
