@@ -7,7 +7,8 @@ import {
   Trash2, Plus, Edit2, LogOut, Layout, Coffee, FileText, 
   Settings, AlignLeft, Phone, Share2, BarChart, FileImage, Upload,
   Download, Database, Copy, AlertTriangle, RefreshCw, RotateCcw, Code,
-  Rocket, Smartphone, Globe, Layers, ArrowUp, ArrowDown, X, MapPin, Clock, Info, Instagram, Facebook, AtSign, MessageCircle
+  Rocket, Smartphone, Globe, Layers, ArrowUp, ArrowDown, X, MapPin, Clock, Info, Instagram, Facebook, AtSign, MessageCircle,
+  PlusCircle, Utensils, Maximize, Sparkles, Zap
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -87,11 +88,23 @@ const MenuEditForm: React.FC<MenuEditFormProps> = ({
   const [form, setForm] = useState<Partial<MenuItem>>(initialForm);
 
   useEffect(() => {
-    setForm(initialForm);
+    const initial = { ...initialForm };
+    if (!initial.toppingText) initial.toppingText = { ko: '', en: '' };
+    setForm(initial);
   }, [initialForm.id]);
 
   return (
     <div className="bg-neutral-800 p-6 border-2 border-gold mb-8 mt-2 shadow-2xl animate-fade-in relative z-10">
+      <style>{`
+        @keyframes burst {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.2); opacity: 0.8; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-burst {
+          animation: burst 1.5s infinite ease-in-out;
+        }
+      `}</style>
       <button onClick={onCancel} className="absolute top-4 right-4 text-gray-500 hover:text-white"><X size={20} /></button>
       <h4 className="text-gold font-bold uppercase tracking-widest mb-6 flex items-center gap-2">
         {editingId === 'new' ? <Plus size={18} /> : <Edit2 size={18} />}
@@ -129,18 +142,89 @@ const MenuEditForm: React.FC<MenuEditFormProps> = ({
         <Input label="Selling Price (RM)" type="number" value={form.price} onChange={e => setForm({...form, price: Number(e.target.value)})} />
         <Input label="Original Price (RM)" type="number" value={form.originalPrice || 0} onChange={e => setForm({...form, originalPrice: Number(e.target.value)})} />
         
-        <div className="col-span-2 flex gap-8 py-2">
-           <label className="text-white flex items-center gap-3 cursor-pointer group">
-              <input type="checkbox" className="w-4 h-4 accent-gold" checked={form.isPopular} onChange={e => setForm({...form, isPopular: e.target.checked})} />
-              <span className="group-hover:text-gold transition-colors font-medium">BEST ITEM</span>
-           </label>
-           <label className="text-red-400 flex items-center gap-3 cursor-pointer group">
-              <input type="checkbox" className="w-4 h-4 accent-red-600" checked={form.isSoldOut} onChange={e => setForm({...form, isSoldOut: e.target.checked})} />
-              <span className="group-hover:text-red-300 transition-colors uppercase font-bold">Sold Out (품절)</span>
-           </label>
+        {/* Menu Options Section */}
+        <div className="col-span-2 space-y-6 py-6 border-y border-neutral-700/50 mt-2">
+           <h5 className="text-[10px] text-gray-500 uppercase tracking-[0.3em] font-black mb-2">Menu Display Options</h5>
+           
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* TOPPING Toggle & Input */}
+              <div className="space-y-4">
+                 <label className="text-white flex items-center gap-3 cursor-pointer group w-fit">
+                    <input type="checkbox" className="w-4 h-4 accent-gold" checked={form.hasToppings} onChange={e => setForm({...form, hasToppings: e.target.checked})} />
+                    <div className="flex items-center gap-2 group-hover:text-gold transition-colors">
+                      <PlusCircle size={18} className="text-gold" />
+                      <span className="font-bold text-xs uppercase tracking-widest">Topping Addition (토핑 추가 안내)</span>
+                    </div>
+                 </label>
+                 {form.hasToppings && (
+                    <div className="space-y-3 p-4 bg-neutral-900 border border-gold/30 rounded-sm animate-fade-in shadow-xl">
+                       <div className="flex items-center gap-2 mb-1">
+                          <Info size={12} className="text-gold" />
+                          <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Use "/" or new line to separate multiple toppings</p>
+                       </div>
+                       <TextArea 
+                          className="!mb-2 !p-3 text-xs border-gold/10 font-sans" 
+                          rows={2}
+                          placeholder="국문 안내 (예: 치즈 추가: 5RM / 메추리알: 3RM)" 
+                          value={form.toppingText?.ko} 
+                          onChange={e => setForm({...form, toppingText: {...form.toppingText!, ko: e.target.value}})} 
+                       />
+                       <TextArea 
+                          className="!mb-0 !p-3 text-xs border-gold/10 font-sans" 
+                          rows={2}
+                          placeholder="English Details (e.g. Cheese: 5RM / Quail Eggs: 3RM)" 
+                          value={form.toppingText?.en} 
+                          onChange={e => setForm({...form, toppingText: {...form.toppingText!, en: e.target.value}})} 
+                       />
+                    </div>
+                 )}
+              </div>
+
+              {/* Other Toggles */}
+              <div className="flex flex-col gap-6">
+                  {/* NEW MENU Toggle with Burst Animation */}
+                  <label className="text-white flex items-center gap-3 cursor-pointer group w-fit relative">
+                    <input type="checkbox" className="w-4 h-4 accent-gold" checked={form.isNew} onChange={e => setForm({...form, isNew: e.target.checked})} />
+                    <div className={`flex items-center gap-2 group-hover:text-gold transition-colors ${form.isNew ? 'animate-burst' : ''}`}>
+                      <Zap size={18} className={form.isNew ? 'text-gold fill-gold' : 'text-gray-400'} />
+                      <span className="font-bold text-xs uppercase tracking-[0.2em]">New Menu (신메뉴)</span>
+                    </div>
+                    {form.isNew && <div className="absolute -top-1 -right-4 w-2 h-2 bg-gold rounded-full animate-ping opacity-75"></div>}
+                  </label>
+
+                  <label className="text-white flex items-center gap-3 cursor-pointer group w-fit">
+                    <input type="checkbox" className="w-4 h-4 accent-gold" checked={form.hasExtraNoodles} onChange={e => setForm({...form, hasExtraNoodles: e.target.checked})} />
+                    <div className="flex items-center gap-2 group-hover:text-gold transition-colors">
+                      <Utensils size={18} />
+                      <span className="font-bold text-xs uppercase tracking-widest">Noodle Option (면 추가 아이콘)</span>
+                    </div>
+                  </label>
+
+                  <label className="text-white flex items-center gap-3 cursor-pointer group w-fit">
+                    <input type="checkbox" className="w-4 h-4 accent-gold" checked={form.hasSizeUp} onChange={e => setForm({...form, hasSizeUp: e.target.checked})} />
+                    <div className="flex items-center gap-2 group-hover:text-gold transition-colors">
+                      <Maximize size={18} />
+                      <span className="font-bold text-xs uppercase tracking-widest">Size Up Option (사이즈 업 아이콘)</span>
+                    </div>
+                  </label>
+
+                  <label className="text-white flex items-center gap-3 cursor-pointer group w-fit">
+                    <input type="checkbox" className="w-4 h-4 accent-gold" checked={form.isPopular} onChange={e => setForm({...form, isPopular: e.target.checked})} />
+                    <div className="flex items-center gap-2 group-hover:text-gold transition-colors">
+                      <Sparkles size={18} className="text-gold" />
+                      <span className="font-bold text-xs uppercase tracking-widest">Best Item (BEST 아이콘)</span>
+                    </div>
+                  </label>
+              </div>
+
+              <label className="text-red-400 flex items-center gap-3 cursor-pointer group col-span-2 pt-4 border-t border-neutral-700/30">
+                 <input type="checkbox" className="w-4 h-4 accent-red-600" checked={form.isSoldOut} onChange={e => setForm({...form, isSoldOut: e.target.checked})} />
+                 <span className="group-hover:text-red-300 transition-colors uppercase font-black text-xs tracking-widest">Sold Out (품절 상태로 표시)</span>
+              </label>
+           </div>
         </div>
         
-        <div className="col-span-2">
+        <div className="col-span-2 mt-4">
           <ImagePicker label="Item Image" value={form.image || ''} onChange={val => setForm({...form, image: val})} />
         </div>
         
@@ -152,8 +236,6 @@ const MenuEditForm: React.FC<MenuEditFormProps> = ({
     </div>
   );
 };
-
-// --- Main Admin Component ---
 
 const Admin: React.FC = () => {
   const { 
@@ -289,8 +371,13 @@ const Admin: React.FC = () => {
         price: 0, 
         originalPrice: 0,
         isPopular: false, 
+        isNew: true, // Default new items to isNew
         isSoldOut: false, 
-        image: '' 
+        image: '',
+        hasToppings: false,
+        toppingText: { ko: '', en: '' },
+        hasExtraNoodles: false,
+        hasSizeUp: false
       });
       setEditingId('new');
     };
@@ -360,10 +447,19 @@ const Admin: React.FC = () => {
                                     <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden">
                                       <img src={item.image} className={`w-full h-full object-cover ${item.isSoldOut ? 'grayscale blur-[1px]' : ''}`} />
                                       {item.isPopular && <div className="absolute top-0 right-0 bg-gold text-black text-[8px] px-1 font-bold">BEST</div>}
+                                      {item.isNew && <div className="absolute top-0 left-0 bg-gold text-black text-[8px] px-1 font-bold">NEW</div>}
                                       {item.isSoldOut && <div className="absolute inset-0 bg-red-600/30 flex items-center justify-center font-black text-[10px] text-white">SOLD</div>}
                                     </div>
                                     <div>
-                                       <p className={`font-bold text-lg ${item.isSoldOut ? 'text-gray-500' : 'text-white'}`}>{item.name.ko}</p>
+                                       <div className="flex items-center gap-2">
+                                         <p className={`font-bold text-lg ${item.isSoldOut ? 'text-gray-500' : 'text-white'}`}>{item.name.ko}</p>
+                                         <div className="flex gap-1">
+                                           {item.hasToppings && <PlusCircle size={10} className="text-gold" />}
+                                           {item.hasExtraNoodles && <Utensils size={10} className="text-gold" />}
+                                           {item.hasSizeUp && <Maximize size={10} className="text-gold" />}
+                                           {item.isNew && <Zap size={10} className="text-gold fill-gold" />}
+                                         </div>
+                                       </div>
                                        <p className="text-xs text-gray-500 font-mono uppercase tracking-widest">RM {item.price}</p>
                                     </div>
                                   </div>

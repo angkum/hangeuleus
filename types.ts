@@ -28,8 +28,16 @@ export interface MenuItem {
   originalPrice?: number;
   image: string;
   isPopular: boolean;
+  isNew?: boolean; // Added isNew
   isSoldOut?: boolean;
   order?: number;
+  // Option flags
+  hasToppings?: boolean;
+  toppingText?: LocalizedString;
+  hasExtraNoodles?: boolean;
+  noodleText?: LocalizedString;
+  hasSizeUp?: boolean;
+  sizeUpText?: LocalizedString;
 }
 
 export interface NewsPost {
@@ -67,7 +75,7 @@ export interface SiteContent {
   contact: {
     address: LocalizedString;
     phone: string;
-    whatsapp: string; // Added field
+    whatsapp: string;
     email: string;
     hours: LocalizedString;
     social: {
