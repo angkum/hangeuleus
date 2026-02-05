@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-02-02T18:49:36.599Z)
+// PASTE START: Generated from Admin (2026-02-05T09:34:56.856Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -290,10 +290,14 @@ const CURRENT_STATE: AppState = {
         "en": "CRUNCHY CHICKEN AND CREAMY TERIYAKI MAYO ON RICE—THE PERFECT COMFORT BOWL",
         "ko": "바삭한 치킨과 부드러운 마요 소스, 단짠의 정석을 보여주는 덮밥"
       },
-      "price": 25,
+      "price": 28,
       "image": "https://i.ibb.co/1YFLf00s/2026-01-30-174728.png",
       "isPopular": false,
-      "order": 3
+      "order": 3,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1769851092884",
