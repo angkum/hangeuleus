@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-02-05T09:34:56.856Z)
+// PASTE START: Generated from Admin (2026-02-05T09:48:12.562Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -183,7 +183,7 @@ const CURRENT_STATE: AppState = {
       "id": "5",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "C-2R Yoo-rin Chicken(Regular)",
+        "en": "C-2R Yuringi(Regular)",
         "ko": "C-2R 유린치킨(중)"
       },
       "description": {
@@ -193,13 +193,17 @@ const CURRENT_STATE: AppState = {
       "price": 50,
       "image": "https://i.ibb.co/8nyY51Jf/2026-01-30-173749.png",
       "isPopular": false,
-      "order": 1
+      "order": 1,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1768969350950",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "C-3R Fried Shrimp with Cream Sauce(Regular)",
+        "en": "C-3R Cheongyang Mayo Fried Shrimp(Regular)",
         "ko": "C-3R 새우 후라이드 + 청양크림소스(중)"
       },
       "description": {
@@ -219,7 +223,7 @@ const CURRENT_STATE: AppState = {
       "id": "1768969422694",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "C-3L Fried Shrimp with Cream Sauce(Large)",
+        "en": "C-3L Cheongyang Mayo Fried Shrimp(Large)",
         "ko": "C-3L 새우 후라이드 + 청양크림소스대)"
       },
       "description": {
@@ -229,13 +233,17 @@ const CURRENT_STATE: AppState = {
       "price": 99,
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-01%20133032.png",
       "isPopular": false,
-      "order": 4
+      "order": 4,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1768969485626",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "C-2L Yoo-rin Chicken(Large)",
+        "en": "C-2L Yuringi(Large)",
         "ko": "C-2L 유린치킨(대)"
       },
       "description": {
@@ -245,13 +253,17 @@ const CURRENT_STATE: AppState = {
       "price": 90,
       "image": "https://i.ibb.co/DPBrC0Nv/2026-01-30-173749.png",
       "isPopular": false,
-      "order": 2
+      "order": 2,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1768969592524",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "R-2 Seafood Jjam Bbong Rice",
+        "en": "R-2 Seafood Jjam Bbong bap",
         "ko": "R-2 해물 짬뽕밥"
       },
       "description": {
@@ -261,13 +273,17 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_132940_48715c18-6666-421c-865d-20dca9f342da.png",
       "isPopular": false,
-      "order": 1
+      "order": 1,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1768969631602",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "R-3 Chicken Mayo Rice + Jjam Bbong Soup",
+        "en": "R-3 Chicken Mayo Deopbap + Jjam Bbong Soup",
         "ko": "R-3 치킨마요 덮밥 + 짬뽕국물"
       },
       "description": {
@@ -277,7 +293,11 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://i.ibb.co/H9yfGkY/2026-01-30-143204.png",
       "isPopular": false,
-      "order": 2
+      "order": 2,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1768996839598",
@@ -319,7 +339,7 @@ const CURRENT_STATE: AppState = {
       "id": "1769851882303",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "DS-2. Jjajang Noodle + Yoo-rin Chicken",
+        "en": "DS-2. Jjajang Myeon+ Yuringi",
         "ko": "DS-2. 짜장면 + 유린치킨"
       },
       "description": {
@@ -327,10 +347,14 @@ const CURRENT_STATE: AppState = {
         "ko": "점심특선__12:00PM~15:00PM"
       },
       "price": 30,
-      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20175936.png",
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-03%20184725.png",
       "isPopular": true,
       "order": 1,
-      "originalPrice": 75
+      "originalPrice": 75,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1769852056185",
@@ -392,8 +416,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769852829598",
       "subCategoryId": "s_noodle",
       "name": {
-        "en": "M-2 Bomb Samgyeopsal Jjajang",
-        "ko": "M-2 폭탄삼겹살짜장"
+        "en": "M-2 Bomb Samgyeopsal Jjajang Myeon",
+        "ko": "M-2 폭탄삼겹살짜장면"
       },
       "description": {
         "en": "Extra pork belly · Jjajang noodles loaded with pork belly",
@@ -402,13 +426,17 @@ const CURRENT_STATE: AppState = {
       "price": 33,
       "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20230517.png",
       "isPopular": false,
-      "order": 1
+      "order": 1,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1769852924435",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "R-1 Jjajang Rice + Jjamppong Soup",
+        "en": "R-1 Jjajang bap+ Jjamppong Soup",
         "ko": "R-1 짜장밥 + 짬뽕국물"
       },
       "description": {
@@ -418,13 +446,17 @@ const CURRENT_STATE: AppState = {
       "price": 25,
       "image": "https://i.ibb.co/N2cSft6c/2026-01-31-144910.png",
       "isPopular": false,
-      "order": 0
+      "order": 0,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1769854205551",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "C-A Boneless Fried Chicken",
+        "en": "C-A Fried Boneless Chicken ",
         "ko": "C-A 순살후라이드치킨"
       },
       "description": {
@@ -435,7 +467,11 @@ const CURRENT_STATE: AppState = {
       "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false,
       "order": 5,
-      "isSoldOut": false
+      "isSoldOut": false,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1769854407673",
@@ -511,7 +547,7 @@ const CURRENT_STATE: AppState = {
       "id": "1769854960018",
       "subCategoryId": "s_side",
       "name": {
-        "en": "E-3 Fried Chicken(5P)",
+        "en": "E-3 Fried Chicken Add-on(5P)",
         "ko": "E-3. 후라이드치킨 추가(5P)"
       },
       "description": {
@@ -521,7 +557,11 @@ const CURRENT_STATE: AppState = {
       "price": 9,
       "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
       "isPopular": false,
-      "order": 1
+      "order": 1,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1769855150528",
@@ -693,7 +733,7 @@ const CURRENT_STATE: AppState = {
       "id": "1769931900693",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "DS-A JJA JANG NOODLE + TANG SOO-YOOK",
+        "en": "DS-A JJA JANG Myeon+ TANG SOO-YOOK",
         "ko": "DS-A 짜장면 + 탕수육"
       },
       "description": {
@@ -705,7 +745,11 @@ const CURRENT_STATE: AppState = {
       "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-30%20181733.png",
       "isPopular": true,
       "isSoldOut": false,
-      "order": 2
+      "order": 2,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1770051613454",
