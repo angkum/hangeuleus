@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-02-05T09:48:12.562Z)
+// PASTE START: Generated from Admin (2026-02-07T19:44:26.955Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -32,12 +32,28 @@ const CURRENT_STATE: AppState = {
       "order": 3
     },
     {
+      "id": "c_sizzling",
+      "name": {
+        "en": "Sizzling Plate",
+        "ko": "철판 요리"
+      },
+      "order": 4
+    },
+    {
+      "id": "c_special",
+      "name": {
+        "en": "Special Menu",
+        "ko": "스페셜 메뉴"
+      },
+      "order": 5
+    },
+    {
       "id": "c_drinks",
       "name": {
         "en": "Drinks & Alcohol",
         "ko": "음료 및 주류"
       },
-      "order": 4
+      "order": 6
     }
   ],
   "subCategories": [
@@ -94,6 +110,24 @@ const CURRENT_STATE: AppState = {
         "ko": "E. 사이드 메뉴"
       },
       "order": 2
+    },
+    {
+      "id": "s_sizzling_main",
+      "categoryId": "c_sizzling",
+      "name": {
+        "en": "Z. Sizzling Plates",
+        "ko": "Z. 철판 요리류"
+      },
+      "order": 1
+    },
+    {
+      "id": "s_special_main",
+      "categoryId": "c_special",
+      "name": {
+        "en": "SP. Special Chef's Selection",
+        "ko": "SP. 스페셜 셰프 엄선 요리"
+      },
+      "order": 1
     },
     {
       "id": "s_drinks",
@@ -464,14 +498,15 @@ const CURRENT_STATE: AppState = {
         "ko": "양념소스 제공 · 바삭한 순살치킨"
       },
       "price": 55,
-      "image": "https://i.ibb.co/sdMmYB9Q/2026-01-31-182508.png",
-      "isPopular": false,
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%88%9C%EC%82%B4%EC%B9%98%ED%82%A8.png",
+      "isPopular": true,
       "order": 5,
       "isSoldOut": false,
       "toppingText": {
         "ko": "",
         "en": ""
-      }
+      },
+      "hasSizeUp": true
     },
     {
       "id": "1769854407673",
@@ -782,7 +817,7 @@ const CURRENT_STATE: AppState = {
         "ko": "신메뉴 탕수만두(6p)"
       },
       "description": {
-        "en": "Crispy fried dumplings (6pcs) topped with our signature sweet and sour Tangsuyuk sauce. A perfect combination of crunch and flavor.",
+        "en": "Crisly fried dumplings (6pcs) topped with our signature sweet and sour Tangsuyuk sauce. A perfect combination of crunch and flavor.",
         "ko": "바삭하게 튀겨낸 만두(6pcs) 위에 새콤달콤한 특제 탕수육 소스를 얹었습니다. 바삭한 식감과 소스의 풍미가 완벽한 조화를 이루는 메뉴입니다."
       },
       "price": 18,
@@ -818,6 +853,156 @@ const CURRENT_STATE: AppState = {
         "en": ""
       },
       "isNew": true
+    },
+    {
+      "id": "1770492753423",
+      "subCategoryId": "s_sizzling_main",
+      "name": {
+        "en": "Cheol-Pan Yang-Nyeom Dak-Gal-Bi",
+        "ko": "철판 양념 닭갈비"
+      },
+      "description": {
+        "en": "Juicy chicken stir-fried in a rich sweet and spicy Korean sauce, cooked on a hot sizzling plate for bold flavor and aroma.\nServed with rice, fresh lettuce, mayo and egg soup.\nEven more delicious when enjoyed as a Korean-style lettuce wrap.",
+        "ko": "콤달콤한 특제 양념에 닭고기를 볶아 뜨거운 철판에 제공하는 한국식 닭갈비 요리입니다.\n밥, 신선한 상추, 마요네즈, 계란국이 함께 제공되며 쌈으로 즐기면 더욱 맛있습니다."
+      },
+      "price": 32,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isNew": true,
+      "isSoldOut": false,
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%B2%A0%ED%8C%90%20%EC%96%91%EB%85%90%20%EB%8B%AD%EA%B0%88%EB%B9%84%20rm%2032%EB%B0%A5%EC%83%81%EC%B6%94%EB%A7%88%EC%9A%94%EB%84%A4%EC%A6%88%EA%B3%84%EB%9E%80%EA%B5%AD.png",
+      "hasToppings": false,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "hasExtraNoodles": false,
+      "hasSizeUp": false
+    },
+    {
+      "id": "1770492939076",
+      "subCategoryId": "s_sizzling_main",
+      "name": {
+        "en": "Cheol-Pan So-Geum Dak-Gal-Bi",
+        "ko": "철판 소금구이 닭갈비"
+      },
+      "description": {
+        "en": "uicy chicken lightly seasoned with salt and cooked on a hot sizzling plate to bring out its natural flavor.\nServed with rice, fresh lettuce, ssamjang and egg soup.\nEven more delicious when enjoyed as a Korean-style lettuce wrap.",
+        "ko": "담백한 소금 간으로 닭고기 본연의 맛을 살려 뜨거운 철판에 구워낸 닭갈비 요리입니다.\n밥, 신선한 상추, 쌈장, 계란국이 함께 제공되며 쌈으로 즐기면 더욱 맛있습니다."
+      },
+      "price": 32,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isNew": true,
+      "isSoldOut": false,
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%B2%A0%ED%8C%90%20%EC%86%8C%EA%B8%88%EA%B5%AC%EC%9D%B4%20%EB%8B%AD%EA%B0%88%EB%B9%84%20rm%2032%EB%B0%A5%EC%83%81%EC%B6%94%20%EC%8C%88%EC%9E%A5%EA%B3%84%EB%9E%80%EA%B5%AD.png",
+      "hasToppings": false,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "hasExtraNoodles": false,
+      "hasSizeUp": false
+    },
+    {
+      "id": "1770493058538",
+      "subCategoryId": "s_rice",
+      "name": {
+        "en": "Bok-Keum-Bap + Jjam-Bbong Soup",
+        "ko": "볶음밥 + 짬뽕스프"
+      },
+      "description": {
+        "en": "Savory Korean-style fried rice paired with a rich and spicy seafood soup inspired by classic jjamppong flavors.\nA comforting combination that offers both bold taste and satisfying warmth in one meal.",
+        "ko": "고소한 한국식 볶음밥에 매콤하고 깊은 맛의 짬뽕 스프를 함께 즐길 수 있는 든든한 한 그릇 메뉴입니다.\n밥과 국물을 동시에 즐기고 싶은 분들께 추천드립니다."
+      },
+      "price": 28,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isNew": true,
+      "isSoldOut": false,
+      "image": "https://696fb61876634d918b871516.imgix.net/%EB%B3%B6%EC%9D%8C%EB%B0%A5%20%2B%20%EC%A7%AC%EB%BD%95%EC%8A%A4%ED%94%84%20rm%2028.png",
+      "hasToppings": false,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "hasExtraNoodles": false,
+      "hasSizeUp": false
+    },
+    {
+      "id": "1770493213020",
+      "subCategoryId": "s_rice",
+      "name": {
+        "en": "Sam-Gyup-Sal Kim-Chi Bok-Keum-Bap",
+        "ko": "삼겹살 김치볶음밥"
+      },
+      "description": {
+        "en": "Savory fried rice stir-fried with grilled pork belly and kimchi, delivering a smoky and well-balanced Korean-style flavor.\nServed with a light and comforting egg soup.",
+        "ko": "고소하게 구운 삼겹살과 김치를 함께 볶아 깊고 균형 잡힌 맛을 살린 한국식 볶음밥입니다.\n부드러운 계란국이 함께 제공되어 든든하게 즐기실 수 있습니다."
+      },
+      "price": 28,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isNew": true,
+      "isSoldOut": false,
+      "image": "https://696fb61876634d918b871516.imgix.net/%EC%82%BC%EA%B2%B9%EC%82%B4%EA%B9%80%EC%B9%98%EB%B3%B6%EC%9D%8C%EB%B0%A5%20%2B%20%EA%B3%84%EB%9E%80%EA%B5%AD%20rm%2028.png",
+      "hasToppings": false,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "hasExtraNoodles": false,
+      "hasSizeUp": false
+    },
+    {
+      "id": "1770493283660",
+      "subCategoryId": "s_special_main",
+      "name": {
+        "en": "Cheol-Pan Sam-Gyup-Sal",
+        "ko": "철판 삼겹살"
+      },
+      "description": {
+        "en": "Juicy pork belly cooked on a hot sizzling plate to create a rich and satisfying Korean-style meal with deep savory flavor.\nServed with rice, fresh lettuce, ssamjang and egg soup.\nEven more delicious when enjoyed as a Korean-style lettuce wrap.",
+        "ko": "두툼한 삼겹살을 뜨거운 철판에 구워 고소하고 깊은 풍미를 살린 한국식 메인 요리입니다.\n밥, 신선한 상추, 쌈장, 계란국이 함께 제공되며 쌈으로 즐기면 더욱 맛있습니다."
+      },
+      "price": 35,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isNew": true,
+      "isSoldOut": false,
+      "image": "https://696fb61876634d918b871516.imgix.net/%EC%B2%A0%ED%8C%90%20%EC%82%BC%EA%B2%B9%EC%82%B4%20rm%2035%EB%B0%A5%EC%83%81%EC%B6%94%EC%8C%88%EC%9E%A5%EA%B3%84%EB%9E%80%EA%B5%AD.png",
+      "hasToppings": false,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "hasExtraNoodles": false,
+      "hasSizeUp": false
+    },
+    {
+      "id": "1770493335477",
+      "subCategoryId": "s_special_main",
+      "name": {
+        "en": "Jap-Chae-Bap",
+        "ko": "잡채밥"
+      },
+      "description": {
+        "en": "Stir-fried glass noodles with vegetables and meat, lightly seasoned and served over steamed rice for a comforting Korean-style meal.",
+        "ko": "당면과 각종 채소, 고기를 함께 볶아 밥 위에 올려낸 담백하고 부드러운 한국식 한 그릇 요리입니다."
+      },
+      "price": 32,
+      "originalPrice": 0,
+      "isPopular": false,
+      "isNew": true,
+      "isSoldOut": false,
+      "image": " https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-02-08%20030924.png",
+      "hasToppings": false,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      },
+      "hasExtraNoodles": false,
+      "hasSizeUp": false
     }
   ],
   "news": [
@@ -876,7 +1061,7 @@ const CURRENT_STATE: AppState = {
       },
       "details": {
         "en": "HAN GEU LEUS does not stop at\nrecreating the taste you remember from Korea\nhere in Malaysia.\n\nThe climate is different.\nThe ingredients respond differently.\nAnd most importantly,\nfire behaves differently here.\n\nBefore cooking,\nChef Jang worked with fire in a kiln,\nshaping ceramics—\nlearning that fire may look the same,\nbut never acts the same.\n\nThat understanding defines our kitchen.\n\nEvery process was redesigned.\nHeat, timing, and sequence\nwere recalibrated from the ground up\nuntil the same depth of flavor emerged.\n\nIt takes more time.\nIt demands more precision.\nAnd it allows no shortcuts.\n\nBut at the very least,\nwe never want you to leave thinking,\n“I shouldn’t have come.”\n\nThe HAN GEU LEUS you expect—\ntreated with the seriousness it deserves.\n\nThis is HAN GEU LEUS.",
-        "ko": "한그릇은\n한국에서 먹던 그 맛을\n말레이시아에서도 그대로 재현하는 데서\n멈추지 않습니다.\n\n이곳은 기후가 다르고,\n재료가 다르고,\n무어서보다 불의 성질이 다릅니다.\n\n불가마 앞에서\n도자기를 만들던 쉐프 장은\n불이 같아 보인다고\n결과가 같아지지 않는다는 걸\n이미 알고 있었습니다.\n\n그래서 모든 과정을\n다시 설계했습니다.\n불의 세기, 시간, 순서까지\n같은 깊이가 나올 때까지\n처음부터 다시 맞췄습니다.\n\n그래서 시간이 더 걸리고,\n그래서 더 어렵습니다.\n\n하지만 적어도,\n당신이 **“괜히 왔다”**는 생각만큼은\n하지 않게 하고 싶었습니다.\n\n당신이 기대하는 그 한 그릇.\n그 기대를\n가볍게 대하지 않는 곳.\n\n한그릇입니다."
+        "ko": "한그릇은\n한국에서 먹던 그 맛을\n말레이시아에서도 그대로 재현하는 데서\n멈추지 않습니다.\n\n이곳은 기후가 다르고,\n재료가 다르고,\n무어서보다 불의 성질이 다릅니다.\n\n불가마 앞에서\n도자기를 만들던 셰프 장은\n불이 같아 보인다고\n결과가 같아지지 않는다는 걸\n이미 알고 있었습니다.\n\n그래서 모든 과정을\n다시 설계했습니다.\n불의 세기, 시간, 순서까지\n같은 깊이가 나올 때까지\n처음부터 다시 맞췄습니다.\n\n그래서 시간이 더 걸리고,\n그래서 더 어렵습니다.\n\n하지만 적어도,\n당신이 **“괜히 왔다”**는 생각만큼은\n하지 않게 하고 싶었습니다.\n\n당신이 기대하는 그 한 그릇.\n그 기대를\n가볍게 대하지 않는 곳.\n\n한그릇입니다."
       },
       "image": "https://696fb61876634d918b871516.imgix.net/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-01-20%20192755.png",
       "stats": {
