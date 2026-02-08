@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-02-08T11:24:17.524Z)
+// PASTE START: Generated from Admin (2026-02-08T11:41:23.697Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -153,8 +153,8 @@ const CURRENT_STATE: AppState = {
       "id": "1",
       "subCategoryId": "s_noodle",
       "name": {
-        "en": "M-1 Jajangmyeon",
-        "ko": "M-1 짜장면"
+        "en": "M-1. Jajangmyeon",
+        "ko": "M-1. 짜장면"
       },
       "description": {
         "en": "Noodles in a rich black bean sauce with pork and onions.",
@@ -163,14 +163,18 @@ const CURRENT_STATE: AppState = {
       "price": 25,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260117_081238_05644889-1fdb-4e9d-bf6d-a0d152cb1fa6.png",
       "isPopular": true,
-      "order": 0
+      "order": 0,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "2",
       "subCategoryId": "s_noodle",
       "name": {
-        "en": "M-3 Seafood Jjambbong",
-        "ko": "M-3 해물 짬뽕"
+        "en": "M-3. Seafood Jjambbong",
+        "ko": "M-3. 해물 짬뽕"
       },
       "description": {
         "en": "Spicy seafood noodle soup with vegetables.",
@@ -179,7 +183,11 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260117_032254_57982580-dab1-4c39-9a8a-3054b6c30f94.png",
       "isPopular": true,
-      "order": 2
+      "order": 2,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "3",
@@ -307,7 +315,7 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_132940_48715c18-6666-421c-865d-20dca9f342da.png",
       "isPopular": false,
-      "order": 0,
+      "order": 1,
       "toppingText": {
         "ko": "",
         "en": ""
@@ -327,7 +335,7 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://i.ibb.co/H9yfGkY/2026-01-30-143204.png",
       "isPopular": false,
-      "order": 2,
+      "order": 3,
       "toppingText": {
         "ko": "",
         "en": ""
@@ -347,7 +355,7 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://i.ibb.co/1YFLf00s/2026-01-30-174728.png",
       "isPopular": false,
-      "order": 3,
+      "order": 1,
       "toppingText": {
         "ko": "",
         "en": ""
@@ -411,8 +419,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769852167553",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "DS-3 Tteokbokki + Fried Dumplings (6P)",
-        "ko": "DS-3 떡볶이 + 군만두(6P)"
+        "en": "DS-3. Tteokbokki + Fried Dumplings (6P)",
+        "ko": "DS-3. 떡볶이 + 군만두(6P)"
       },
       "description": {
         "en": "Lunch Specials 12:00PM~15:00PM",
@@ -450,8 +458,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769852829598",
       "subCategoryId": "s_noodle",
       "name": {
-        "en": "M-2 Bomb Samgyeopsal Jjajang Myeon",
-        "ko": "M-2 폭탄삼겹살짜장면"
+        "en": "M-2. Bomb Samgyeopsal Jjajang Myeon",
+        "ko": "M-2. 폭탄삼겹살짜장면"
       },
       "description": {
         "en": "Extra pork belly · Jjajang noodles loaded with pork belly",
@@ -470,8 +478,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769852924435",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "R-1 Jjajang bap+ Jjamppong Soup",
-        "ko": "R-1 짜장밥 + 짬뽕국물"
+        "en": "R-1. Jjajang bap+ Jjamppong Soup",
+        "ko": "R-1. 짜장밥 + 짬뽕국물"
       },
       "description": {
         "en": "Black bean rice with jjamppong soup",
@@ -776,8 +784,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769931900693",
       "subCategoryId": "s_weekday",
       "name": {
-        "en": "DS-A JJA JANG Myeon+ TANG SOO-YOOK",
-        "ko": "DS-A 짜장면 + 탕수육"
+        "en": "DS-A. JJA JANG Myeon+ TANG SOO-YOOK",
+        "ko": "DS-A. 짜장면 + 탕수육"
       },
       "description": {
         "en": "RECHARGE YOUR DAY WITH OUR VIBRANT AND AFFORDABLE DAILY LUNCH SPECIALS",
@@ -798,8 +806,8 @@ const CURRENT_STATE: AppState = {
       "id": "1770051613454",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "C-5. NEW. KIM-PI-TANG (Kimchi Cheese Tang Soo Yook)",
-        "ko": "C-5. 신메뉴. 김피탕 - 김치피자탕수육 "
+        "en": "C-5. KIM-PI-TANG (Kimchi Cheese Tang Soo Yook)",
+        "ko": "C-5. 김피탕 - 김치피자탕수육 "
       },
       "description": {
         "en": "The ultimate Korean fusion dish! Our classic crispy Tang Soo Yook topped with spicy stir-fried Kimchi and generous melted mozzarella cheese.",
@@ -821,8 +829,8 @@ const CURRENT_STATE: AppState = {
       "id": "1770051754856",
       "subCategoryId": "s_side",
       "name": {
-        "en": "E-5. E-NEW. TANGSU MAN DOO(6p)",
-        "ko": "E-5. 신메뉴 탕수만두(6p)"
+        "en": "E-5. TANGSU MAN DOO(6p)",
+        "ko": "E-5. 탕수만두(6p)"
       },
       "description": {
         "en": "Crisly fried dumplings (6pcs) topped with our signature sweet and sour Tangsuyuk sauce. A perfect combination of crunch and flavor.",
@@ -962,7 +970,7 @@ const CURRENT_STATE: AppState = {
       },
       "hasExtraNoodles": false,
       "hasSizeUp": false,
-      "order": 1
+      "order": 2
     },
     {
       "id": "1770493283660",
