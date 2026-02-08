@@ -1,6 +1,6 @@
 import { AppState, MenuItem, NewsPost, MenuCategory, MenuSubCategory } from './types';
 
-// PASTE START: Generated from Admin (2026-02-07T19:44:26.955Z)
+// PASTE START: Generated from Admin (2026-02-08T11:24:17.524Z)
 const CURRENT_STATE: AppState = {
   "lang": "en",
   "theme": {
@@ -258,7 +258,7 @@ const CURRENT_STATE: AppState = {
       "subCategoryId": "s_fried_main",
       "name": {
         "en": "C-3L Cheongyang Mayo Fried Shrimp(Large)",
-        "ko": "C-3L 새우 후라이드 + 청양크림소스대)"
+        "ko": "C-3L 새우 후라이드 + 청양크림소스(대)"
       },
       "description": {
         "en": "Crispy fried shrimp served with spicy Cheongyang cream sauce.",
@@ -297,8 +297,8 @@ const CURRENT_STATE: AppState = {
       "id": "1768969592524",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "R-2 Seafood Jjam Bbong bap",
-        "ko": "R-2 해물 짬뽕밥"
+        "en": "R-3. Seafood Jjam Bbong bap",
+        "ko": "R-3. 해물 짬뽕밥"
       },
       "description": {
         "en": "Spicy seafood soup served with rice.",
@@ -307,7 +307,7 @@ const CURRENT_STATE: AppState = {
       "price": 28,
       "image": "https://696fb61876634d918b871516.imgix.net/hf_20260120_132940_48715c18-6666-421c-865d-20dca9f342da.png",
       "isPopular": false,
-      "order": 1,
+      "order": 0,
       "toppingText": {
         "ko": "",
         "en": ""
@@ -317,8 +317,8 @@ const CURRENT_STATE: AppState = {
       "id": "1768969631602",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "R-3 Chicken Mayo Deopbap + Jjam Bbong Soup",
-        "ko": "R-3 치킨마요 덮밥 + 짬뽕국물"
+        "en": "R-6. Chicken Mayo Deopbap + Jjam Bbong Soup",
+        "ko": "R-6. 치킨마요 덮밥 + 짬뽕국물"
       },
       "description": {
         "en": "Fried chicken over rice with teriyaki mayo sauce, served with spicy soup.",
@@ -337,8 +337,8 @@ const CURRENT_STATE: AppState = {
       "id": "1768996839598",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "R-5 Kimchi Samgyeopsal Deobap + Jjamppong Soup",
-        "ko": "R-5 김치삼겹살덮밥 + 짬뽕국물"
+        "en": "R-A. Kimchi Samgyeopsal Deobap + Jjamppong Soup",
+        "ko": "R-A. 김치삼겹살덮밥 + 짬뽕국물"
       },
       "description": {
         "en": "CRUNCHY CHICKEN AND CREAMY TERIYAKI MAYO ON RICE—THE PERFECT COMFORT BOWL",
@@ -602,8 +602,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769855150528",
       "subCategoryId": "s_side",
       "name": {
-        "en": "E-5 GONGKIBAB",
-        "ko": "E-5 공기밥"
+        "en": "E-6. GONGKIBAB",
+        "ko": "E-6. 공기밥"
       },
       "description": {
         "en": "Steamed Rice",
@@ -612,7 +612,11 @@ const CURRENT_STATE: AppState = {
       "price": 5,
       "image": "https://i.ibb.co/k63F4Nrx/2026-01-31-230314.png",
       "isPopular": false,
-      "order": 4
+      "order": 4,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1769855282836",
@@ -738,8 +742,8 @@ const CURRENT_STATE: AppState = {
       "id": "1769868385495",
       "subCategoryId": "s_liquor",
       "name": {
-        "en": "L-2 Tiger Beer (650ml)",
-        "ko": "L-2 타이거 맥주(650ml)"
+        "en": "L-2 Beer (640ml)",
+        "ko": "L-2 맥주(640ml)"
       },
       "description": {
         "en": "Regular · Bottled beer",
@@ -747,7 +751,11 @@ const CURRENT_STATE: AppState = {
       },
       "price": 26,
       "image": "https://i.ibb.co/KpTXTYB7/2026-01-30-192314.png",
-      "isPopular": false
+      "isPopular": false,
+      "toppingText": {
+        "ko": "",
+        "en": ""
+      }
     },
     {
       "id": "1769868476520",
@@ -790,8 +798,8 @@ const CURRENT_STATE: AppState = {
       "id": "1770051613454",
       "subCategoryId": "s_fried_main",
       "name": {
-        "en": "NEW. KIM-PI-TANG (Kimchi Cheese Tang Soo Yook)",
-        "ko": "신메뉴. 김피탕 - 김치피자탕수육 "
+        "en": "C-5. NEW. KIM-PI-TANG (Kimchi Cheese Tang Soo Yook)",
+        "ko": "C-5. 신메뉴. 김피탕 - 김치피자탕수육 "
       },
       "description": {
         "en": "The ultimate Korean fusion dish! Our classic crispy Tang Soo Yook topped with spicy stir-fried Kimchi and generous melted mozzarella cheese.",
@@ -813,8 +821,8 @@ const CURRENT_STATE: AppState = {
       "id": "1770051754856",
       "subCategoryId": "s_side",
       "name": {
-        "en": "E-NEW. TANGSU MAN DOO(6p)",
-        "ko": "신메뉴 탕수만두(6p)"
+        "en": "E-5. E-NEW. TANGSU MAN DOO(6p)",
+        "ko": "E-5. 신메뉴 탕수만두(6p)"
       },
       "description": {
         "en": "Crisly fried dumplings (6pcs) topped with our signature sweet and sour Tangsuyuk sauce. A perfect combination of crunch and flavor.",
@@ -858,8 +866,8 @@ const CURRENT_STATE: AppState = {
       "id": "1770492753423",
       "subCategoryId": "s_sizzling_main",
       "name": {
-        "en": "Cheol-Pan Yang-Nyeom Dak-Gal-Bi",
-        "ko": "철판 양념 닭갈비"
+        "en": "SP-1. Cheol-Pan Yang-Nyeom Dak-Gal-Bi",
+        "ko": "SP-1. 철판 양념 닭갈비"
       },
       "description": {
         "en": "Juicy chicken stir-fried in a rich sweet and spicy Korean sauce, cooked on a hot sizzling plate for bold flavor and aroma.\nServed with rice, fresh lettuce, mayo and egg soup.\nEven more delicious when enjoyed as a Korean-style lettuce wrap.",
@@ -883,8 +891,8 @@ const CURRENT_STATE: AppState = {
       "id": "1770492939076",
       "subCategoryId": "s_sizzling_main",
       "name": {
-        "en": "Cheol-Pan So-Geum Dak-Gal-Bi",
-        "ko": "철판 소금구이 닭갈비"
+        "en": "SP-2. Cheol-Pan So-Geum Dak-Gal-Bi",
+        "ko": "SP-2. 철판 소금구이 닭갈비"
       },
       "description": {
         "en": "uicy chicken lightly seasoned with salt and cooked on a hot sizzling plate to bring out its natural flavor.\nServed with rice, fresh lettuce, ssamjang and egg soup.\nEven more delicious when enjoyed as a Korean-style lettuce wrap.",
@@ -908,8 +916,8 @@ const CURRENT_STATE: AppState = {
       "id": "1770493058538",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "Bok-Keum-Bap + Jjam-Bbong Soup",
-        "ko": "볶음밥 + 짬뽕스프"
+        "en": "R-2.Bok-Keum-Bap + Jjam-Bbong Soup",
+        "ko": "R-2. 볶음밥 + 짬뽕스프"
       },
       "description": {
         "en": "Savory Korean-style fried rice paired with a rich and spicy seafood soup inspired by classic jjamppong flavors.\nA comforting combination that offers both bold taste and satisfying warmth in one meal.",
@@ -927,14 +935,15 @@ const CURRENT_STATE: AppState = {
         "en": ""
       },
       "hasExtraNoodles": false,
-      "hasSizeUp": false
+      "hasSizeUp": false,
+      "order": 0
     },
     {
       "id": "1770493213020",
       "subCategoryId": "s_rice",
       "name": {
-        "en": "Sam-Gyup-Sal Kim-Chi Bok-Keum-Bap",
-        "ko": "삼겹살 김치볶음밥"
+        "en": "R-5. Sam-Gyup-Sal Kim-Chi Bok-Keum-Bap",
+        "ko": "R-5. 삼겹살 김치볶음밥"
       },
       "description": {
         "en": "Savory fried rice stir-fried with grilled pork belly and kimchi, delivering a smoky and well-balanced Korean-style flavor.\nServed with a light and comforting egg soup.",
@@ -952,14 +961,15 @@ const CURRENT_STATE: AppState = {
         "en": ""
       },
       "hasExtraNoodles": false,
-      "hasSizeUp": false
+      "hasSizeUp": false,
+      "order": 1
     },
     {
       "id": "1770493283660",
       "subCategoryId": "s_special_main",
       "name": {
-        "en": "Cheol-Pan Sam-Gyup-Sal",
-        "ko": "철판 삼겹살"
+        "en": "CS-2. Cheol-Pan Sam-Gyup-Sal",
+        "ko": "CS-2. 철판 삼겹살"
       },
       "description": {
         "en": "Juicy pork belly cooked on a hot sizzling plate to create a rich and satisfying Korean-style meal with deep savory flavor.\nServed with rice, fresh lettuce, ssamjang and egg soup.\nEven more delicious when enjoyed as a Korean-style lettuce wrap.",
@@ -983,8 +993,8 @@ const CURRENT_STATE: AppState = {
       "id": "1770493335477",
       "subCategoryId": "s_special_main",
       "name": {
-        "en": "Jap-Chae-Bap",
-        "ko": "잡채밥"
+        "en": "CS-1. Jap-Chae-Bap",
+        "ko": "CS-1. 잡채밥"
       },
       "description": {
         "en": "Stir-fried glass noodles with vegetables and meat, lightly seasoned and served over steamed rice for a comforting Korean-style meal.",
