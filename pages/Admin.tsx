@@ -239,10 +239,10 @@ const MenuEditForm: React.FC<MenuEditFormProps> = ({
 
 const Admin: React.FC = () => {
   const { 
-    state, updateContent, updateTheme, addMenuItem, updateMenuItem, deleteMenuItem,
+    state, updateContent, updateTheme, addMenuItem, updateMenuItem, batchUpdateMenuItems, deleteMenuItem,
     addCategory, updateCategory, deleteCategory, addSubCategory, updateSubCategory, deleteSubCategory,
     addNews, updateNews, deleteNews 
-  } = useApp();
+  } = useApp() as any;
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
@@ -260,7 +260,7 @@ const Admin: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-6">
-        <div className="bg-neutral-900 p-8 md:p-12 w-full max-w-md border border-neutral-800">
+        <div className="bg-neutral-900 p-8 md:p-12 w-full max-md border border-neutral-800">
           <h2 className="text-2xl text-white font-serif mb-6 text-center">Admin Access</h2>
           <form onSubmit={handleLogin}>
             <Input type="password" label="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -371,7 +371,7 @@ const Admin: React.FC = () => {
         price: 0, 
         originalPrice: 0,
         isPopular: false, 
-        isNew: true, // Default new items to isNew
+        isNew: true, 
         isSoldOut: false, 
         image: '',
         hasToppings: false,
@@ -388,14 +388,55 @@ const Admin: React.FC = () => {
       setEditingId(null);
     };
 
-    const handleMove = (item: MenuItem, direction: 'up' | 'down', siblingItems: MenuItem[]) => {
-      const currentIndex = siblingItems.findIndex(i => i.id === item.id);
+    // --- ENHANCED REORDERING LOGIC (Supports crossing subcategories) ---
+    const handleMove = (item: MenuItem, direction: 'up' | 'down') => {
+      // 1. Build a flattened list of all categories -> subcategories -> items in their correct visual order
+      const visualItems: { item: MenuItem; subId: string }[] = [];
+      const sortedCats = [...state.categories].sort((a,b) => a.order - b.order);
+      
+      sortedCats.forEach(cat => {
+        const sortedSubs = [...state.subCategories]
+          .filter(s => s.categoryId === cat.id)
+          .sort((a,b) => a.order - b.order);
+          
+        sortedSubs.forEach(sub => {
+          const itemsInSub = state.menu
+            .filter(m => m.subCategoryId === sub.id)
+            .sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+          
+          itemsInSub.forEach(m => visualItems.push({ item: m, subId: sub.id }));
+        });
+      });
+
+      // 2. Find the current item's index in this global visual list
+      const currentIndex = visualItems.findIndex(v => v.item.id === item.id);
+      if (currentIndex === -1) return;
+
       const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
-      if (targetIndex < 0 || targetIndex >= siblingItems.length) return;
-      const targetItem = siblingItems[targetIndex];
-      const tempOrder = item.order ?? 0;
-      updateMenuItem({ ...item, order: targetItem.order ?? 0 });
-      updateMenuItem({ ...targetItem, order: tempOrder });
+      
+      // Check boundaries
+      if (targetIndex < 0 || targetIndex >= visualItems.length) return;
+
+      const targetEntry = visualItems[targetIndex];
+      const targetItem = targetEntry.item;
+      const targetSubId = targetEntry.subId;
+
+      // 3. Perform the swap
+      // We swap the 'order' values. If they cross subcategories, the target subCategoryId is inherited.
+      const currentOrder = item.order ?? 0;
+      const targetOrder = targetItem.order ?? 0;
+
+      // If they are exactly the same order (newly created), we just nudge them apart
+      let newCurrentOrder = targetOrder;
+      let newTargetOrder = currentOrder;
+      if (newCurrentOrder === newTargetOrder) {
+         newCurrentOrder = direction === 'up' ? targetOrder - 1 : targetOrder + 1;
+      }
+
+      batchUpdateMenuItems([
+        { ...item, order: newCurrentOrder, subCategoryId: targetSubId },
+        { ...targetItem, order: newTargetOrder }
+      ]);
     };
 
     return (
@@ -417,7 +458,7 @@ const Admin: React.FC = () => {
         )}
 
         <div className="space-y-16">
-          {state.categories.sort((a,b) => a.order - b.order).map(cat => (
+          {state.categories.sort((a,b) => a.order - b.order).map((cat, catIdx, catArr) => (
             <div key={cat.id} className="space-y-6">
               <div className="flex items-center gap-4">
                  <h4 className="text-xl font-bold text-gold uppercase tracking-widest whitespace-nowrap">{cat.name.ko} / {cat.name.en}</h4>
@@ -428,7 +469,7 @@ const Admin: React.FC = () => {
                 {state.subCategories
                   .filter(sub => sub.categoryId === cat.id)
                   .sort((a,b) => a.order - b.order)
-                  .map(sub => {
+                  .map((sub, subIdx, subArr) => {
                     const subItems = state.menu
                       .filter(item => item.subCategoryId === sub.id)
                       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -440,43 +481,61 @@ const Admin: React.FC = () => {
                           {subItems.length === 0 ? (
                             <p className="text-xs text-gray-700 italic">No items here.</p>
                           ) : (
-                            subItems.map((item, idx) => (
-                              <React.Fragment key={item.id}>
-                                <div className={`bg-neutral-900/60 p-4 flex justify-between items-center border transition-all rounded ${editingId === item.id ? 'border-gold bg-gold/5' : 'border-neutral-800 hover:border-neutral-600'}`}>
-                                  <div className="flex items-center gap-6">
-                                    <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden">
-                                      <img src={item.image} className={`w-full h-full object-cover ${item.isSoldOut ? 'grayscale blur-[1px]' : ''}`} />
-                                      {item.isPopular && <div className="absolute top-0 right-0 bg-gold text-black text-[8px] px-1 font-bold">BEST</div>}
-                                      {item.isNew && <div className="absolute top-0 left-0 bg-gold text-black text-[8px] px-1 font-bold">NEW</div>}
-                                      {item.isSoldOut && <div className="absolute inset-0 bg-red-600/30 flex items-center justify-center font-black text-[10px] text-white">SOLD</div>}
-                                    </div>
-                                    <div>
-                                       <div className="flex items-center gap-2">
-                                         <p className={`font-bold text-lg ${item.isSoldOut ? 'text-gray-500' : 'text-white'}`}>{item.name.ko}</p>
-                                         <div className="flex gap-1">
-                                           {item.hasToppings && <PlusCircle size={10} className="text-gold" />}
-                                           {item.hasExtraNoodles && <Utensils size={10} className="text-gold" />}
-                                           {item.hasSizeUp && <Maximize size={10} className="text-gold" />}
-                                           {item.isNew && <Zap size={10} className="text-gold fill-gold" />}
+                            subItems.map((item, idx) => {
+                              // Logic for global boundary check for buttons
+                              const isFirstOverall = catIdx === 0 && subIdx === 0 && idx === 0;
+                              const isLastOverall = catIdx === catArr.length - 1 && subIdx === subArr.length - 1 && idx === subItems.length - 1;
+
+                              return (
+                                <React.Fragment key={item.id}>
+                                  <div className={`bg-neutral-900/60 p-4 flex justify-between items-center border transition-all rounded ${editingId === item.id ? 'border-gold bg-gold/5' : 'border-neutral-800 hover:border-neutral-600'}`}>
+                                    <div className="flex items-center gap-6">
+                                      <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden">
+                                        <img src={item.image} className={`w-full h-full object-cover ${item.isSoldOut ? 'grayscale blur-[1px]' : ''}`} />
+                                        {item.isPopular && <div className="absolute top-0 right-0 bg-gold text-black text-[8px] px-1 font-bold">BEST</div>}
+                                        {item.isNew && <div className="absolute top-0 left-0 bg-gold text-black text-[8px] px-1 font-bold">NEW</div>}
+                                        {item.isSoldOut && <div className="absolute inset-0 bg-red-600/30 flex items-center justify-center font-black text-[10px] text-white">SOLD</div>}
+                                      </div>
+                                      <div>
+                                         <div className="flex items-center gap-2">
+                                           <p className={`font-bold text-lg ${item.isSoldOut ? 'text-gray-500' : 'text-white'}`}>{item.name.ko}</p>
+                                           <div className="flex gap-1">
+                                             {item.hasToppings && <PlusCircle size={10} className="text-gold" />}
+                                             {item.hasExtraNoodles && <Utensils size={10} className="text-gold" />}
+                                             {item.hasSizeUp && <Maximize size={10} className="text-gold" />}
+                                             {item.isNew && <Zap size={10} className="text-gold fill-gold" />}
+                                           </div>
                                          </div>
-                                       </div>
-                                       <p className="text-xs text-gray-500 font-mono uppercase tracking-widest">RM {item.price}</p>
+                                         <p className="text-xs text-gray-500 font-mono uppercase tracking-widest">RM {item.price}</p>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <div className="flex flex-col gap-1 mr-2">
+                                        <button 
+                                          disabled={isFirstOverall} 
+                                          onClick={() => handleMove(item, 'up')} 
+                                          className={`p-1.5 rounded ${isFirstOverall ? 'text-gray-800 cursor-not-allowed' : 'text-gray-400 hover:text-white hover:bg-neutral-800'}`}
+                                        >
+                                          <ArrowUp size={14} />
+                                        </button>
+                                        <button 
+                                          disabled={isLastOverall} 
+                                          onClick={() => handleMove(item, 'down')} 
+                                          className={`p-1.5 rounded ${isLastOverall ? 'text-gray-800 cursor-not-allowed' : 'text-gray-400 hover:text-white hover:bg-neutral-800'}`}
+                                        >
+                                          <ArrowDown size={14} />
+                                        </button>
+                                      </div>
+                                      <button onClick={() => startEdit(item)} className={`p-3 rounded ${editingId === item.id ? 'bg-gold text-black' : 'text-blue-400 hover:bg-neutral-800'}`}><Edit2 size={18}/></button>
+                                      <button onClick={() => window.confirm('Delete?') && deleteMenuItem(item.id)} className="p-3 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={18}/></button>
                                     </div>
                                   </div>
-                                  <div className="flex items-center gap-2">
-                                    <div className="flex flex-col gap-1 mr-2">
-                                      <button disabled={idx === 0} onClick={() => handleMove(item, 'up', subItems)} className={`p-1.5 rounded ${idx === 0 ? 'text-gray-700' : 'text-gray-400 hover:text-white hover:bg-neutral-800'}`}><ArrowUp size={14} /></button>
-                                      <button disabled={idx === subItems.length - 1} onClick={() => handleMove(item, 'down', subItems)} className={`p-1.5 rounded ${idx === subItems.length - 1 ? 'text-gray-700' : 'text-gray-400 hover:text-white hover:bg-neutral-800'}`}><ArrowDown size={14} /></button>
-                                    </div>
-                                    <button onClick={() => startEdit(item)} className={`p-3 rounded ${editingId === item.id ? 'bg-gold text-black' : 'text-blue-400 hover:bg-neutral-800'}`}><Edit2 size={18}/></button>
-                                    <button onClick={() => window.confirm('Delete?') && deleteMenuItem(item.id)} className="p-3 text-red-400 hover:bg-neutral-800 rounded"><Trash2 size={18}/></button>
-                                  </div>
-                                </div>
-                                {editingId === item.id && (
-                                  <MenuEditForm editingId={item.id} initialForm={form} categories={state.categories} subCategories={state.subCategories} onSave={handleSave} onCancel={() => setEditingId(null)} />
-                                )}
-                              </React.Fragment>
-                            ))
+                                  {editingId === item.id && (
+                                    <MenuEditForm editingId={item.id} initialForm={form} categories={state.categories} subCategories={state.subCategories} onSave={handleSave} onCancel={() => setEditingId(null)} />
+                                  )}
+                                </React.Fragment>
+                              );
+                            })
                           )}
                         </div>
                       </div>
